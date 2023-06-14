@@ -174,9 +174,25 @@
       {% endcomment %} {% comment %}
       <hr />
       {% endcomment %}
-      <div class="container mt-5 mb-md-4 py-5">
-        {% block body %} {% endblock %}
-      </div>
+      <div class="container my-5 py-5">{% block body %} {% endblock %}</div>
+      <footer class="position-relative pb-5">
+        <div
+          class="d-none d-xxl-block position-absolute top-0 start-0 w-100 h-100 bg-dark"
+          style="
+            border-top-left-radius: 1.875rem;
+            border-top-right-radius: 1.875rem;
+          "
+        ></div>
+
+        <div class="container content-overlay text-center py-md-3 py-lg-5">
+          <p class="fs-sm mb-0">
+            <span class="text-light">© All rights reserved. Made by </span
+            ><a href="https://createx.studio/" target="_blank" rel="noopener"
+              >Phuong Anh Vu</a
+            >
+          </p>
+        </div>
+      </footer>
     </body>
   </html>
 </html>
