@@ -16,17 +16,141 @@
         crossorigin="anonymous"
       />
       <link
-        href="{% static 'manage_vocabulary/styles.css' %}"
+        href="{% static 'manage_vocabulary/css/theme.min.css' %}"
         rel="stylesheet"
       />
     </head>
-
     <body>
-      <h1>Personal Vocabulary Management</h1>
+      <header class="navbar navbar-expand-md navbar-light fixed-top">
+        <div class="container">
+          <a class="navbar-brand me-2 me-xl-4" href="#"
+            ><img
+              class="d-block"
+              src="{% static 'manage_vocabulary/img/logo/logo-dark.svg' %}"
+              alt="Toro"
+              width="116"
+          /></a>
+          <button
+            class="navbar-toggler ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span></button
+          ><a
+            class="btn btn-sm text-primary d-none d-lg-block order-lg-3"
+            href="{% url 'login' %}"
+            rel="noopener"
+            ><i class="fi-user me-2"></i>Sign In</a
+          >
+          <a
+            class="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
+            href="{% url 'register' %}"
+            ><i class="fi-plus me-2"></i>Register</a
+          >
+          <div class="collapse navbar-collapse order-md-2" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  >Demos</a
+                >
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="real-estate-home-v1.html"
+                      ><i class="fi-building fs-base opacity-50 me-2"></i>Real
+                      Estate Demo</a
+                    >
+                  </li>
+                  <li class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item" href="car-finder-home.html"
+                      ><i class="fi-car fs-base opacity-50 me-2"></i>Car Finder
+                      Demo</a
+                    >
+                  </li>
+                  <li class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item" href="job-board-home-v1.html"
+                      ><i class="fi-briefcase fs-base opacity-50 me-2"></i>Job
+                      Board Demo</a
+                    >
+                  </li>
+                  <li class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item" href="city-guide-home-v1.html"
+                      ><i class="fi-map-pin fs-base opacity-50 me-2"></i>City
+                      Guide Demo</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="components/typography.html"
+                  >UI Kit (Components)</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="docs/dev-setup.html">Documentation</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      {% comment %}
       <div>
         {% if user.is_authenticated %} Signed in as
-        <strong>{{ user.username }}</strong>. {% else %} Not signed in. {% endif%}
+        <strong>{{ user.username }}</strong>. {% else %} Not signed in. {%
+        endif%}
       </div>
+      {% endcomment %} {% comment %}
+      <nav>
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'index' %}"
+            >Personal Vocabulary Management</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="{% url 'index' %}"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+              </li>
+              <li class="nav-item ms-md-auto">
+                <a class="nav-link disabled">Disabled</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {% endcomment %} {% comment %}
       <ul class="nav">
         <li class="nav-item">
           <a class="nav-link" href="{% url 'index' %}">Home</a>
@@ -47,8 +171,12 @@
         </li>
         {% endif %}
       </ul>
+      {% endcomment %} {% comment %}
       <hr />
-      <div class="container">{% block body %} {% endblock %}</div>
+      {% endcomment %}
+      <div class="container mt-5 mb-md-4 py-5">
+        {% block body %} {% endblock %}
+      </div>
     </body>
   </html>
 </html>
