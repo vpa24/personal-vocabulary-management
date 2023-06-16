@@ -2,6 +2,9 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
     {% if breadcrumb_name %}
+    	{% if 'dictionary/' in request.path %}
+        <li class="breadcrumb-item">Dictionary</li>
+      {% endif %}
     <li class="breadcrumb-item active" aria-current="page">
       {{breadcrumb_name }}
     </li>

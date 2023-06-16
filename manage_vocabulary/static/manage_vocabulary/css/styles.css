@@ -1,6 +1,15 @@
 .w-150px {
   width: 150px;
 }
+.w-250px {
+  width: 250px;
+}
 .logo {
   height: 50px;
+}
+.bg-purple {
+  background-color: #d521de;
+}
+.mt-6 {
+  margin-top: 6rem !important;
 }

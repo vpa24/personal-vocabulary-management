@@ -1,10 +1,10 @@
 {% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
 <div class="container mt-5 mb-md-4 py-5">
-  {% include 'manage_vocabulary/breadcrumb.html' %}
+  {% include 'manage_vocabulary/breadcrumb.html' with breadcrumb_name=word.name|title %}
   <div class="list-group">
-    <div class="list-group-item list-group-item-action py-3">
+    <div class="list-group-item py-3">
       <div class="d-flex flex-wrap w-100 justify-content-between">
-        <h5 class="text-primary">{{ word.name }}</h5>
+        <h5 class="text-primary">{{ word.name|title }}</h5>
         <small class="opacity-50 mb-2">{{entry.word.updated_date|date}}</small>
       </div>
       {% for entry in word_entries %}
@@ -17,9 +17,8 @@
       {% if entry.example %}
       <h6 class="opacity-75 text-decoration-underline">Example:</h6>
       <p>{{entry.example}}</p>
-      {% endif %}
+      {% endif %} {% endfor %}
     </div>
-    {% endfor %}
   </div>
 </div>
-{% endblock %}
+ {% endblock %}

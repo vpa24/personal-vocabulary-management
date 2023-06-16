@@ -17,6 +17,7 @@ class WordEntry(models.Model):
         ('noun', 'Noun'),
         ('adjective', 'Adjective'),
         ('phrasal_verb', 'Phrasal Verb'),
+        ('adverb', 'Adverb'),
     ]
     word_type = models.CharField(max_length=20, choices=WORD_TYPES)
     definition = models.CharField(max_length=300)
@@ -26,8 +27,9 @@ class WordEntry(models.Model):
     def get_word_type_class(self):
         word_type_classes = {
             'verb': 'badge rounded-pill bg-info',
-            'noun': 'badge rounded-pill bg-primary',
-            'adjective': 'badge rounded-pill bg-secondary',
+            'noun': 'badge rounded-pill bg-warning',
+            'adjective': 'badge rounded-pill bg-danger',
             'phrasal_verb': 'badge rounded-pill bg-success',
+            'adverb': 'badge rounded-pill bg-purple',
         }
         return word_type_classes.get(self.word_type, '')

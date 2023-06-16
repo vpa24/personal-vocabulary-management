@@ -1,16 +1,15 @@
 {% extends "manage_vocabulary/layout.html" %} {% block body %}
-<div class="container mt-5 mb-md-4 py-5">
-    {% include 'manage_vocabulary/breadcrumb.html' with breadcrumb_name='Add new vocabulary' %}
-    <h2 class="h3 mb-4 mb-sm-5 text-primary">
-      Let's add a new vocabulary word!
-    </h2>
-    <form action="{% url 'add_vocabulary' %}" method="post">
-      {% csrf_token %}
-      <div class="p-4 card border-0 shadow-sm">
-        <label class="form-label" for="{{ form.name.id_for_label }}"
-          >{{ form.name.label }}</label
-        >
-        {{form.name}}
+<div class="container mt-6 mb-md-4">
+  {% include 'manage_vocabulary/breadcrumb.html' with breadcrumb_name='Add new vocabulary' %}
+  <h2 class="h3 mb-4 mb-sm-5 text-primary">Let's add a new vocabulary word!</h2>
+  <form action="{% url 'add_vocabulary' %}" method="post">
+    {% csrf_token %}
+    <div class="p-4 card border-0 shadow-sm">
+      <label class="form-label" for="{{ form.name.id_for_label }}"
+        >{{ form.name.label }}</label
+      >
+      {{form.name}}
+      <div class="clone_div">
         <div class="row mt-3 p-4 bg-secondary rounded">
           <div class="col-md-2 mb-3">
             <label class="form-label" for="{{form.part_of_speech.id_for_lable}}"
@@ -31,10 +30,19 @@
             {{form.example}}
           </div>
         </div>
-        <button class="btn btn-primary w-150px mt-4" type="submit">
-          Create
-        </button>
       </div>
-    </form>
-
+      <div class="mt-3">
+        <button
+          type="button"
+          id="add_other_definition"
+          class="btn btn-accent w-250px me-3"
+        >
+        <i class="fi-plus me-2"></i>
+          Add other definition
+        </button>
+        <button class="btn btn-primary w-150px" type="submit"><i class="fi-check me-2"></i>Save</button>
+      </div>
+    </div>
+  </form>
+</div>
 {% endblock %}

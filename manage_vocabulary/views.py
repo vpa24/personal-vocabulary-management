@@ -30,7 +30,7 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "manage_vocaubary/login.html", {
+            return render(request, "manage_vocabulary/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
@@ -77,12 +77,22 @@ def add_vocabulary(request):
             new_word = Word(name=name)
             new_word.save()
 
-            part_of_speech =request.POST['part_of_speech']
-            definition = request.POST['definition']
-            example = request.POST['example']
-            new_word_entry = WordEntry(word_type= part_of_speech, definition=definition, example=example, word=new_word)
-            new_word_entry.save()
-            return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form})
+            definitions = request.POST.getlist('definition')
+            examples = request.POST.getlist('example')
+            part_of_speeches = request.POST.getlist('part_of_speech')
+            for i in range(len(definitions)):
+                definition = definitions[i]
+                example = examples[i]
+                part_of_speech = part_of_speeches[i]
+
+                word_entry = WordEntry(
+                    word_type=part_of_speech,
+                    definition=definition,
+                    example=example,
+                    word=new_word
+                )
+                word_entry.save()
+            return HttpResponseRedirect(reverse("index"))
     else:
         form = addVocabularyForm()
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form})

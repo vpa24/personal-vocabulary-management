@@ -6,11 +6,11 @@
   {% for letter, words in sored_word_dict %}
   <h4 class="mt-2 text-primary">Letter: {{letter}}</h4>
   {% for word in words %}
-  <a
-    href="{% url 'vocabulary_detail' word.id %}"
-  >
-    {{word.name}}</a
-  >
+  <div class="mt-1">
+    <a class="text-body" href="{% url 'vocabulary_detail' word.id %}">
+      {{word.name}}</a
+    >
+  </div>
   {% endfor%} {% endfor%}
 </div>
 {% endblock %}
