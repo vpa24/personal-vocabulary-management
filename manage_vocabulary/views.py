@@ -3,10 +3,11 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
-from .models import User
+from .models import User, Word, WordEntry
 from django.contrib.auth.decorators import login_required
-from decimal import Decimal
+from .addVocabularyForm import addVocabularyForm
 
 def index(request):
     return render(request, 'manage_vocabulary/index.html')
@@ -62,3 +63,22 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "manage_vocabulary/register.html")
+
+@login_required()    
+def add_vocabulary(request):
+    if request.method == 'POST':
+        form = addVocabularyForm(request.POST)
+        if form.is_valid():
+            name = request.POST['name'].lower().strip()
+            new_word = Word(name=name)
+            new_word.save()
+
+            part_of_speech =request.POST['part_of_speech']
+            definition = request.POST['definition']
+            example = request.POST['example']
+            new_word_entry = WordEntry(word_type= part_of_speech, definition=definition, example=example, word=new_word)
+            new_word_entry.save()
+            return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form})
+    else:
+        form = addVocabularyForm()
+        return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form})

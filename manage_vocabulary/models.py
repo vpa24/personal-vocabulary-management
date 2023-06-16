@@ -6,11 +6,12 @@ from django.utils import timezone
 class User(AbstractUser):
     pass
 
-class Group(models.Model):
-    definition = models.CharField(max_length=300)
-    example = models.TextField()
+class Word(models.Model):
+    name = models.CharField(max_length=100)
+    created_date = models.DateTimeField(default=timezone.now)
+    updated_date = models.DateTimeField(default=timezone.now)
 
-class PartOfSpeech(models.Model):
+class WordEntry(models.Model):
     WORD_TYPES = [
         ('verb', 'Verb'),
         ('noun', 'Noun'),
@@ -18,8 +19,7 @@ class PartOfSpeech(models.Model):
         ('phrasal_verb', 'Phrasal Verb'),
     ]
     word_type = models.CharField(max_length=20, choices=WORD_TYPES)
-    groups = models.ManyToManyField(Group, blank=True, related_name="groups")
+    definition = models.CharField(max_length=300)
+    example = models.TextField()
+    word = models.ForeignKey(Word, on_delete=models.CASCADE, related_name="word_entries")
     
-class Word(models.Model):
-    name = models.CharField(max_length=100)
-    word_types = models.ManyToManyField(PartOfSpeech, blank=True, related_name="word_types")
