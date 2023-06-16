@@ -1,18 +1,25 @@
 {% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
-<section class="position-relative overflow-hidden py-5 my-5">
-  <div class="container">
-    <div class="card card-hover">
-      <div class="card-body">
-        <h1 class="card-title">{{word.name}}</h1>
-        {% for word_entry in word_entries %}
-        <span class="{{word_entry.get_word_type_class}}">{{word_entry.word_type}}</span>
-        {{word_entry.definition}} 
-		{% if word_entry.example %}
-        <div class="fw-bold">Example:</div>
-        {{word_entry.example}} {% endif %}
+<div class="container mt-5 mb-md-4 py-5">
+  {% include 'manage_vocabulary/breadcrumb.html' %}
+  <div class="list-group">
+    <div class="list-group-item list-group-item-action py-3">
+      <div class="d-flex flex-wrap w-100 justify-content-between">
+        <h5 class="text-primary">{{ word.name }}</h5>
+        <small class="opacity-50 mb-2">{{entry.word.updated_date|date}}</small>
       </div>
-      {% endfor %}
+      {% for entry in word_entries %}
+      <p class="font-weight-normal">
+        <span class="{{entry.get_word_type_class }}"
+          >{{ entry.word_type }}</span
+        >
+        <span class="opacity-75">{{ entry.definition }}</span>
+      </p>
+      {% if entry.example %}
+      <h6 class="opacity-75 text-decoration-underline">Example:</h6>
+      <p>{{entry.example}}</p>
+      {% endif %}
     </div>
+    {% endfor %}
   </div>
-</section>
+</div>
 {% endblock %}

@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from collections import defaultdict
 
 from .models import User, Word, WordEntry
 from django.contrib.auth.decorators import login_required
@@ -11,8 +12,8 @@ from .addVocabularyForm import addVocabularyForm
 
 def index(request):
     if request.user.is_authenticated:
-        word_entries = WordEntry.objects.all()
-        return render(request,'manage_vocabulary/index_user_is_authenticated.html', {'word_entries': word_entries})
+        context = vocabulary_list()
+        return render(request,'manage_vocabulary/index_user_is_authenticated.html', context)
     else:
         return render(request, 'manage_vocabulary/index.html')
 
@@ -86,9 +87,21 @@ def add_vocabulary(request):
         form = addVocabularyForm()
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form})
     
-def vocabularyList():
-    entries = WordEntry.objects.all()
-    return entries;
+def vocabulary_list():
+    vocabulary_words = Word.objects.all()
+    word_dict = defaultdict(list)
+    for word in vocabulary_words:
+        first_letter = word.name[0].upper()
+        if first_letter in word_dict:
+            word_dict[first_letter].append(word)
+        else:
+            word_dict[first_letter] = [word]
+    sorted_word_dict = dict(sorted(word_dict.items()))
+    context = {
+        'total': len(vocabulary_words),
+        'sored_word_dict': sorted_word_dict.items()
+    }
+    return context
 
 @login_required()
 def vocabulary_detail(request, vid):
