@@ -107,9 +107,11 @@ def vocabulary_list():
         else:
             word_dict[first_letter] = [word]
     sorted_word_dict = dict(sorted(word_dict.items()))
+    letters = sorted_word_dict.keys()
     context = {
         'total': len(vocabulary_words),
-        'sored_word_dict': sorted_word_dict.items()
+        'sored_word_dict': sorted_word_dict.items(),
+        'letters': letters,
     }
     return context
 

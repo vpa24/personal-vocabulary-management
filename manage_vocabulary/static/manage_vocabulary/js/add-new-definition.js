@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Handle click event on "Add other definition" button
   var addButton = document.getElementById("add_other_definition");
   addButton.addEventListener("click", function () {
     // Select the target div to clone
