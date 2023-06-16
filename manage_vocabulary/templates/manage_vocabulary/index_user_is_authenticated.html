@@ -1,0 +1,26 @@
+{% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
+<div class="container mt-5 mb-md-4 py-5">
+  {% include 'manage_vocabulary/breadcrumb.html' %}
+  <h2>Vocabulary list</h2>
+  <div class="list-group">
+    {% for entry in word_entries %}
+    <div class="list-group-item list-group-item-action py-3">
+      <div class="d-flex flex-wrap w-100 justify-content-between">
+        <h6>
+          <a href="{% url 'vocabulary_detail' entry.word.id %}"
+            >{{ entry.word.name }}
+          </a>
+        </h6>
+        <small class="opacity-50 mb-2">{{entry.word.updated_date|date}}</small>
+      </div>
+      <p class="font-weight-normal">
+        <span class="{{entry.get_word_type_class }}"
+          >{{ entry.word_type }}</span
+        >
+        <span class="opacity-75">{{ entry.definition }}</span>
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

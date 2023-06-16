@@ -10,8 +10,11 @@ from django.contrib.auth.decorators import login_required
 from .addVocabularyForm import addVocabularyForm
 
 def index(request):
-    return render(request, 'manage_vocabulary/index.html')
-
+    if request.user.is_authenticated:
+        word_entries = WordEntry.objects.all()
+        return render(request,'manage_vocabulary/index_user_is_authenticated.html', {'word_entries': word_entries})
+    else:
+        return render(request, 'manage_vocabulary/index.html')
 
 def login_view(request):
     if request.method == "POST":
@@ -82,3 +85,16 @@ def add_vocabulary(request):
     else:
         form = addVocabularyForm()
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form})
+    
+def vocabularyList():
+    entries = WordEntry.objects.all()
+    return entries;
+
+@login_required()
+def vocabulary_detail(request, vid):
+    word = Word.objects.get(pk=vid)
+    word_entries = WordEntry.objects.filter(word=word)
+    return render(request, 'manage_vocabulary/vocabulary_detail.html' ,{
+        'word': word,
+        'word_entries': word_entries
+    })

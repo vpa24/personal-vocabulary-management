@@ -1,6 +1,6 @@
 {% extends "manage_vocabulary/layout.html" %} {% block body %}
-<section class="position-relative overflow-hidden py-5 mb-5">
-  <div class="container py-5">
+<div class="container mt-5 mb-md-4 py-5">
+    {% include 'manage_vocabulary/breadcrumb.html' with breadcrumb_name='Add new vocabulary' %}
     <h2 class="h3 mb-4 mb-sm-5 text-primary">
       Let's add a new vocabulary word!
     </h2>
@@ -36,7 +36,5 @@
         </button>
       </div>
     </form>
-  </div>
-</section>
 
 {% endblock %}

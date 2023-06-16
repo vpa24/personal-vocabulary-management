@@ -1,12 +1,4 @@
 {% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
-{% if user.is_authenticated %}
-<section class="position-relative overflow-hidden py-5 mb-5">
-  <div class="container py-5">
-    Hello <strong class="text-primary">{{user.username|title}}!</strong>
-    <h1>Display vocabulary list</h1>
-  </div>
-</section>
-{% else %}
 <section class="position-relative overflow-hidden py-5 mb-5">
   <div
     class="d-none d-xl-block position-absolute top-0 start-0 h-100 bg-secondary"
@@ -105,4 +97,4 @@
     </div>
   </div>
 </section>
-{% endif %} {% endblock %}
+{% endblock %}

@@ -7,4 +7,5 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("add-vocabulary", views.add_vocabulary, name="add_vocabulary"),
+    path("dictionary/<int:vid>", views.vocabulary_detail, name="vocabulary_detail"),
 ]

@@ -23,3 +23,11 @@ class WordEntry(models.Model):
     example = models.TextField()
     word = models.ForeignKey(Word, on_delete=models.CASCADE, related_name="word_entries")
     
+    def get_word_type_class(self):
+        word_type_classes = {
+            'verb': 'badge rounded-pill bg-info',
+            'noun': 'badge rounded-pill bg-primary',
+            'adjective': 'badge rounded-pill bg-secondary',
+            'phrasal_verb': 'badge rounded-pill bg-success',
+        }
+        return word_type_classes.get(self.word_type, '')

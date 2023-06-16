@@ -1,0 +1,18 @@
+{% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
+<section class="position-relative overflow-hidden py-5 my-5">
+  <div class="container">
+    <div class="card card-hover">
+      <div class="card-body">
+        <h1 class="card-title">{{word.name}}</h1>
+        {% for word_entry in word_entries %}
+        <span class="{{word_entry.get_word_type_class}}">{{word_entry.word_type}}</span>
+        {{word_entry.definition}} 
+		{% if word_entry.example %}
+        <div class="fw-bold">Example:</div>
+        {{word_entry.example}} {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
