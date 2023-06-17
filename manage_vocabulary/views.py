@@ -12,7 +12,7 @@ from .addVocabularyForm import addVocabularyForm
 
 def index(request):
     if request.user.is_authenticated:
-        context = vocabulary_list()
+        context = vocabulary_list(request)
         return render(request,'manage_vocabulary/index_user_is_authenticated.html', context)
     else:
         return render(request, 'manage_vocabulary/index.html')
@@ -74,7 +74,9 @@ def add_vocabulary(request):
         form = addVocabularyForm(request.POST)
         if form.is_valid():
             name = request.POST['name'].lower().strip()
-            new_word = Word(name=name)
+            user_id = request.user.id
+            user = User.objects.get(pk=user_id)
+            new_word = Word(name=name, owner=user)
             new_word.save()
 
             definitions = request.POST.getlist('definition')
@@ -97,8 +99,10 @@ def add_vocabulary(request):
         form = addVocabularyForm()
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form})
     
-def vocabulary_list():
-    vocabulary_words = Word.objects.all()
+def vocabulary_list(request):
+    user_id = request.user.id
+    user = User.objects.get(pk=user_id)
+    vocabulary_words = Word.objects.filter(owner = user)
     word_dict = defaultdict(list)
     for word in vocabulary_words:
         first_letter = word.name[0].upper()

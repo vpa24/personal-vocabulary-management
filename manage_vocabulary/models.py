@@ -1,15 +1,14 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 
 class User(AbstractUser):
     pass
 
 class Word(models.Model):
     name = models.CharField(max_length=100)
-    created_date = models.DateTimeField(default=timezone.now)
-    updated_date = models.DateTimeField(default=timezone.now)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="words")
 
 class WordEntry(models.Model):
     WORD_TYPES = [

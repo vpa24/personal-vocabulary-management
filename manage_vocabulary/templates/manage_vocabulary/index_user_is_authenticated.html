@@ -2,7 +2,11 @@
 <div class="container mt-5 mb-md-4 py-5">
   {% include 'manage_vocabulary/breadcrumb.html' %}
   <h2>Vocabulary list</h2>
-  <div class="my-3">You have {{total}} word(s).</div>
+  <div class="my-3">You have {{total}} word(s).
+    {% if total == 0 %}
+      Please add some new words.
+    {% endif %}
+  </div>
   {% for letter in letters %}
   <a class="fw-bold fs-5 my-4 text-decoration-none letter-link" href="#{{letter}}"
     >{{letter}}</a
