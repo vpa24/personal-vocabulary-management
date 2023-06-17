@@ -1,6 +1,11 @@
 {% extends "manage_vocabulary/layout.html" %} {% block body %}
 <div class="container mt-6 mb-md-4">
   {% include 'manage_vocabulary/breadcrumb.html' with breadcrumb_name='Add new vocabulary' %}
+  {% if message and id %}
+    <div class="alert alert-danger" role="alert">
+      {{message}}, <a class="fw-bold" href="{% url 'vocabulary_detail' id %}">click here</a>
+    </div>
+  {% endif %} 
   <h2 class="h3 mb-4 mb-sm-5 text-primary">Let's add a new vocabulary word!</h2>
   <form action="{% url 'add_vocabulary' %}" method="post">
     {% csrf_token %}
@@ -37,10 +42,12 @@
           id="add_other_definition"
           class="btn btn-accent w-250px me-3"
         >
-        <i class="fi-plus me-2"></i>
+          <i class="fi-plus me-2"></i>
           Add other definition
         </button>
-        <button class="btn btn-primary w-150px" type="submit"><i class="fi-check me-2"></i>Save</button>
+        <button class="btn btn-primary w-150px" type="submit">
+          <i class="fi-check me-2"></i>Save
+        </button>
       </div>
     </div>
   </form>

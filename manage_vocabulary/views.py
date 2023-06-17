@@ -74,6 +74,9 @@ def add_vocabulary(request):
         form = addVocabularyForm(request.POST)
         if form.is_valid():
             name = request.POST['name'].lower().strip()
+            vid = vocabulary_id_by_user(name, request)
+            if vid != 0:
+                return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form, 'message': 'This vocabulary already exists. If you want to view or edit it', 'id': vid})
             user_id = request.user.id
             user = User.objects.get(pk=user_id)
             new_word = Word(name=name, owner=user)
@@ -127,3 +130,11 @@ def vocabulary_detail(request, vid):
         'word': word,
         'word_entries': word_entries
     })
+
+def vocabulary_id_by_user(name, request):
+    user_id = request.user.id
+    user =  User.objects.get(pk=user_id)
+    word = Word.objects.get(name=name, owner=user)
+    if word:
+        return word.id
+    return 0
