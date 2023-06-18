@@ -86,6 +86,7 @@ def add_vocabulary(request):
                 return HttpResponseRedirect(reverse("index"))
             else:
                 add_new_vocabulary(user_id, name, request)
+                return HttpResponseRedirect(reverse("index"))
     else:
         form = addVocabularyForm()
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form})
@@ -117,7 +118,7 @@ def vocabulary_detail(request, vid):
     user = request.user
     word = get_object_or_404(Word, id=vid)
 
-    word_entries = word.word_entries.filter(word__owners=user)
+    word_entries = WordEntry.objects.filter(word=word, user=user)
     return render(request, 'manage_vocabulary/vocabulary_detail.html', {
         'word': word,
         'word_entries': word_entries
@@ -147,7 +148,7 @@ def add_new_owner(user_id, name):
     word.owners.add(new_owner)
 
 
-def add_to_word_entry(request, word):
+def add_to_word_entry(request, word, user):
     definitions = request.POST.getlist('definition')
     examples = request.POST.getlist('example')
     part_of_speeches = request.POST.getlist('part_of_speech')
@@ -160,7 +161,8 @@ def add_to_word_entry(request, word):
             word_type=part_of_speech,
             definition=definition,
             example=example,
-            word=word
+            word=word,
+            user=user
         )
         word_entry.save()
 
@@ -184,7 +186,7 @@ def shared_vocabulary(user, name, request):
         vid = shared_word.id
         if vid is not None:
             word = Word.objects.get(pk=vid)
-            add_to_word_entry(request, word)
+            add_to_word_entry(request, word, user)
             return True
     else:
         return False
@@ -195,5 +197,4 @@ def add_new_vocabulary(user_id, name, request):
     new_word = Word(name=name)
     new_word.save()
     new_word.owners.set([user])
-    add_to_word_entry(request, new_word)
-    return HttpResponseRedirect(reverse("index"))
+    add_to_word_entry(request, new_word, user)
