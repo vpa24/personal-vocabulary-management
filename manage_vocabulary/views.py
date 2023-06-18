@@ -74,29 +74,30 @@ def add_vocabulary(request):
         form = addVocabularyForm(request.POST)
         if form.is_valid():
             name = request.POST['name'].lower().strip()
-            vid = vocabulary_id_by_user(name, request)
-            if vid != 0:
-                return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form, 'message': 'This vocabulary already exists. If you want to view or edit it', 'id': vid})
             user_id = request.user.id
             user = User.objects.get(pk=user_id)
-            new_word = Word(name=name, owner=user)
+             # Check if the vocabulary exists for the current user
+            existing_vocabulary = user.words.filter(name=name)
+            if existing_vocabulary.exists():
+                vid = existing_vocabulary.first().id
+                return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form, 'message': 'This vocabulary already exists. If you want to view or edit it', 'id': vid})
+            
+             # Check if the vocabulary exists with different owners
+            shared_vocabulary = Word.objects.filter(name=name).exclude(owners=user)
+            if shared_vocabulary.exists():
+                shared_word = shared_vocabulary.first()
+                shared_word.owners.add(user)
+                vid = shared_word.id
+                if vid is not None:
+                    word = Word.objects.get(pk=vid)
+                    add_to_word_entry(request, word)
+                    return HttpResponseRedirect(reverse("index"))
+            
+            user = User.objects.get(pk=user_id)
+            new_word = Word(name=name)
             new_word.save()
-
-            definitions = request.POST.getlist('definition')
-            examples = request.POST.getlist('example')
-            part_of_speeches = request.POST.getlist('part_of_speech')
-            for i in range(len(definitions)):
-                definition = definitions[i]
-                example = examples[i]
-                part_of_speech = part_of_speeches[i]
-
-                word_entry = WordEntry(
-                    word_type=part_of_speech,
-                    definition=definition,
-                    example=example,
-                    word=new_word
-                )
-                word_entry.save()
+            new_word.owners.set([user])
+            add_to_word_entry(request, new_word)
             return HttpResponseRedirect(reverse("index"))
     else:
         form = addVocabularyForm()
@@ -105,7 +106,7 @@ def add_vocabulary(request):
 def vocabulary_list(request):
     user_id = request.user.id
     user = User.objects.get(pk=user_id)
-    vocabulary_words = Word.objects.filter(owner = user)
+    vocabulary_words = Word.objects.filter(owners = user)
     word_dict = defaultdict(list)
     for word in vocabulary_words:
         first_letter = word.name[0].upper()
@@ -138,3 +139,33 @@ def vocabulary_id_by_user(name, request):
     if word:
         return word.id
     return 0
+
+def get_owners_by_vocabulary(name):
+    words = Word.objects.filter(name=name)
+    if words.exists():
+        word = words.first()
+        return word.owners.all()
+    return None
+    
+
+def add_new_owner(user_id, name):
+    new_owner = User.objects.get(pk=user_id)
+    word =Word.objects.get(name=name)
+    word.owners.add(new_owner)
+
+def add_to_word_entry(request, word):
+    definitions = request.POST.getlist('definition')
+    examples = request.POST.getlist('example')
+    part_of_speeches = request.POST.getlist('part_of_speech')
+    for i in range(len(definitions)):
+        definition = definitions[i]
+        example = examples[i]
+        part_of_speech = part_of_speeches[i]
+
+        word_entry = WordEntry(
+            word_type=part_of_speech,
+            definition=definition,
+            example=example,
+            word=word
+        )
+        word_entry.save()

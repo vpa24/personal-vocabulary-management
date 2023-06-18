@@ -8,7 +8,7 @@ class User(AbstractUser):
 
 class Word(models.Model):
     name = models.CharField(max_length=100)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="words")
+    owners = models.ManyToManyField(User, blank=True, related_name="words")
 
 class WordEntry(models.Model):
     WORD_TYPES = [
