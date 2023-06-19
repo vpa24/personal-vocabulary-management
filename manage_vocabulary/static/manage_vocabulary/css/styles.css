@@ -25,3 +25,16 @@
 .vocabulary_list:last-child {
   border-right: none !important;
 }
+.clone_div {
+  position: relative;
+}
+.clone_div .content-overlay {
+  position: absolute;
+  text-align: right;
+}
+.clone_div button.btn.btn-icon.btn-light.btn-xs.text-primary.rounded-circle {
+  position: absolute;
+}
+.btn-icon.btn-xs > i {
+  font-size: 2em;
+}
