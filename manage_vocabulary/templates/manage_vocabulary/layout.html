@@ -1,6 +1,5 @@
-{% url 'index' as index %}
-{% url 'add_vocabulary' as add_vocabulary %}
-{% load static %}
+{% url 'index' as index %} {% url 'add_vocabulary' as add_vocabulary %} {% load
+static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +24,11 @@
         href="{% static 'manage_vocabulary/css/styles.css' %}"
         rel="stylesheet"
       />
-       <link rel="shortcut icon" type="image/x-icon" href="{% static 'manage_vocabulary/img/icon.png' %}">
+      <link
+        rel="shortcut icon"
+        type="image/x-icon"
+        href="{% static 'manage_vocabulary/img/icon.png' %}"
+      />
     </head>
     <body>
       <main class="page-wrapper">
@@ -36,7 +39,7 @@
                 class="d-block logo"
                 src="{% static 'manage_vocabulary/img/logo/bi-logo.svg' %}"
                 alt="Toro"
-               width="116"
+                width="116"
             /></a>
             <button
               class="navbar-toggler ms-auto"
@@ -122,11 +125,8 @@
           ></div>
 
           <div class="container content-overlay text-center py-md-3 py-lg-5">
-            <p class="fs-sm mb-0">
-              <span class="text-light">© All rights reserved. Made by </span
-              ><a href="https://createx.studio/" target="_blank" rel="noopener"
-                >my heart</a
-              >
+            <p class="fs-sm mb-0 text-light">
+              © All rights reserved. Made from my heart
             </p>
           </div>
         </footer>
