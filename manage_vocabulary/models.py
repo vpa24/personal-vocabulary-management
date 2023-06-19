@@ -26,8 +26,8 @@ class WordEntry(models.Model):
     example = models.TextField()
     word = models.ForeignKey(
         Word, on_delete=models.CASCADE, related_name="word_entries")
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="word_entry")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="word_entries")
 
     def get_word_type_class(self):
         word_type_classes = {

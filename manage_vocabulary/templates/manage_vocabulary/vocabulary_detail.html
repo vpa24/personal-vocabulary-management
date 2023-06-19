@@ -8,7 +8,8 @@
         <small class="opacity-50 mb-2">{{entry.word.updated_date|date}}</small>
       </div>
       {% for entry in word_entries %}
-      <p class="font-weight-normal">
+        {% with index=forloop.counter0 %}
+      <p class="font-weight-normal {% if index > 0 %} border-top pt-3{% endif %}">
         <span class="{{entry.get_word_type_class }}"
           >{{ entry.word_type }}</span
         >
@@ -17,7 +18,7 @@
       {% if entry.example %}
       <h6 class="opacity-75 text-decoration-underline">Example:</h6>
       <p>{{entry.example}}</p>
-      {% endif %} {% endfor %}
+      {% endif %} {% endwith %} {% endfor %}
     </div>
   </div>
 </div>
