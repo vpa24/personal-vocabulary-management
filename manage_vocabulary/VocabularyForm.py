@@ -1,7 +1,7 @@
 from django import forms
 from .models import WordEntry
 
-class addVocabularyForm(forms.Form):
+class VocabularyForm(forms.Form):
     name = forms.CharField( 
         label="Name:",
         widget=forms.TextInput(

@@ -5,10 +5,12 @@ from django.shortcuts import render
 from django.urls import reverse
 from collections import defaultdict
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import User, Word, WordEntry
 from django.contrib.auth.decorators import login_required
-from .addVocabularyForm import addVocabularyForm
+from .VocabularyForm import VocabularyForm
+from .VocabularyFormEntry import VocabularyFormEntry
 
 
 def index(request):
@@ -74,9 +76,9 @@ def register(request):
 @login_required()
 def add_vocabulary(request):
     if request.method == 'POST':
-        form = addVocabularyForm(request.POST)
+        form = VocabularyForm(request.POST)
         if form.is_valid():
-            name = request.POST['name'].lower().strip()
+            name = request.POST['name'].lower().strip().replace(' ', '-')
             user_id = request.user.id
             user = User.objects.get(pk=user_id)
             vid = existing_vocabulary(user, name)
@@ -88,7 +90,7 @@ def add_vocabulary(request):
                 add_new_vocabulary(user_id, name, request)
                 return HttpResponseRedirect(reverse("index"))
     else:
-        form = addVocabularyForm()
+        form = VocabularyForm()
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form})
 
 
@@ -125,13 +127,34 @@ def vocabulary_detail(request, vid):
     })
 
 
-def vocabulary_id_by_user(name, request):
-    user_id = request.user.id
-    user = User.objects.get(pk=user_id)
-    word = Word.objects.get(name=name, owner=user)
-    if word:
-        return word.id
-    return 0
+@login_required()
+def edit_vocabulary(request, title):
+    if request.method == 'POST':
+        form = VocabularyForm(request.POST)
+        if form.is_valid():
+            update_vocabulary(request)
+            return HttpResponseRedirect(reverse("index"))
+
+    user = request.user
+    name = title.lower().strip().replace(' ', '-')
+    word = get_object_or_404(Word, name=name)
+    word_entries = WordEntry.objects.filter(word=word, user=user)
+    # Prepare the initial data for the formset
+    form_entries = []
+    for entry in word_entries:
+        initial_data = {
+            'example': entry.example,
+            'part_of_speech': entry.word_type,
+            'definition': entry.definition,
+        }
+        form_entries.append(VocabularyFormEntry(initial=initial_data))
+
+    return render(request, 'manage_vocabulary/edit_vocabulary.html', {
+        'voca_title': word.name.replace('-', ' '),
+        'form': VocabularyForm(initial={'name': word.name.title()}),
+        'form_entries': form_entries
+    })
+
 
 
 def get_owners_by_vocabulary(name):
@@ -198,3 +221,16 @@ def add_new_vocabulary(user_id, name, request):
     new_word.save()
     new_word.owners.set([user])
     add_to_word_entry(request, new_word, user)
+
+def update_vocabulary(request):
+    name = request.POST['name'].lower().strip().replace(' ', '-')
+    word = get_object_or_404(Word, name=name)
+    delete_word_entries(word, request.user)  # Delete old WordEntry instances
+    add_to_word_entry(request, word, request.user)   
+
+def delete_word_entries(word, user):
+    try:
+        word_entries = WordEntry.objects.filter(word=word, user=user)
+        word_entries.delete()
+    except ObjectDoesNotExist:
+        pass
