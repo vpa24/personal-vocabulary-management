@@ -10,7 +10,7 @@
     <a class="fw-bold" href="{% url 'vocabulary_detail' id %}">click here</a>
   </div>
   {% endif %}
-  <form action="{% url 'edit_vocabulary' voca_title %}" method="post">
+  <form action="{% url 'edit_vocabulary' title=voca_title|slugify vid=vid %}" method="post">
     {% csrf_token %}
     <div class="p-4 card border-0 shadow-sm">
       <label class="form-label" for="{{ form.name.id_for_label }}"

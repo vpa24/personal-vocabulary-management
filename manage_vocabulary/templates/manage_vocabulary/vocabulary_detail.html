@@ -5,7 +5,7 @@
   <div class="list-group">
     <div class="list-group-item py-3">
       <div class="end-0 top-0 pt-3 pe-3 position-absolute">
-        <a href="{% url 'edit_vocabulary' word.name %}"><button
+        <a href="{% url 'edit_vocabulary' title=word.name|slugify vid=word.id %}"><button
           class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
           type="button"
           data-bs-toggle="tooltip"

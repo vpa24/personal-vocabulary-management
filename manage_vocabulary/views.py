@@ -128,16 +128,18 @@ def vocabulary_detail(request, vid):
 
 
 @login_required()
-def edit_vocabulary(request, title):
+def edit_vocabulary(request, title, vid):
     if request.method == 'POST':
         form = VocabularyForm(request.POST)
         if form.is_valid():
-            update_vocabulary(request)
+            name = request.POST['name'].lower().strip().replace(' ', '-')
+            update_vocabulary_name(name, title)
+
+            update_vocabulary_entries(request)
             return HttpResponseRedirect(reverse("index"))
 
     user = request.user
-    name = title.lower().strip().replace(' ', '-')
-    word = get_object_or_404(Word, name=name)
+    word = get_object_or_404(Word, pk=vid)
     word_entries = WordEntry.objects.filter(word=word, user=user)
     # Prepare the initial data for the formset
     form_entries = []
@@ -151,10 +153,10 @@ def edit_vocabulary(request, title):
 
     return render(request, 'manage_vocabulary/edit_vocabulary.html', {
         'voca_title': word.name.replace('-', ' '),
+        'vid': word.id,
         'form': VocabularyForm(initial={'name': word.name.title()}),
         'form_entries': form_entries
     })
-
 
 
 def get_owners_by_vocabulary(name):
@@ -222,11 +224,11 @@ def add_new_vocabulary(user_id, name, request):
     new_word.owners.set([user])
     add_to_word_entry(request, new_word, user)
 
-def update_vocabulary(request):
+def update_vocabulary_entries(request):
     name = request.POST['name'].lower().strip().replace(' ', '-')
     word = get_object_or_404(Word, name=name)
     delete_word_entries(word, request.user)  # Delete old WordEntry instances
-    add_to_word_entry(request, word, request.user)   
+    add_to_word_entry(request, word, request.user)
 
 def delete_word_entries(word, user):
     try:
@@ -234,3 +236,10 @@ def delete_word_entries(word, user):
         word_entries.delete()
     except ObjectDoesNotExist:
         pass
+
+def update_vocabulary_name(get_name, title):
+    word = get_object_or_404(Word, name=title)
+    if title != get_name:
+        word.name = get_name
+        word.save()
+        return
