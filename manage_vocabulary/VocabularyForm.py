@@ -1,5 +1,4 @@
 from django import forms
-from .models import WordEntry
 
 class VocabularyForm(forms.Form):
     name = forms.CharField( 
