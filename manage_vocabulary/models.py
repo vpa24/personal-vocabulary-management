@@ -38,3 +38,9 @@ class WordEntry(models.Model):
             'adverb': 'badge rounded-pill bg-purple',
         }
         return word_type_classes.get(self.word_type, '')
+
+class Contact(models.Model):
+    your_name = models.CharField(max_length=100)
+    your_email = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
+    message = models.TextField()
