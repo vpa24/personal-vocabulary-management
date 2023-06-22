@@ -91,7 +91,8 @@ def add_vocabulary(request):
                 return HttpResponseRedirect(reverse("index"))
     else:
         form = VocabularyForm()
-        return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form})
+        form_entries = VocabularyFormEntry()
+        return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form, 'form_entries': form_entries})
 
 
 def vocabulary_list(request):
