@@ -118,6 +118,7 @@ USE_TZ = True
 
 LOGIN_URL = 'login'
 
+SECURE_SSL_REDIRECT = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
