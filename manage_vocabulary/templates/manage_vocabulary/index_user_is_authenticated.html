@@ -2,21 +2,22 @@
 {% load custom_filters %}
 <div class="container mt-5 mb-md-4 py-5">
   <h2 class="mt-4">{{ user.username|title}}'s Dictionary</h2>
-  <div class="my-3">You have {{total}} word(s).
-    {% if total == 0 %}
-      Please add some new words.
+  <div class="my-3">
+    You have {{total}} word(s). {% if total == 0 %} Please add some new words by clicking the <span class="fw-bold">"Add new vocabulary"</span> link from menu.
     {% endif %}
   </div>
   {% if letters|length > 3 %}
+  <div class="mb-3">
     {% for letter in letters %}
-      <a class="fw-bold fs-5 my-4 text-decoration-none letter-link" href="#{{letter}}"
-        >{{letter}}</a
-      >
-      {% if forloop.last == False %} | {% endif %} 
-    {% endfor %}
-  {% endif%}
-  {% for letter, words in sored_word_dict %}
-  <h4 id="{{letter}}" class="mt-2 text-primary">Letter: {{letter}}</h4>
+    <a
+      class="fw-bold fs-5 my-4 text-decoration-none letter-link"
+      href="#{{letter}}"
+      >{{letter}}</a
+    >
+    {% if forloop.last == False %} | {% endif %} {% endfor %}
+  </div>
+  {% endif%} {% for letter, words in sored_word_dict %}
+  <h4 id="{{letter}}" class="my-1 text-primary">Letter: {{letter}}</h4>
   {% for word in words %}
   <div class="mt-1">
     <a class="text-body" href="{% url 'vocabulary_detail' word.id %}">
