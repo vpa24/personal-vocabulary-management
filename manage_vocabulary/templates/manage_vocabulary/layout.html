@@ -2,139 +2,153 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <html lang="en">
-    <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>{% block title %}Vocabulary Management{% endblock %}</title>
-      <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-        crossorigin="anonymous"
-      />
-      <link
-        href="{% static 'manage_vocabulary/css/theme.min.css' %}"
-        rel="stylesheet"
-      />
-      <link
-        href="{% static 'manage_vocabulary/css/styles.css' %}"
-        rel="stylesheet"
-      />
-      <link
-        rel="shortcut icon"
-        type="image/x-icon"
-        href="{% static 'manage_vocabulary/img/icon.png' %}"
-      />
-    </head>
-    <body>
-      <main class="page-wrapper">
-        <header class="navbar navbar-expand-md navbar-light fixed-top">
-          <div class="container">
-            <a class="navbar-brand me-2 me-xl-4" href="{% url 'index' %}"
-              ><img
-                class="d-block logo"
-                src="{% static 'manage_vocabulary/img/logo/dictionary-icon.png' %}"
-                alt="Toro"
-            /></a>
-            <button
-              class="navbar-toggler ms-auto"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            {% if user.is_authenticated %}
-            <a
-              class="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
-              href="{% url 'logout' %}"
-              ><i class="fi-logout me-2"></i>Logout</a
-            >
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-5Z2MKY58PY"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-            {% else %}
-            <a
-              class="btn btn-sm text-primary d-none d-lg-block order-lg-3"
-              href="{% url 'login' %}"
-              rel="noopener"
-              ><i class="fi-user me-2"></i>Log In</a
-            >
-            <a
-              class="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
-              href="{% url 'register' %}"
-              ><i class="fi-plus me-2"></i>Register</a
-            >
-            {% endif %}
-            <div class="collapse navbar-collapse order-md-2" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a
-                    class="nav-link {% if request.path == index %} active {% endif %}"
-                    href="{% url 'index' %}"
-                    role="button"
-                    aria-expanded="false"
-                    >Home</a
-                  >
-                </li>
-                {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                  <a
-                    class="nav-link {% if request.path == add_vocabulary %} active {% endif %}"
-                    href="{% url 'add_vocabulary' %}"
-                    role="button"
-                    aria-expanded="false"
-                    >Add new vocabulary</a
-                  >
-                </li>
-                {% comment %} <li class="nav-item">
-                  <a class="nav-link" href="components/typography.html"
-                    >Vocabulary Quiz</a
-                  >
-                </li> {% endcomment %}
-                {% else %}
-                {% comment %} <li class="nav-item">
-                  <a class="nav-link" href="components/typography.html"
-                    >Contact Me</a
-                  >
-                </li> {% endcomment %}
-                {% endif %}
-                {% comment %} <li class="nav-item">
-                  <a class="nav-link" href="docs/dev-setup.html"
-                    >Documentation</a
-                  >
-                </li> {% endcomment %}
-              </ul>
-            </div>
-          </div>
-        </header>
-        {% block body %} {% endblock %}
-      </main>
-        <footer class="position-relative pb-5">
-          <div
-            class="d-none d-xxl-block position-absolute top-0 start-0 w-100 h-100 bg-dark"
-            style="
-              border-top-left-radius: 1.875rem;
-              border-top-right-radius: 1.875rem;
-            "
-          ></div>
+      gtag("config", "G-5Z2MKY58PY");
+    </script>
 
-          <div class="container content-overlay text-center py-md-3 py-lg-5">
-            <p class="fs-sm mb-0 text-light">
-              © All rights reserved. Made from <span class="text-primary">my big heart.</span>
-            </p>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Vocabulary Management{% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link
+      href="{% static 'manage_vocabulary/css/theme.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'manage_vocabulary/css/styles.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'manage_vocabulary/img/icon.png' %}"
+    />
+  </head>
+  <body>
+    <main class="page-wrapper">
+      <header class="navbar navbar-expand-md navbar-light fixed-top">
+        <div class="container">
+          <a class="navbar-brand me-2 me-xl-4" href="{% url 'index' %}"
+            ><img
+              class="d-block logo"
+              src="{% static 'manage_vocabulary/img/logo/dictionary-icon.png' %}"
+              alt="Toro"
+          /></a>
+          <button
+            class="navbar-toggler ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          {% if user.is_authenticated %}
+          <a
+            class="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
+            href="{% url 'logout' %}"
+            ><i class="fi-logout me-2"></i>Logout</a
+          >
+
+          {% else %}
+          <a
+            class="btn btn-sm text-primary d-none d-lg-block order-lg-3"
+            href="{% url 'login' %}"
+            rel="noopener"
+            ><i class="fi-user me-2"></i>Log In</a
+          >
+          <a
+            class="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
+            href="{% url 'register' %}"
+            ><i class="fi-plus me-2"></i>Register</a
+          >
+          {% endif %}
+          <div class="collapse navbar-collapse order-md-2" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if request.path == index %} active {% endif %}"
+                  href="{% url 'index' %}"
+                  role="button"
+                  aria-expanded="false"
+                  >Home</a
+                >
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link {% if request.path == add_vocabulary %} active {% endif %}"
+                  href="{% url 'add_vocabulary' %}"
+                  role="button"
+                  aria-expanded="false"
+                  >Add new vocabulary</a
+                >
+              </li>
+              {% comment %}
+              <li class="nav-item">
+                <a class="nav-link" href="components/typography.html"
+                  >Vocabulary Quiz</a
+                >
+              </li>
+              {% endcomment %} {% else %} {% comment %}
+              <li class="nav-item">
+                <a class="nav-link" href="components/typography.html"
+                  >Contact Me</a
+                >
+              </li>
+              {% endcomment %} {% endif %} {% comment %}
+              <li class="nav-item">
+                <a class="nav-link" href="docs/dev-setup.html">Documentation</a>
+              </li>
+              {% endcomment %}
+            </ul>
           </div>
-        </footer>
-      <!-- Vendor scrits: js libraries and plugins-->
-      <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-      <script src="{% static 'vendor/simplebar/dist/simplebar.min.js' %}"></script>
-      <script src="{% static 'vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
-      <!-- Main theme script-->
-      <script src="{% static 'manage_vocabulary/js/theme.min.js' %}"></script>
-      <script src="{% static 'manage_vocabulary/js/add-new-definition.js' %}"></script>
-      <script src="{% static 'manage_vocabulary/js/scroll.js' %}"></script>
-    </body>
-  </html>
+        </div>
+      </header>
+      {% block body %} {% endblock %}
+    </main>
+    <footer class="position-relative pb-5">
+      <div
+        class="d-none d-xxl-block position-absolute top-0 start-0 w-100 h-100 bg-dark"
+        style="
+          border-top-left-radius: 1.875rem;
+          border-top-right-radius: 1.875rem;
+        "
+      ></div>
+
+      <div class="container content-overlay text-center py-md-3 py-lg-5">
+        <p class="fs-sm mb-0 text-light">
+          © All rights reserved. Made from
+          <span class="text-primary">my big heart.</span>
+        </p>
+      </div>
+    </footer>
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/simplebar/dist/simplebar.min.js' %}"></script>
+    <script src="{% static 'vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+    <!-- Main theme script-->
+    <script src="{% static 'manage_vocabulary/js/theme.min.js' %}"></script>
+    <script src="{% static 'manage_vocabulary/js/add-new-definition.js' %}"></script>
+    <script src="{% static 'manage_vocabulary/js/scroll.js' %}"></script>
+  </body>
 </html>
