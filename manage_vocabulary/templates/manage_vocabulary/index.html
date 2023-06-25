@@ -8,7 +8,7 @@
     class="d-xl-none position-absolute top-0 start-0 w-100 h-100 bg-secondary"
   ></div>
   <div class="container content-overlay mt-4 mb-2 mt-lg-5 mb-lg-4 pt-5 pb-md-2">
-    <h1>Manage your dictionary</h1>
+    <h1>Your dictionary</h1>
     <div class="row">
       <div class="d-none d-md-block col-md-2 pt-4 mt-4">
         <img
@@ -29,13 +29,13 @@
                 class="nav-link stretched-link d-flex align-items-center justify-content-center justify-content-md-start"
                 href="real-estate-home-v1.html"
                 ><i class="fi-flame text-primary me-2 pe-1"></i
-                ><span>Easy</span></span
+                ><span>Easy to add new vocabulary</span></span
               >
             </h2>
             <div class="position-relative zindex-0">
               <img
                 class="position-relative zindex-5 rounded"
-                src="https://images.saymedia-content.com/.image/t_share/MTk3MTUwMjk1NDU1NzA0MTQ3/how-to-create-a-vocabulary-rich-classroom-for-english-language-learners-6-effective-strategies.jpg"
+                src="{% static 'manage_vocabulary/img/add_new_vocabulary.png' %}"
                 alt="Easily"
               />
               <div
@@ -59,14 +59,14 @@
           <h2 class="h4 ms-md-3">
             <span
               class="nav-link stretched-link d-flex align-items-center justify-content-center justify-content-md-start"
-              ><i class="fi-alarm text-primary me-2 pe-1"></i
-              ><span>Time-Saving</span></span
+              ><i class="fi-like text-primary me-2 pe-1"></i
+              ><span>Easy to manage</span></span
             >
           </h2>
           <img
             class="rounded"
-            src="https://www.learninga-z.com/user_area/content_media/raw/time-saving-tips.jpg"
-            alt="Time-Saving"
+            src="{% static 'manage_vocabulary/img/esay-to-manage.png' %}"
+            alt="Easy-to-manage"
           />
         </div>
       </div>
@@ -84,7 +84,9 @@
       />
     </div>
     <div class="col-xxl-6 col-md-7 text-md-start text-center">
-      {% comment %} <h2 class="text-primary">{{ 'I forgot what I have studied'|title }}</h2> {% endcomment %}
+      {% comment %}
+      <h2 class="text-primary">{{ 'I forgot what I have studied'|title }}</h2>
+      {% endcomment %}
       <p class="pb-3 fs-lg">
         As an English learner, I have taken a lot of time and effort into
         learning and remembering vocabulary. But a long time later, I feel

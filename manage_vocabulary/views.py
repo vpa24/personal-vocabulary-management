@@ -1,7 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from collections import defaultdict
 from django.shortcuts import get_object_or_404
@@ -9,6 +8,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .models import User, Word, WordEntry
 from django.contrib.auth.decorators import login_required
+
+from .authentication.forms import SignupForm, LoginForm
 from .VocabularyForm import VocabularyForm
 from .VocabularyFormEntry import VocabularyFormEntry
 
@@ -22,55 +23,43 @@ def index(request):
 
 
 def login_view(request):
-    if request.method == "POST":
-
-        # Attempt to sign user in
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-
-        # Check if authentication successful
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse("index"))
-        else:
-            return render(request, "manage_vocabulary/login.html", {
-                "message": "Invalid username and/or password."
-            })
-    else:
-        return render(request, "manage_vocabulary/login.html")
+    message = ''
+    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password'],
+            )
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+        message = 'Invalid username and/or password.'
+    return render(request, 'manage_vocabulary/login.html', context={'form': form, 'message': message})
 
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-
 def register(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
-
-        # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
-        if password != confirmation:
-            return render(request, "manage_vocabulary/register.html", {
-                "message": "Passwords must match."
-            })
-
-        # Attempt to create new user
-        try:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-        except IntegrityError:
-            return render(request, "manage_vocabulary/register.html", {
-                "message": "Username already taken."
-            })
-        login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+        else:
+            for field, errors in form.errors.items():
+                first_error = errors[0] if errors else ''
+                message = first_error
+                break 
+            return render(request, 'manage_vocabulary/register.html', {'form': form, 'message': message})
     else:
-        return render(request, "manage_vocabulary/register.html")
+        form = SignupForm()
+    
+    return render(request, 'manage_vocabulary/register.html', {'form': form})
 
 
 @login_required()

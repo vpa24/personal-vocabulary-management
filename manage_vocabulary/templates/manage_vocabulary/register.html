@@ -1,9 +1,6 @@
 {% extends "manage_vocabulary/layout.html" %} {% block body %}
 <section class="position-relative overflow-hidden py-5 mb-5">
   <div class="container py-5">
-    {% if message %}
-    <div>{{ message }}</div>
-    {% endif %}
     <section
       class="card card-body border-0 shadow-sm p-4 mb-4 w-lg-50"
       id="basic-info"
@@ -11,55 +8,46 @@
       <h2 class="h4 mb-4 text-primary">
         <i class="fi-plus-circle text-primary fs-5 mt-n1 me-2"></i>Register
       </h2>
+      {% if message %}
+      <div class="alert alert-danger" role="alert">{{ message }}</div>
+      {% endif %}
       <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         <div class="mb-3">
-          <label class="form-label" for="username"
-            >Username <span class="text-danger">*</span></label
+          <label class="form-label" for="{{form.first_name.label}}"
+            >{{form.first_name.label}} <span class="text-danger">*</span></label
           >
-          <input
-            class="form-control"
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Your Username"
-            required=""
-          />
+          {{form.first_name}}
         </div>
         <div class="mb-3">
-          <label class="form-label" for="email"
-            >Email <span class="text-danger">*</span></label
+          <label class="form-label" for="{{form.last_name.label}}"
+            >{{form.last_name.label}} <span class="text-danger">*</span></label
           >
-          <input
-            class="form-control"
-            type="text"
-            id="email"
-            name="email"
-            placeholder="Your Email Address"
-            required=""
-          />
+          {{form.last_name}}
         </div>
         <div class="mb-3">
-          <label class="form-label" for="email"
-            >Password <span class="text-danger">*</span></label
+          <label class="form-label" for="{{form.email.label}}"
+            >{{form.email.label}} <span class="text-danger">*</span></label
           >
-          <input
-            class="form-control"
-            type="password"
-            name="password"
-            placeholder="Your Password"
-          />
+          {{form.email}}
         </div>
         <div class="mb-3">
-          <label class="form-label" for="email"
-            >Confirm Password <span class="text-danger">*</span></label
+          <label class="form-label" for="{{form.username.label}}"
+            >{{form.username.label}} <span class="text-danger">*</span></label
           >
-          <input
-            class="form-control"
-            type="password"
-            name="confirmation"
-            placeholder="Confirm Your Password"
-          />
+          {{form.username}}
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="{{form.password1.label}}"
+            >{{form.password1.label}} <span class="text-danger">*</span></label
+          >
+          {{form.password1}}
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="{{form.password2.label}}"
+            >{{form.password2.label}} <span class="text-danger">*</span></label
+          >
+          {{form.password2}}
         </div>
         <input class="btn btn-primary" type="submit" value="Register" />
       </form>
