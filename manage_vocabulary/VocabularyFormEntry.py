@@ -9,7 +9,7 @@ class VocabularyFormEntry(forms.Form):
 
     example = forms.CharField(
         label="Example:",
-        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '2', "placeholder": "You can add one or more example sentences"}))
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '2', "placeholder": "It would be geart when you can create your own example sentences because it will help you remember vocabulary longer."}))
 
     part_of_speech = forms.ChoiceField(
         label="Part of speech:",
