@@ -12,12 +12,46 @@ from django.contrib.auth.decorators import login_required
 from .authentication.forms import SignupForm, LoginForm
 from .VocabularyForm import VocabularyForm
 from .VocabularyFormEntry import VocabularyFormEntry
+from .forms.SearchForm import SearchForm
 
 
 def index(request):
     if request.user.is_authenticated:
-        context = vocabulary_list(request)
-        return render(request, 'manage_vocabulary/index_user_is_authenticated.html', context)
+            user_id = request.user.id
+            user = User.objects.get(pk=user_id)
+            message = ""
+            if request.method == 'POST':
+                form = SearchForm(request.POST)
+                if form.is_valid():
+                    voca_name = form.cleaned_data['search']
+                    vocabulary_words = Word.objects.filter(owners=user, name__contains=voca_name)
+                    if len(vocabulary_words) == 0:
+                        message = f"We couldn't find any matches for <span class='text-primary'>{voca_name}</span> in your dictionary."
+                    elif len(vocabulary_words) == 1:
+                        id = vocabulary_words[0].id
+                        return HttpResponseRedirect(reverse('vocabulary_detail', args=(id,)))
+                    else:
+                        message = "Did you mean:"
+            else:
+                vocabulary_words = Word.objects.filter(owners=user)
+            word_dict = defaultdict(list)
+            for word in vocabulary_words:
+                first_letter = word.name[0].upper()
+                if first_letter in word_dict:
+                    word_dict[first_letter].append(word)
+                else:
+                    word_dict[first_letter] = [word]
+            sorted_word_dict = dict(sorted(word_dict.items()))
+            letters = sorted_word_dict.keys()
+            searchForm = SearchForm()
+            context = {
+                'total': len(vocabulary_words),
+                'sored_word_dict': sorted_word_dict.items(),
+                'letters': letters,
+                'searchForm': searchForm,
+                'message': message,
+            }
+            return render(request, 'manage_vocabulary/index_user_is_authenticated.html', context)
     else:
         return render(request, 'manage_vocabulary/index.html')
 
@@ -43,6 +77,7 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
+
 def register(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -54,11 +89,11 @@ def register(request):
             for field, errors in form.errors.items():
                 first_error = errors[0] if errors else ''
                 message = first_error
-                break 
+                break
             return render(request, 'manage_vocabulary/register.html', {'form': form, 'message': message})
     else:
         form = SignupForm()
-    
+
     return render(request, 'manage_vocabulary/register.html', {'form': form})
 
 
@@ -84,25 +119,9 @@ def add_vocabulary(request):
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form, 'form_entries': form_entries})
 
 
-def vocabulary_list(request):
-    user_id = request.user.id
-    user = User.objects.get(pk=user_id)
-    vocabulary_words = Word.objects.filter(owners=user)
-    word_dict = defaultdict(list)
-    for word in vocabulary_words:
-        first_letter = word.name[0].upper()
-        if first_letter in word_dict:
-            word_dict[first_letter].append(word)
-        else:
-            word_dict[first_letter] = [word]
-    sorted_word_dict = dict(sorted(word_dict.items()))
-    letters = sorted_word_dict.keys()
-    context = {
-        'total': len(vocabulary_words),
-        'sored_word_dict': sorted_word_dict.items(),
-        'letters': letters,
-    }
-    return context
+# def vocabulary_list(request):
+
+#     return context
 
 
 @login_required()
@@ -214,11 +233,13 @@ def add_new_vocabulary(user_id, name, request):
     new_word.owners.set([user])
     add_to_word_entry(request, new_word, user)
 
+
 def update_vocabulary_entries(request):
     name = request.POST['name'].lower().strip().replace(' ', '-')
     word = get_object_or_404(Word, name=name)
     delete_word_entries(word, request.user)  # Delete old WordEntry instances
     add_to_word_entry(request, word, request.user)
+
 
 def delete_word_entries(word, user):
     try:
@@ -226,6 +247,7 @@ def delete_word_entries(word, user):
         word_entries.delete()
     except ObjectDoesNotExist:
         pass
+
 
 def update_vocabulary_name(get_name, title):
     word = get_object_or_404(Word, name=title)
