@@ -1,8 +1,7 @@
 {% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
 <div class="container mt-5 mb-md-4 py-5">
-  {% load custom_filters %} {% include
-  'manage_vocabulary/components/breadcrumb.html' with
-  breadcrumb_name=word.name|title %}
+  {% load custom_filters %} 
+    {% include 'manage_vocabulary/components/breadcrumb.html' with breadcrumb_name=word.name|title %}
   <div class="list-group">
     <div class="list-group-item py-3">
       <div class="end-0 top-0 pt-3 pe-3 position-absolute">
