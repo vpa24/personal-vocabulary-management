@@ -3,23 +3,23 @@
 <div class="container mt-5 mb-md-4 py-5">
   <h2 class="mt-4">{{ user.username|title}}'s Dictionary</h2>
   
+  {% if total == 0 %} 
+      You don't have any vocabulary words yet. Let's start to add your first vocabulary word by clicking on the <span class="fw-bold">"Add new vocabulary"</span> in the menu.
+  {% endif %}
+    
   {% if letters|length > 3 %}
-  {% include 'manage_vocabulary/components/search_form.html' with form=searchForm %}
-  <div class="mb-3">
-    {% for letter in letters %}
-    <a
-    class="fw-bold fs-5 my-4 text-decoration-none letter-link"
-    href="#{{letter}}"
-    ><span class="badge rounded-circle bg-info ms-1">{{letter}}</span></a
-      >
+    {% include 'manage_vocabulary/components/search_form.html' with form=searchForm %}
+    <div class="mb-3">You have {{total}} word(s). </div>
+    <div class="mb-3">
+      {% for letter in letters %}
+        <a
+        class="fw-bold fs-5 my-4 text-decoration-none letter-link"
+        href="#{{letter}}"
+        ><span class="badge rounded-circle bg-info ms-1">{{letter}}</span></a
+          >
       {% endfor %}
     </div>
   {% endif%}
-  {% if total == 0 %} 
-      You don't have any vocabulary words yet. Let's start to add your first vocabulary word by clicking on the <span class="fw-bold">"Add new vocabulary"</span> in the menu.
-    {% else %}
-      You have {{total}} word(s). 
-  {% endif %}
   {% for letter, words in sored_word_dict %}
     <h4 id="{{letter}}" class="my-1 text-primary">Letter: {{letter}}</h4>
     {% for word in words %}
