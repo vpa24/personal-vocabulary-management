@@ -20,6 +20,7 @@
       {% endfor %}
     </div>
   {% endif%}
+
   {% for letter, words in sored_word_dict %}
     <h4 id="{{letter}}" class="my-1 text-primary">Letter: {{letter}}</h4>
     {% for word in words %}
@@ -27,6 +28,8 @@
       <a class="text-body text-decoration-none" href="{% url 'vocabulary_detail' word.id %}">
       {{word.name|replacetoSpace }}</a>
     </div>
-  {% endfor%} {% endfor%}
+    {% endfor%}
+  {% endfor%}
+  
 </div>
 {% endblock %}
