@@ -17,41 +17,8 @@ from .forms.SearchForm import SearchForm
 
 def index(request):
     if request.user.is_authenticated:
-            user_id = request.user.id
-            user = User.objects.get(pk=user_id)
-            message = ""
-            if request.method == 'POST':
-                form = SearchForm(request.POST)
-                if form.is_valid():
-                    voca_name = form.cleaned_data['search']
-                    vocabulary_words = Word.objects.filter(owners=user, name__contains=voca_name)
-                    if len(vocabulary_words) == 0:
-                        message = f"We couldn't find any matches for <span class='text-primary'>{voca_name}</span> in your dictionary."
-                    elif len(vocabulary_words) == 1:
-                        id = vocabulary_words[0].id
-                        return HttpResponseRedirect(reverse('vocabulary_detail', args=(id,)))
-                    else:
-                        message = "Did you mean:"
-            else:
-                vocabulary_words = Word.objects.filter(owners=user)
-            word_dict = defaultdict(list)
-            for word in vocabulary_words:
-                first_letter = word.name[0].upper()
-                if first_letter in word_dict:
-                    word_dict[first_letter].append(word)
-                else:
-                    word_dict[first_letter] = [word]
-            sorted_word_dict = dict(sorted(word_dict.items()))
-            letters = sorted_word_dict.keys()
-            searchForm = SearchForm()
-            context = {
-                'total': len(vocabulary_words),
-                'sored_word_dict': sorted_word_dict.items(),
-                'letters': letters,
-                'searchForm': searchForm,
-                'message': message,
-            }
-            return render(request, 'manage_vocabulary/index_user_is_authenticated.html', context)
+        context = vocabulary_list_index(request)
+        return render(request, 'manage_vocabulary/index_user_is_authenticated.html', context)
     else:
         return render(request, 'manage_vocabulary/index.html')
 
@@ -119,9 +86,56 @@ def add_vocabulary(request):
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form, 'form_entries': form_entries})
 
 
-# def vocabulary_list(request):
+@login_required()
+def search(request):
+    form = SearchForm()
+    voca_name = ""
+    if request.method == 'GET':
+        form = SearchForm(request.GET)  # Bind form data to the submitted GET data
+        if form.is_valid():
+            voca_name = request.GET.get('search')
+    return search_vocabulary_list(request, voca_name, form)
 
-#     return context
+
+def search_vocabulary_list(request, voca_name, form):
+    user_id = request.user.id
+    user = User.objects.get(pk=user_id)
+    vocabulary_words = Word.objects.filter(
+        owners=user, name__contains=voca_name)
+    if len(vocabulary_words) == 1:
+        id = vocabulary_words[0].id
+        if vocabulary_words[0].name == voca_name:
+            return HttpResponseRedirect(reverse('vocabulary_detail', args=(id,)))
+    context = {
+        'total': len(vocabulary_words),
+        'voca_name': voca_name,
+        "words": vocabulary_words,
+        "searchForm": form
+    }
+    return render(request, 'manage_vocabulary/search.html', context)
+
+
+def vocabulary_list_index(request):
+    user_id = request.user.id
+    user = User.objects.get(pk=user_id)
+    vocabulary_words = Word.objects.filter(owners=user)
+    word_dict = defaultdict(list)
+
+    for word in vocabulary_words:
+        first_letter = word.name[0].upper()
+        if first_letter in word_dict:
+            word_dict[first_letter].append(word)
+        else:
+            word_dict[first_letter] = [word]
+    sorted_word_dict = dict(sorted(word_dict.items()))
+    letters = sorted_word_dict.keys()
+    context = {
+        'total': len(vocabulary_words),
+        'sored_word_dict': sorted_word_dict.items(),
+        'letters': letters,
+        'searchForm': SearchForm()
+    }
+    return context
 
 
 @login_required()

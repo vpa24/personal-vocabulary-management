@@ -1,45 +1,23 @@
 {% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
 {% load custom_filters %}
 <div class="container mt-5 mb-md-4 py-5">
-  <form method="post" action="{% url 'index' %}">
-    {% csrf_token %}
-    <div class="position-relative">
-      {{searchForm.search}}
-      <i
-        class="fi-search position-absolute top-50 end-0 translate-middle-y me-3"
-      ></i>
-    </div>
-  </form>
-  {% if message == '' %} 
-    <h2 class="mt-4">{{ user.username|title}}'s Dictionary</h2>
-  {% endif %}
-
-  <div class="my-3">
-    {% if message %}
-     <h3 class="text-center fst-italic">{{ message|safe }}</h3>
-    {% else %}
-      You have {{total}} word(s). {% if total == 0 %} Please add some new words by
-      clicking the <span class="fw-bold">"Add new vocabulary"</span> link from
-      menu. {% endif %}
-    {% endif %}
-  </div>
-  {% if letters|length > 3 and message == "" %}
-  <div class="mb-3">
+  <h2 class="mt-4">{{ user.username|title}}'s Dictionary</h2>
+  {% include 'manage_vocabulary/components/search_form.html' with form=searchForm %}
+  {% if letters|length > 3 %}
+    <div class="mb-3">
     {% for letter in letters %}
-    <a
-      class="fw-bold fs-5 my-4 text-decoration-none letter-link"
-      href="#{{letter}}"
-      >{{letter}}</a
-    >
-    {% if forloop.last == False %} | {% endif %} {% endfor %}
-  </div>
+      <a
+        class="fw-bold fs-5 my-4 text-decoration-none letter-link"
+        href="#{{letter}}"
+        ><span class="badge rounded-circle bg-info ms-1">{{letter}}</span></a
+      >
+      {% endfor %}
+    </div>
   {% endif%} {% for letter, words in sored_word_dict %}
-    {% if message == '' %}
       <h4 id="{{letter}}" class="my-1 text-primary">Letter: {{letter}}</h4>
-    {% endif %}
   {% for word in words %}
   <div class="mt-1">
-    <a class="text-body" href="{% url 'vocabulary_detail' word.id %}">
+    <a class="text-body text-decoration-none" href="{% url 'vocabulary_detail' word.id %}">
       {{word.name|replacetoSpace }}</a
     >
   </div>

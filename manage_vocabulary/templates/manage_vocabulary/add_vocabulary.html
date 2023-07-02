@@ -1,6 +1,7 @@
 {% extends "manage_vocabulary/layout.html" %} {% block body %}
 <div class="container mt-6 mb-md-4">
-  {% include 'manage_vocabulary/breadcrumb.html' with breadcrumb_name='Add new vocabulary' %} {% if message and id %}
+  {% include 'manage_vocabulary/components/breadcrumb.html' with breadcrumb_name='Add new vocabulary' %}
+  {% if message and id %}
   <div class="alert alert-danger" role="alert">
     {{message}},
     <a class="fw-bold" href="{% url 'vocabulary_detail' id %}">click here</a>
@@ -26,13 +27,18 @@
           ></button>
 
           <div class="col-md-2 mb-3">
-            <label class="form-label" for="{{form_entries.part_of_speech.id_for_lable}}"
+            <label
+              class="form-label"
+              for="{{form_entries.part_of_speech.id_for_lable}}"
               >{{form_entries.part_of_speech.label}}</label
             >
             {{form_entries.part_of_speech}}
           </div>
           <div class="col-md-7">
-            <label class="form-label" for="{{form_entries.definition.id_for_label}}">
+            <label
+              class="form-label"
+              for="{{form_entries.definition.id_for_label}}"
+            >
               {{form_entries.definition.label}}</label
             >
             {{form_entries.definition}}

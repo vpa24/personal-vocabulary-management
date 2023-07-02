@@ -1,20 +1,23 @@
 {% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
 <div class="container mt-5 mb-md-4 py-5">
-  {% load custom_filters %}
-  {% include 'manage_vocabulary/breadcrumb.html' with breadcrumb_name=word.name|title %}
+  {% load custom_filters %} {% include
+  'manage_vocabulary/components/breadcrumb.html' with
+  breadcrumb_name=word.name|title %}
   <div class="list-group">
     <div class="list-group-item py-3">
       <div class="end-0 top-0 pt-3 pe-3 position-absolute">
-        <a href="{% url 'edit_vocabulary' title=word.name|slugify vid=word.id %}"><button
-          class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
-          type="button"
-          data-bs-toggle="tooltip"
-          data-bs-placement="left"
-          aria-label="Edit"
-          data-bs-original-title="Edit"
-        >
-          <i class="fi-edit"></i>
-        </button></a>
+        <a
+          href="{% url 'edit_vocabulary' title=word.name|slugify vid=word.id %}"
+          ><button
+            class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
+            type="button"
+            data-bs-toggle="tooltip"
+            data-bs-placement="left"
+            aria-label="Edit"
+            data-bs-original-title="Edit"
+          >
+            <i class="fi-edit"></i></button
+        ></a>
       </div>
       <div class="d-flex flex-wrap w-100 justify-content-between">
         <h5 class="text-primary">{{ word.name|replacetoSpace|title }}</h5>

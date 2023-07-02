@@ -10,4 +10,5 @@ urlpatterns = [
     path("dictionary/<int:vid>", views.vocabulary_detail, name="vocabulary_detail"),
     path("dictionary/<slug:title>-<int:vid>/edit",
          views.edit_vocabulary, name="edit_vocabulary"),
+    path("search", views.search, name="search"),
 ]
