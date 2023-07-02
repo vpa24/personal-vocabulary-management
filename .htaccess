@@ -1,4 +1,0 @@
-<VirtualHost \*:80>
-ServerName www.happydictionary.net
-Redirect permanent / https://happydictionary.net
-</VirtualHost>

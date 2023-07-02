@@ -10,6 +10,7 @@ class User(AbstractUser):
 
 class Word(models.Model):
     name = models.CharField(max_length=100)
+    added_date = models.DateTimeField(default=timezone.now)
     owners = models.ManyToManyField(User, blank=True, related_name="words")
 
 
