@@ -5,14 +5,17 @@ from django.contrib.auth.models import User
 
 
 class User(AbstractUser):
-    pass
-
+    time_zone = models.CharField(max_length=50, null=True)
 
 class Word(models.Model):
     name = models.CharField(max_length=100)
     added_date = models.DateTimeField(default=timezone.now)
     owners = models.ManyToManyField(User, blank=True, related_name="words")
 
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.added_date = timezone.now()
+        super(Word, self).save(*args, **kwargs)
 
 class WordEntry(models.Model):
     WORD_TYPES = [
