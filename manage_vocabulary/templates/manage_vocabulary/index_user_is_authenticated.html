@@ -1,10 +1,18 @@
 {% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
 {% load custom_filters %}
-<div class="container mt-5 mb-md-4 py-5">
-  <h2 class="mt-4">{{ user.username|title}}'s Dictionary</h2>
-  
+<div class="container mt-5 mb-md-4 py-5 mt-4">
+  <div class="d-flex flex-row mb-3">
+    <h2>{{ user.first_name|title}}'s Dictionary</h2>
+      <div class="d-md-none ms-2 d-sm-flex align-items-center">
+      <span class="badge bg-accent p-2 mb-2">
+        <i class="fi-plus opacity-80">
+        </i>
+          <a class="text-white text-decoration-none" href="{% url 'add_vocabulary' %}">Add new vocabulary</a>
+      </span>
+    </div>
+  </div>
   {% if total == 0 %} 
-      You don't have any vocabulary words yet. Let's start to add your first vocabulary word by clicking on the <span class="fw-bold">"Add new vocabulary"</span> in the menu.
+      You don't have any vocabulary words yet. Let's start to add your first vocabulary word by clicking on the <span class="fw-bold">"Add new vocabulary"</span>.
   {% endif %}
     
   {% if letters|length > 3 %}
