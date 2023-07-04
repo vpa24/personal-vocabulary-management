@@ -5,6 +5,8 @@ from django.urls import reverse
 from collections import defaultdict
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models.functions import ExtractYear, ExtractMonth
+from django.db.models import Count
 
 from .models import User, Word, WordEntry
 from django.contrib.auth.decorators import login_required
@@ -181,6 +183,25 @@ def edit_vocabulary(request, title, vid):
         'form_entries': form_entries
     })
 
+
+@login_required()
+def vocab_by_dates(request):
+    context = vocabulary_list_monthly(request)
+    return render(request, 'manage_vocabulary/vocab_by_dates.html', context)
+
+def vocabulary_list_monthly(request):
+    user_id = request.user.id
+    user = User.objects.get(pk=user_id)
+    vocabulary_words = Word.objects.filter(owners=user).order_by('added_date')
+    years = vocabulary_words.annotate(year=ExtractYear('added_date')).values('year').distinct().order_by('year')
+    months = vocabulary_words.annotate(month=ExtractMonth('added_date')).values('month', 'added_date__month').distinct().order_by('month').annotate(total_words=Count('id'))
+
+    context = {
+        'years': years,
+        'months': months,
+        'vocabulary_words': vocabulary_words,
+    }
+    return context
 
 def get_owners_by_vocabulary(name):
     words = Word.objects.filter(name=name)

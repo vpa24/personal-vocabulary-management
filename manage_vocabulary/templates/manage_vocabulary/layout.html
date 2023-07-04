@@ -106,7 +106,7 @@
                 >
               </li>
               {% if user.is_authenticated %}
-              <li class="nav-item dropdown">
+              <li class="nav-item">
                 <a
                   class="nav-link {% if request.path == add_vocabulary %} active {% endif %}"
                   href="{% url 'add_vocabulary' %}"
@@ -115,13 +115,17 @@
                   >Add new vocabulary</a
                 >
               </li>
-              {% comment %}
               <li class="nav-item">
-                <a class="nav-link" href="components/typography.html"
-                  >Vocabulary Quiz</a
+                {% url 'vocab_by_dates' as vocab_by_dates %}
+                <a
+                  class="nav-link {% if request.path == vocab_by_dates %} active {% endif %}"
+                  href="{% url 'vocab_by_dates' %}"
+                  role="button"
+                  aria-expanded="false"
+                  >{{request.path}} Add new vocabulary</a
                 >
               </li>
-              {% endcomment %} {% else %} {% comment %}
+              {% else %} {% comment %}
               <li class="nav-item">
                 <a class="nav-link" href="components/typography.html"
                   >Contact Me</a
