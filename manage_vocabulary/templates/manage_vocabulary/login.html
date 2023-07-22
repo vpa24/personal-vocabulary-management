@@ -2,6 +2,7 @@
 <section class="position-relative overflow-hidden py-5 mb-5">
   <div class="container py-5">
     <h2 class="h3 mb-4 mb-sm-5 text-primary">Hey there!<br />Welcome back.</h2>
+     <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
     {% if message %}
     <div class="w-md-50 w-sm-100 alert alert-danger" role="alert">{{ message }}</div>
     {% endif %}
