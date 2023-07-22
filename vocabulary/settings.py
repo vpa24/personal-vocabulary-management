@@ -143,3 +143,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
+
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'index' #The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
+
+# social app key settings
+SOCIAL_AUTH_FACEBOOK_KEY = '984308785934824'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'dec73d4a1fe3d6b974f81870170619bd'  # App Secret
