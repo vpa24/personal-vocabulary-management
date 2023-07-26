@@ -72,15 +72,6 @@ TEMPLATES = [
     },
 ]
 
-# Authentication for social media
-# Authentication for social media
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
 WSGI_APPLICATION = 'vocabulary.wsgi.application'
 
 # Database
@@ -90,14 +81,22 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'vocabulary',
-        'USER': 'admin',
-        'PASSWORD': 'aP4H7zvVwMmuXWElIg5frQII3iIbPxXN',
-        'HOST': 'mz62am.stackhero-network.com',
+        'USER': 'postgres',
+        'PASSWORD': '12345',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
 
 AUTH_USER_MODEL = 'manage_vocabulary.User'
+
+# Authentication for social media
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -131,7 +130,7 @@ USE_TZ = True
 
 LOGIN_URL = 'login'
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -144,10 +143,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
-
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'index' #The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index' #The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
