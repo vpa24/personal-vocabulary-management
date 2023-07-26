@@ -2,13 +2,13 @@
   "name": "finder",
   "version": "1.4.1",
   "description": "Finder - Directory & Listings Bootstrap Template",
-  "main": "index.html",
   "scripts": {
     "build": "gulp"
   },
   "author": "https://createx.studio/",
   "license": "ISC",
   "homepage": "https://finder.createx.studio",
+  "type": "module",
   "devDependencies": {
     "@babel/core": "^7.22.9",
     "@babel/preset-env": "^7.22.9",

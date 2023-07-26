@@ -21,7 +21,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   */
   var passwordVisibilityToggle = function () {
     var elements = document.querySelectorAll('.password-toggle');
-    var _loop = function _loop(i) {
+    var _loop = function _loop() {
       var passInput = elements[i].querySelector('.form-control'),
         passToggle = elements[i].querySelector('.password-toggle-btn');
       passToggle.addEventListener('click', function (e) {
@@ -34,7 +34,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }, false);
     };
     for (var i = 0; i < elements.length; i++) {
-      _loop(i);
+      _loop();
     }
   }();
 
@@ -229,7 +229,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
   var rangeSlider = function () {
     var rangeSliderWidget = document.querySelectorAll('.range-slider');
-    var _loop2 = function _loop2(i) {
+    var _loop2 = function _loop2() {
       var rangeSlider = rangeSliderWidget[i].querySelector('.range-slider-ui'),
         valueMinInput = rangeSliderWidget[i].querySelector('.range-slider-value-min'),
         valueMaxInput = rangeSliderWidget[i].querySelector('.range-slider-value-max');
@@ -285,7 +285,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }
     };
     for (var i = 0; i < rangeSliderWidget.length; i++) {
-      _loop2(i);
+      _loop2();
     }
   }();
 
@@ -295,7 +295,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
   var dropdownSelect = function () {
     var dropdownSelectList = document.querySelectorAll('[data-bs-toggle="select"]');
-    var _loop3 = function _loop3(i) {
+    var _loop3 = function _loop3() {
       var dropdownItems = dropdownSelectList[i].querySelectorAll('.dropdown-item'),
         dropdownToggleLabel = dropdownSelectList[i].querySelector('.dropdown-toggle-label'),
         hiddenInput = dropdownSelectList[i].querySelector('input[type="hidden"]');
@@ -311,7 +311,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }
     };
     for (var i = 0; i < dropdownSelectList.length; i++) {
-      _loop3(i);
+      _loop3();
     }
   }();
 
@@ -484,7 +484,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   var subscriptionForm = function () {
     var form = document.querySelectorAll('.subscription-form');
     if (form === null) return;
-    var _loop4 = function _loop4(i) {
+    var _loop4 = function _loop4() {
       var button = form[i].querySelector('button[type="submit"]'),
         buttonText = button.innerHTML,
         input = form[i].querySelector('.form-control'),
@@ -497,7 +497,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     };
     for (var i = 0; i < form.length; i++) {
-      _loop4(i);
+      _loop4();
     }
     var register = function register(form, button, input, buttonText, status) {
       button.innerHTML = 'Sending...';
@@ -562,7 +562,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     var _loop5 = function _loop5(i) {
       var mapOptions = mapList[i].dataset.mapOptions,
         mapOptionsExternal = mapList[i].dataset.mapOptionsJson,
-        map = void 0;
+        map;
 
       // Map options: Inline JSON data
       if (mapOptions && mapOptions !== '') {
@@ -742,7 +742,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   var bindedInputValue = function () {
     var bindedInput = document.querySelectorAll('[data-bs-binded-element]');
     if (bindedInput.length === 0) return;
-    var _loop6 = function _loop6(i) {
+    var _loop6 = function _loop6() {
       var bindedElement = document.querySelector(bindedInput[i].dataset.bsBindedElement),
         unsetValue = bindedInput[i].dataset.bsUnsetValue;
       if (bindedInput[i].tagName === 'SELECT') {
@@ -768,7 +768,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }
     };
     for (var i = 0; i < bindedInput.length; i++) {
-      _loop6(i);
+      _loop6();
     }
   }();
 
