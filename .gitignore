@@ -1,5 +1,6 @@
 .vscode/
 db.sqlite3
 manage_vocabulary/static/node_modules
+manage_vocabulary/static/manage_vocabulary/vendor
 vocabulary/settings.py
 __pycache__
