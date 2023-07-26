@@ -49,6 +49,12 @@
 .text-decoration-hover:hover{
   text-decoration: underline !important;
 }
+.divider::after, .divider::before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
 body {
   min-height: 100vh;
   display: flex;
