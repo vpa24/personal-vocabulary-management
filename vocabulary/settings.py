@@ -73,11 +73,11 @@ TEMPLATES = [
 ]
 
 # Authentication for social media
+# Authentication for social media
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.github.GithubOAuth2',
-
+    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -149,6 +149,13 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'index' #The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
 
-# social app key settings
-SOCIAL_AUTH_FACEBOOK_KEY = '984308785934824'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = 'dec73d4a1fe3d6b974f81870170619bd'  # App Secret
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index' #The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
+
+# social app custom settings
+SOCIAL_AUTH_FACEBOOK_KEY = '984308785934824'  # App Facebook ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'dec73d4a1fe3d6b974f81870170619bd'  # App Facebook Secret Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '648225543451-1ofis6lkqctcbgor5r5745fnbfk936a9.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SERECT = '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'
