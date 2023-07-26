@@ -13,22 +13,26 @@
       class="w-md-50 w-sm-100 mb-1 needs-validation"
       novalidate
     >
-    <p class="lead fw-normal mb-3 me-3">Sign in with:</p>
-    <a
-      href="{% url 'social:begin' 'facebook' %}"
-      class="btn btn-icon btn-light border btn-xs rounded-circle"
-    >
-      <i class="fi-facebook"></i>
-    </a>
-    <a
-      href="{% url 'social:begin' 'google-oauth2' %}"
-      class="btn btn-icon btn-light border btn-xs rounded-circle"
-    >
-      <i class="fi-google"></i>
-    </a>
-    <div class="divider d-flex align-items-center my-4">
-      <p class="text-center fw-bold mx-3 mb-0">Or</p>
-    </div>
+      <div
+        class="d-flex flex-row justify-content-center justify-content-lg-start"
+      >
+        <p class="mb-3 me-3">Sign in with:</p>
+        <a
+          href="{% url 'social:begin' 'facebook' %}"
+          class="btn btn-icon btn-translucent-primary rounded-circle mx-1"
+        >
+          <i class="fi-facebook"></i>
+        </a>
+        <a
+          href="{% url 'social:begin' 'google-oauth2' %}"
+          class="btn btn-icon btn-translucent-primary rounded-circle mx-1"
+        >
+          <i class="fi-google"></i>
+        </a>
+      </div>
+      <div class="divider d-flex align-items-center my-4">
+        <p class="text-center fw-bold mx-3 mb-0">Or</p>
+      </div>
       {% csrf_token %}
       <div class="mb-4 has-validate">
         <label class="form-label" for="{{form.username.label}}"
