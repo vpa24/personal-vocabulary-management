@@ -81,9 +81,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'vocabulary',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
-        'HOST': '127.0.0.1',
+        'USER': 'admin',
+        'PASSWORD': 'aP4H7zvVwMmuXWElIg5frQII3iIbPxXN',
+        'HOST': 'mz62am.stackhero-network.com',
         'PORT': '5432',
     }
 }
