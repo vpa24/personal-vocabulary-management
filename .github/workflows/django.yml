@@ -32,15 +32,13 @@ jobs:
     - name: Set DJANGO_SETTINGS_MODULE
       run: echo "DJANGO_SETTINGS_MODULE=vocabulary.settings" >> $GITHUB_ENV
     - name: Set SECRET_KEY as environment variable
-      run: echo "SECRET_KEY=${{env.SECRET_KEY}}" >> $GITHUB_ENV 
+      run: echo "SECRET_KEY=${{env.SECRET_KEY}}" >> .env 
     - name: Set DB_USER content as environment variable
-      run: echo "DB_USER=${{env.DB_USER}}" >> $GITHUB_ENV
+      run: echo "DB_USER=${{env.DB_USER}}" >> .env
     - name: Set DB_PASS content as environment variable
-      run: echo "DB_PASS=${{env.DB_PASS}}" >> $GITHUB_ENV
+      run: echo "DB_PASS=${{env.DB_PASS}}" >> .env
     - name: Set DB_HOST content as environment variable
-      run: echo "DB_HOST=${{env.DB_HOST}}" >> $GITHUB_ENV
-    - name: Set .env.master content as environment variable
-      run: echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+      run: echo "DB_HOST=${{env.DB_HOST}}" >> .env
     - name: Run Tests
       run: |
         python manage.py test
