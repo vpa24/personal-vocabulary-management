@@ -30,6 +30,8 @@ jobs:
         pip install -r requirements.txt
     - name: Set DJANGO_SETTINGS_MODULE
       run: echo "DJANGO_SETTINGS_MODULE=vocabulary.settings" >> $GITHUB_ENV
+    - name: Get SECERT_KEY
+      run: echo "${{SECERT_KEY=secrets.SECERT_KEY}}" >> $GITHUB_ENV 
     - name: Set DB_USER content as environment variable
       run: echo "${{ vars.DB_USER }}" >> .env.master
     - name: Set DB_PASS content as environment variable
