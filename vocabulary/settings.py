@@ -99,9 +99,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'vocabulary',
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASS'),
-        'HOST': os.environ.get('DB_HOST'),
+        'USER': 'admin',
+        'PASSWORD': os.environ.get('STACKHERO_POSTGRESQL_ADMIN_PASSWORD'),
+        'HOST': os.environ.get('STACKHERO_POSTGRESQL_HOST'),
         'PORT': '5432',
     }
 }
