@@ -144,8 +144,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-LOGIN_URL = 'login'
-
 SECURE_SSL_REDIRECT = False
 
 # Static files (CSS, JavaScript, Images)
@@ -159,7 +157,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
-SOCIALACCOUNT_LOGIN_ON_GET = True
 
 LOGIN_URL = 'login'
 # The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
