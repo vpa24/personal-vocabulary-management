@@ -1,7 +1,9 @@
 {% extends "manage_vocabulary/layout.html" %} {% block body %}
 <section class="position-relative overflow-hidden py-5 mb-5">
   <div class="container py-5">
-    <h2 class="h3 mb-4 mb-sm-5 text-primary text-center">Hello friend! Welcome back :D</h2>
+    <h2 class="h3 mb-4 mb-sm-5 text-primary text-center">
+      Hello friend! Welcome back :D
+    </h2>
     {% if message %}
     <div class="w-md-50 w-sm-100 alert alert-danger" role="alert">
       {{ message }}
@@ -13,16 +15,17 @@
       class="w-md-50 w-sm-100 mb-1 needs-validation mx-auto"
       novalidate
     >
+      {% load socialaccount %}
       <div class="d-flex flex-row justify-content-center">
         <p class="mb-3 me-3">Sign in with:</p>
         <a
-          href="{% url 'social:begin' 'facebook' %}"
           class="btn btn-icon btn-translucent-primary rounded-circle mx-1"
+          href="{% provider_login_url 'facebook' %}"
         >
           <i class="fi-facebook"></i>
         </a>
         <a
-          href="{% url 'social:begin' 'google-oauth2' %}"
+          href="{% provider_login_url 'google' %}?next=/"
           class="btn btn-icon btn-translucent-primary rounded-circle mx-1"
         >
           <i class="fi-google"></i>
