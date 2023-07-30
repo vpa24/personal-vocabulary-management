@@ -16,12 +16,11 @@
       novalidate
     >
       {% load socialaccount %}
-      {% providers_media_js %}
       <div class="d-flex flex-row justify-content-center">
         <p class="mb-3 me-3">Sign in with:</p>
         <a
           class="btn btn-icon btn-translucent-primary rounded-circle mx-1"
-          href="{% provider_login_url 'facebook' method='js_sdk' %}"
+          href="{% provider_login_url 'facebook' %}"
         >
           <i class="fi-facebook"></i>
         </a>
