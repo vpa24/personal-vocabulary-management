@@ -10,7 +10,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 import django_heroku
-import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4l0_kow5=-&y&xda!jcrz!i9l&8j_!^tko0au+tj83%a-jlr&('
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
+SITE_ID = 2
 
 INSTALLED_APPS = [
     'manage_vocabulary',
@@ -38,8 +41,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'social_django'
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email"
+        ],
+        "AUTH_PARAMS": {"access_type": "online"}
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,9 +99,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'vocabulary',
-        'USER': 'admin',
-        'PASSWORD': 'aP4H7zvVwMmuXWElIg5frQII3iIbPxXN',
-        'HOST': 'mz62am.stackhero-network.com',
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
         'PORT': '5432',
     }
 }
@@ -92,10 +110,8 @@ AUTH_USER_MODEL = 'manage_vocabulary.User'
 
 # Authentication for social media
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 # Password validation
@@ -143,14 +159,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'index' #The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
+# The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = 'logout'
-LOGOUT_REDIRECT_URL = 'login'
-
-# social app custom settings
-SOCIAL_AUTH_FACEBOOK_KEY = '984308785934824'  # App Facebook ID
-SOCIAL_AUTH_FACEBOOK_SECRET = 'dec73d4a1fe3d6b974f81870170619bd'  # App Facebook Secret Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '648225543451-1ofis6lkqctcbgor5r5745fnbfk936a9.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SERECT = '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'
+LOGOUT_REDIRECT_URL = '/'

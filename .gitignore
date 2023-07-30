@@ -11,3 +11,4 @@ manage_vocabulary/static/manage_vocabulary/vendor/*
 
 vocabulary/settings.py
 __pycache__
+.env
