@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
+SITE_ID = 2
 
 INSTALLED_APPS = [
     'manage_vocabulary',
@@ -38,8 +39,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'social_django'
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email"
+        ],
+        "AUTH_PARAMS": {"access_type": "online"}
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -92,10 +108,8 @@ AUTH_USER_MODEL = 'manage_vocabulary.User'
 
 # Authentication for social media
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 # Password validation
@@ -128,8 +142,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-LOGIN_URL = 'login'
-
 SECURE_SSL_REDIRECT = False
 
 # Static files (CSS, JavaScript, Images)
@@ -144,13 +156,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'index' #The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
-LOGOUT_URL = 'logout'
-LOGOUT_REDIRECT_URL = 'login'
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
-# social app custom settings
-SOCIAL_AUTH_FACEBOOK_KEY = '984308785934824'  # App Facebook ID
-SOCIAL_AUTH_FACEBOOK_SECRET = 'dec73d4a1fe3d6b974f81870170619bd'  # App Facebook Secret Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '648225543451-1ofis6lkqctcbgor5r5745fnbfk936a9.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SERECT = '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'
+LOGIN_URL = 'login'
+# The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = '/'
