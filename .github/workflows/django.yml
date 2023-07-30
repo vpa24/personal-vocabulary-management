@@ -5,13 +5,14 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-env:
-  # Setting an environment variable with the value of a configuration variable
-  env_var: ${{ vars.ENV_CONTEXT_VAR }}
-  
+
 jobs:
   build:
-
+    env:
+      SECRET_KEY: django-insecure-4l0_kow5=-&y&xda!jcrz!i9l&8j_!^tko0au+tj83%a-jlr&(
+      DB_USER: admin
+      DB_PASS: aP4H7zvVwMmuXWElIg5frQII3iIbPxXN
+      DB_HOST: mz62am.stackhero-network.com
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -30,14 +31,14 @@ jobs:
         pip install -r requirements.txt
     - name: Set DJANGO_SETTINGS_MODULE
       run: echo "DJANGO_SETTINGS_MODULE=vocabulary.settings" >> $GITHUB_ENV
-    - name: Get SECRET_KEY
-      run: echo "SECRET_KEY={{secrets.SECRET_KEY}}" >> $GITHUB_ENV 
+    - name: Set SECRET_KEY as environment variable
+      run: echo "SECRET_KEY=${{env.SECRET_KEY}}" >> $GITHUB_ENV 
     - name: Set DB_USER content as environment variable
-      run: echo "${{ vars.DB_USER }}" >> .env.master
+      run: echo "DB_USER=${{env.DB_USER}}" >> $GITHUB_ENV
     - name: Set DB_PASS content as environment variable
-      run: echo "${{ vars.DB_PASS }}" >> .env.master
+      run: echo "DB_PASS=${{env.DB_PASS}}" >> $GITHUB_ENV
     - name: Set DB_HOST content as environment variable
-      run: echo "${{ vars.DB_HOST }}" >> .env.master
+      run: echo "DB_HOST=${{env.DB_HOST}}" >> $GITHUB_ENV
     - name: Run Tests
       run: |
         python manage.py test
