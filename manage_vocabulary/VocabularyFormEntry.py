@@ -8,8 +8,8 @@ class VocabularyFormEntry(forms.Form):
         fields = ['word_type', 'definition', 'example']
 
     example = forms.CharField(
-        label="Example:",
-        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '2', "placeholder": "It would be geart when you can create your own example sentences because it will help you remember vocabulary longer."}))
+        label="Your Own Example:",
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '2'}))
 
     part_of_speech = forms.ChoiceField(
         label="Part of speech:",
@@ -18,8 +18,8 @@ class VocabularyFormEntry(forms.Form):
     )
 
     definition = forms.CharField(
-        label="Definition:",
+        label="Your Own Definition:",
         widget=forms.TextInput(
-            attrs={'class': "form-control", 'autocompelte': 'off', "placeholder": "Please Enter Description"}),
+            attrs={'class': "form-control", 'autocompelte': 'off'}),
         required=True
     )
