@@ -1,9 +1,7 @@
 {% extends "manage_vocabulary/layout.html" %} {% block body %}
 <section class="position-relative overflow-hidden py-5 mb-5">
   <div class="container py-5">
-    <h2 class="h3 mb-4 mb-sm-5 text-primary text-center">
-      Hello friend! Welcome back :D
-    </h2>
+    <h2 class="h3 mb-2 text-primary text-center">Login</h2>
     {% if message %}
     <div class="w-md-50 w-sm-100 alert alert-danger" role="alert">
       {{ message }}
@@ -15,26 +13,22 @@
       class="w-md-50 w-sm-100 mb-1 needs-validation mx-auto"
       novalidate
     >
-      {% load socialaccount %}
-      <div class="d-flex flex-row justify-content-center">
-        <p class="mb-3 me-3">Sign in with:</p>
-        {% comment %} <a
-          class="btn btn-icon btn-translucent-primary rounded-circle mx-1"
-          href="{% provider_login_url 'facebook' %}"
-        >
-          <i class="fi-facebook"></i>
-        </a> {% endcomment %}
-        <a
-          href="{% provider_login_url 'google' %}?next=/"
-          class="btn btn-icon btn-translucent-primary rounded-circle mx-1"
-        >
-          <i class="fi-google"></i>
-        </a>
+      <div class="text-center mb-5">
+        Welcome back. Login to your account bellow.
       </div>
-      <div class="divider d-flex align-items-center my-4">
-        <p class="text-center fw-bold mx-3 mb-0">Or</p>
+      {% load socialaccount %} {% csrf_token %}
+      <div class="text-center">
+        <a href="{% provider_login_url 'google' %}?next=/"
+            class="btn btn-lg btn-block btn-primary text-uppercase"
+            style="background-color: #dd4b39"
+          >
+            <i class="fi-google me-2 mt-0"></i> Sign in with google
+         </a
+        >
       </div>
-      {% csrf_token %}
+        <div class="divider d-flex align-items-center my-4">
+          <p class="text-center fw-bold mx-3 mb-0">Or</p>
+        </div>
       <div class="mb-4 has-validate">
         <label class="form-label" for="{{form.username.label}}"
           >{{form.username.label}} <span class="text-danger">*</span></label
@@ -49,7 +43,9 @@
         {{ form.password }}
         <div class="invalid-feedback">This field is required.</div>
       </div>
-      <input class="btn btn-primary mb-2" type="submit" value="Login" />
+      <div class="text-center">
+        <input class="btn btn-primary mb-2" type="submit" value="Login" />
+      </div>
       <div class="small fw-bold mt-2 pt-1 mb-0">
         Don't have an account? <a href="{% url 'register' %}">Register</a>
       </div>
