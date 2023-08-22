@@ -93,7 +93,8 @@ def search(request):
     form = SearchForm()
     voca_name = ""
     if request.method == 'GET':
-        form = SearchForm(request.GET)  # Bind form data to the submitted GET data
+        # Bind form data to the submitted GET data
+        form = SearchForm(request.GET)
         if form.is_valid():
             voca_name = request.GET.get('search')
     return search_vocabulary_list(request, voca_name, form)
@@ -189,12 +190,15 @@ def vocab_by_dates(request):
     context = vocabulary_list_monthly(request)
     return render(request, 'manage_vocabulary/vocab_by_dates.html', context)
 
+
 def vocabulary_list_monthly(request):
     user_id = request.user.id
     user = User.objects.get(pk=user_id)
     vocabulary_words = Word.objects.filter(owners=user).order_by('added_date')
-    years = vocabulary_words.annotate(year=ExtractYear('added_date')).values('year').distinct().order_by('year')
-    months = vocabulary_words.annotate(month=ExtractMonth('added_date')).values('month', 'added_date__month').distinct().order_by('month').annotate(total_words=Count('id'))
+    years = vocabulary_words.annotate(year=ExtractYear(
+        'added_date')).values('year').distinct().order_by('year')
+    months = vocabulary_words.annotate(month=ExtractMonth('added_date')).values(
+        'month', 'added_date__month').distinct().order_by('-month').annotate(total_words=Count('id'))
 
     context = {
         'years': years,
@@ -202,6 +206,7 @@ def vocabulary_list_monthly(request):
         'vocabulary_words': vocabulary_words,
     }
     return context
+
 
 def get_owners_by_vocabulary(name):
     words = Word.objects.filter(name=name)
