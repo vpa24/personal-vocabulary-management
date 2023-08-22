@@ -33,7 +33,7 @@
     <h4 id="{{letter}}" class="my-1 text-primary">Letter: {{letter}}</h4>
     {% for word in words %}
     <div class="mt-1">
-      <a class="text-body text-decoration-none" href="{% url 'vocabulary_detail' word.id %}">
+      <a class="text-body link-body" href="{% url 'vocabulary_detail' word.id %}">
       {{word.name|replacetoSpace }}</a>
     </div>
     {% endfor%}
