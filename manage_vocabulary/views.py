@@ -52,7 +52,7 @@ def register(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('index')
         else:
             for field, errors in form.errors.items():
