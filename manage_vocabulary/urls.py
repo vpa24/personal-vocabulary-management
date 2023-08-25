@@ -11,5 +11,5 @@ urlpatterns = [
     path("dictionary/<slug:title>-<int:vid>/edit",
          views.edit_vocabulary, name="edit_vocabulary"),
     path("search", views.search, name="search"),
-    path("vocab-by-dates", views.vocab_by_dates, name="vocab_by_dates"),
+    path("history", views.vocab_by_dates, name="vocab_by_dates"),
 ]
