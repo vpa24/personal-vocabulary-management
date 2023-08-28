@@ -7,12 +7,12 @@ from django.contrib.auth.forms import UserCreationForm
 class SignupForm(UserCreationForm):
     first_name = forms.CharField(
         max_length=50,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter First Name', 'autofocus': True}),
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter First Name', 'id':'firstNameField', 'autofocus': True}),
         required=True
     )
     last_name = forms.CharField(
         max_length=50,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Last Name'}),
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Last Name', 'id':'lastField'}),
         required=True
     )
     username = forms.CharField(

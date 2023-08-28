@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 import django_heroku
 from dotenv import load_dotenv
+from django.contrib import messages
 
 load_dotenv()
 
@@ -181,6 +182,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
 
 LOGIN_URL = 'login'
 # The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.

@@ -53,7 +53,6 @@ usernameField.addEventListener("keyup", (e) => {
           userFeedBackAreafeedBackArea.innerHTML = `<p>${data.username_error}</p>`;
           submitBtn.disabled = true;
         } else {
-          usernameField.classList.add("is-valid");
           submitBtn.removeAttribute("disabled");
         }
       });
