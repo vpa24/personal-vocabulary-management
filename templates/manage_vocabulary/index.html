@@ -1,0 +1,106 @@
+{% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
+<section class="position-relative overflow-hidden py-5 mb-5">
+  <div
+    class="d-none d-xl-block position-absolute top-0 start-0 h-100 bg-secondary"
+    style="width: 67%; border-bottom-right-radius: 0.75rem"
+  ></div>
+  <div
+    class="d-xl-none position-absolute top-0 start-0 w-100 h-100 bg-secondary"
+  ></div>
+  <div class="container content-overlay mt-4 mb-2 mt-lg-5 mb-lg-4 pt-5 pb-md-2">
+    <h2 class="lh-lg">
+      <span class="text-primary">Welcome to Happy Dictionary.</span><br />
+      You can create and manage your own dictionary
+    </h2>
+    <div class="row">
+      <div class="d-none d-md-block col-md-2 pt-4 mt-4">
+        <img
+          src="{% static 'manage_vocabulary/img/intro/swirly-arrow.svg' %}"
+          alt="Arrow"
+          width="120"
+        />
+      </div>
+      <div class="col-md-10 d-md-flex mt-md-n4">
+        <!-- Easy-->
+        <div
+          class="d-block hover-img-scale position-relative zindex-5 mt-md-5 mx-auto me-md-n5 mb-4 mb-md-0"
+          style="max-width: 633px"
+        >
+          <div class="pt-md-5 mt-4 me-md-n5">
+            <h2 class="h4 mb-2 pb-1 ms-md-3">
+              <span
+                class="nav-link stretched-link d-flex align-items-center justify-content-center justify-content-md-start"
+                href="real-estate-home-v1.html"
+                ><i class="fi-flame text-primary me-2 pe-1"></i
+                ><span>Easy to add new vocabulary</span></span
+              >
+            </h2>
+            <div class="position-relative zindex-0">
+              <img
+                class="position-relative zindex-5 rounded"
+                src="{% static 'manage_vocabulary/img/add_new_vocabulary.png' %}"
+                alt="Easily"
+              />
+              <div
+                class="d-none d-md-block position-absolute zindex-1"
+                style="
+                  top: 15px;
+                  left: 20px;
+                  width: calc(100% - 40px);
+                  height: calc(100% - 50px);
+                  box-shadow: 33px 26px 85px rgba(0, 0, 0, 0.14);
+                "
+              ></div>
+            </div>
+          </div>
+        </div>
+        <!-- Time-Saving -->
+        <div
+          class="d-block hover-img-scale position-relative mt-md-n5 mx-auto me-md-n3"
+          style="max-width: 550px"
+        >
+          <h2 class="h4 ms-md-3">
+            <span
+              class="nav-link stretched-link d-flex align-items-center justify-content-center justify-content-md-start"
+              ><i class="fi-like text-primary me-2 pe-1"></i
+              ><span>Easy to organize</span></span
+            >
+          </h2>
+          <img
+            class="rounded"
+            src="{% static 'manage_vocabulary/img/esay-to-manage.png' %}"
+            alt="Easy-to-manage"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="container mb-5 pb-2 pb-lg-4">
+  <div class="row align-items-center">
+    <div class="col-md-5">
+      <img
+        class="d-block mx-md-0 mx-auto mb-md-0 mb-4 rounded"
+        src="{% static 'manage_vocabulary/img/intro/IMG_2115.jpg' %}"
+        alt="Illustration"
+        width="416"
+      />
+    </div>
+    <div class="col-xxl-6 col-md-7 text-md-start text-center">
+      {% comment %}
+      <h2 class="text-primary">{{ 'I forgot what I have studied'|title }}</h2>
+      {% endcomment %}
+      <p class="pb-3 fs-lg">
+        As an English learner, I have taken a lot of time and effort into
+        learning and remembering vocabulary. But a long time later, I feel
+        frustrated when I forget some vocabulary words that I have previously
+        learned. More than that, I also feel overwhelmed by my vocabulary notes
+        and struggle to keep them organized. That's why I made this website
+        offers a convenient solution for everyone to save time by eliminating
+        the need for paper notes. With this website, you can easily to create
+        and manage the vocabulary that you have learned.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

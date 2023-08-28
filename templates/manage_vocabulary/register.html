@@ -1,0 +1,57 @@
+{% extends "manage_vocabulary/layout.html" %} {% block body %}
+<section class="position-relative overflow-hidden py-5 mb-5">
+  <div class="container py-5">
+    <section
+      class="card card-body border-0 shadow-sm p-4 mb-4 w-lg-50"
+      id="basic-info"
+    >
+      <h2 class="h4 mb-4 text-primary">
+        <i class="fi-plus-circle text-primary fs-5 mt-n1 me-2"></i>Register
+      </h2>
+      {% if message %}
+      <div class="alert alert-danger" role="alert">{{ message }}</div>
+      {% endif %}
+      <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label" for="{{form.first_name.label}}"
+            >{{form.first_name.label}} <span class="text-danger">*</span></label
+          >
+          {{form.first_name}}
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="{{form.last_name.label}}"
+            >{{form.last_name.label}} <span class="text-danger">*</span></label
+          >
+          {{form.last_name}}
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="{{form.email.label}}"
+            >{{form.email.label}} <span class="text-danger">*</span></label
+          >
+          {{form.email}}
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="{{form.username.label}}"
+            >{{form.username.label}} <span class="text-danger">*</span></label
+          >
+          {{form.username}}
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="{{form.password1.label}}"
+            >{{form.password1.label}} <span class="text-danger">*</span></label
+          >
+          {{form.password1}}
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="{{form.password2.label}}"
+            >{{form.password2.label}} <span class="text-danger">*</span></label
+          >
+          {{form.password2}}
+        </div>
+        <input class="btn btn-primary" type="submit" value="Register" />
+      </form>
+    </section>
+  </div>
+</section>
+{% endblock %}
