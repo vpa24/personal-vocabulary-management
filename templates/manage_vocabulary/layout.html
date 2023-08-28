@@ -61,12 +61,16 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           {% if user.is_authenticated %}
-          <a
-            class="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
-            href="{% url 'logout' %}"
-            ><i class="fi-logout me-2"></i>Logout</a
+          <form
+            action="{% url  'logout' %}"
+            method="POST"
+            class="ms-2 order-lg-3"
           >
-
+            {% csrf_token %}
+            <button class="btn btn-primary btn-sm rounded-pill" type="submit">
+              <i class="fi-logout me-2"></i>Logout
+            </button>
+          </form>
           {% else %}
           <a
             class="btn btn-sm text-primary d-none d-md-block order-md-3"
@@ -81,7 +85,7 @@
           >
           <a
             class="btn btn-sm text-success me-1 d-md-none d-sm-block order-md-3 p-0"
-            href="{% url 'authentication/login' %}"
+            href="{% url 'login' %}"
             rel="noopener"
             >Log In</a
           >

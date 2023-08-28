@@ -9,6 +9,16 @@ manage_vocabulary/static/manage_vocabulary/vendor/*
 !/manage_vocabulary/static/manage_vocabulary/vendor/smooth-scroll/
 !manage_vocabulary/static/manage_vocabulary/vendor/bootstrap/
 
+
+vocabulary/static/node_modules
+# Ignore the entire manage_vocabulary/static/manage_vocabulary/vendor directory
+vocabulary/static/manage_vocabulary/vendor/*
+
+# Unignore the directory itself
+!vocabulary/static/manage_vocabulary/vendor/simplebar/
+!/vocabulary/static/manage_vocabulary/vendor/smooth-scroll/
+!vocabulary/static/manage_vocabulary/vendor/bootstrap/
+
 vocabulary/settings.py
 __pycache__
 .env

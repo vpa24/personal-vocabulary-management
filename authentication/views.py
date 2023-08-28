@@ -18,6 +18,7 @@ from django.template.loader import render_to_string
 from .utils import account_activation_token
 from django.urls import reverse
 from django.contrib import auth
+from .forms import SignupForm, LoginForm
 
 # Create your views here.
 
@@ -124,9 +125,11 @@ class VerificationView(View):
 
 class LoginView(View):
     def get(self, request):
-        return render(request, 'authentication/login.html')
+        form = LoginForm()
+        return render(request, 'authentication/login.html', context={'form': form, })
 
     def post(self, request):
+        form = LoginForm()
         username = request.POST['username']
         password = request.POST['password']
 
@@ -138,21 +141,21 @@ class LoginView(View):
                     auth.login(request, user)
                     messages.success(request, 'Welcome, ' +
                                      user.username+' you are now logged in')
-                    return redirect('expenses')
+                    return redirect('manage_vocabulary:index')
                 messages.error(
                     request, 'Account is not active,please check your email')
                 return render(request, 'authentication/login.html')
             messages.error(
                 request, 'Invalid credentials,try again')
-            return render(request, 'authentication/login.html')
+            return render(request, 'authentication/login.html', context={'form': form})
 
         messages.error(
             request, 'Please fill all fields')
-        return render(request, 'authentication/login.html')
+        return render(request, 'authentication/login.html', context={'form': form})
 
 
 class LogoutView(View):
     def post(self, request):
         auth.logout(request)
         messages.success(request, 'You have been logged out')
-        return redirect('login')
+        return redirect('authentication:index')
