@@ -1,8 +1,7 @@
-{% extends "../layout.html" %} 
-{% load static %}
-{% block body %}
+{% extends "../layout.html" %} {% load static %} {% block body %}
 <section class="position-relative overflow-hidden py-5 mb-5">
   <div class="container py-5">
+    {% include 'components/_messages.html' %}
     <section
       class="card card-body border-0 shadow-sm p-4 mb-4 w-lg-50"
       id="basic-info"
@@ -20,38 +19,62 @@
             >{{form.first_name.label}} <span class="text-danger">*</span></label
           >
           {{form.first_name}}
+          <div
+            class="invalid_feedback invalid-feedback"
+            style="display: none"
+          ></div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="{{form.last_name.label}}"
             >{{form.last_name.label}} <span class="text-danger">*</span></label
           >
           {{form.last_name}}
+          <div
+            class="invalid_feedback invalid-feedback"
+            style="display: none"
+          ></div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="{{form.email.label}}"
             >{{form.email.label}} <span class="text-danger">*</span></label
           >
           {{form.email}}
+          <div
+            class="invalid_feedback invalid-feedback"
+            style="display: none"
+          ></div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="{{form.username.label}}"
             >{{form.username.label}} <span class="text-danger">*</span></label
           >
           {{form.username}}
+          <div
+            class="invalid_feedback invalid-feedback username_feedback"
+            style="display: none"
+          ></div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="{{form.password1.label}}"
             >{{form.password1.label}} <span class="text-danger">*</span></label
           >
           {{form.password1}}
+          <div
+            class="invalid_feedback invalid-feedback"
+            style="display: none"
+          ></div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="{{form.password2.label}}"
             >{{form.password2.label}} <span class="text-danger">*</span></label
           >
           {{form.password2}}
+          <div
+            class="invalid_feedback invalid-feedback"
+            style="display: none"
+          ></div>
         </div>
-        <input class="btn btn-primary" type="submit" value="Register" />
+        <input class="btn btn-primary submit-btn" type="submit" value="Register" />
       </form>
     </section>
   </div>

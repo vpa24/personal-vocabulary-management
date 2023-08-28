@@ -17,16 +17,16 @@ class SignupForm(UserCreationForm):
     )
     username = forms.CharField(
         max_length=50,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Username'}),
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Username', 'id':'usernameField'}),
         required=True
     )
     email = forms.EmailField(
-        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter Email'}),
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter Email', 'id': 'emailField'}),
         required=True
     )
     password1 = forms.CharField(
         label="Password",
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter Password'}),
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter Password', 'id': 'passwordField'}),
         required=True,
         strip=False,
     )

@@ -3,9 +3,6 @@ from django.views import View
 import json
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-import json
-from django.http import JsonResponse
-from django.contrib.auth.models import User
 from validate_email import validate_email
 from django.contrib import messages
 from django.core.mail import EmailMessage
@@ -19,8 +16,7 @@ from .utils import account_activation_token
 from django.urls import reverse
 from django.contrib import auth
 from .forms import SignupForm, LoginForm
-
-# Create your views here.
+from manage_vocabulary.models import User
 
 
 class EmailValidationView(View):
@@ -38,18 +34,22 @@ class UsernameValidationView(View):
     def post(self, request):
         data = json.loads(request.body)
         username = data['username']
+        if len(username) < 4:
+            return JsonResponse({'username_error': 'username must more than 4 characters'})
         if not str(username).isalnum():
-            return JsonResponse({'username_error': 'username should only contain alphanumeric characters'}, status=400)
+            return JsonResponse({'username_error': 'username should only contain alphanumeric characters'})
         if User.objects.filter(username=username).exists():
-            return JsonResponse({'username_error': 'sorry username in use,choose another one '}, status=409)
+            return JsonResponse({'username_error': 'sorry username in use, choose another one'})
         return JsonResponse({'username_valid': True})
 
 
 class RegistrationView(View):
     def get(self, request):
-        return render(request, 'authentication/register.html')
+        form = SignupForm(request.POST)
+        return render(request, 'authentication/register.html', {'form': form, 'include_register_script':  True})
 
     def post(self, request):
+        form = SignupForm(request.POST)
         # GET USER DATA
         # VALIDATE
         # create a user account
@@ -59,7 +59,9 @@ class RegistrationView(View):
         password = request.POST['password']
 
         context = {
-            'fieldValues': request.POST
+            'form': form,
+            'fieldValues': request.POST,
+            'include_register_script':  True
         }
 
         if not User.objects.filter(username=username).exists():
@@ -85,7 +87,7 @@ class RegistrationView(View):
 
                 email_subject = 'Activate your account'
 
-                activate_url = 'http://'+current_site.domain+link
+                activate_url = 'https://'+current_site.domain+link
 
                 email = EmailMessage(
                     email_subject,
@@ -95,9 +97,9 @@ class RegistrationView(View):
                 )
                 email.send(fail_silently=False)
                 messages.success(request, 'Account successfully created')
-                return render(request, 'authentication/register.html')
+                return render(request, 'authentication/register.html', {'form': form, 'include_register_script':  True})
 
-        return render(request, 'authentication/register.html')
+        return render(request, 'authentication/register.html', {'form': form, 'include_register_script':  True})
 
 
 class VerificationView(View):
@@ -126,7 +128,7 @@ class VerificationView(View):
 class LoginView(View):
     def get(self, request):
         form = LoginForm()
-        return render(request, 'authentication/login.html', context={'form': form, })
+        return render(request, 'authentication/login.html', context={'form': form, 'include_register_script':  True})
 
     def post(self, request):
         form = LoginForm()
@@ -139,23 +141,21 @@ class LoginView(View):
             if user:
                 if user.is_active:
                     auth.login(request, user)
-                    messages.success(request, 'Welcome, ' +
-                                     user.username+' you are now logged in')
-                    return redirect('manage_vocabulary:index')
+                    return redirect('index')
                 messages.error(
-                    request, 'Account is not active,please check your email')
+                    request, 'Account is not active, please check your email')
                 return render(request, 'authentication/login.html')
             messages.error(
-                request, 'Invalid credentials,try again')
-            return render(request, 'authentication/login.html', context={'form': form})
+                request, 'Invalid credentials, try again')
+            return render(request, 'authentication/login.html', context={'form': form, 'include_register_script':  True})
 
         messages.error(
             request, 'Please fill all fields')
-        return render(request, 'authentication/login.html', context={'form': form})
+        return render(request, 'authentication/login.html', context={'form': form, 'include_register_script':  True})
 
 
 class LogoutView(View):
     def post(self, request):
         auth.logout(request)
         messages.success(request, 'You have been logged out')
-        return redirect('authentication:index')
+        return redirect('index')

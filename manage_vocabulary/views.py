@@ -25,28 +25,6 @@ def index(request):
         return render(request, 'manage_vocabulary/index.html')
 
 
-def login_view(request):
-    message = ''
-    form = LoginForm()
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user = authenticate(
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password'],
-            )
-            if user is not None:
-                login(request, user)
-                return redirect('index')
-        message = 'Invalid username and/or password.'
-    return render(request, 'manage_vocabulary/login.html', context={'form': form, 'message': message})
-
-
-def logout_view(request):
-    logout(request)
-    return HttpResponseRedirect(reverse("index"))
-
-
 def register(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)

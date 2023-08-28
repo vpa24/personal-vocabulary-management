@@ -172,5 +172,8 @@
     <script src="{% static 'manage_vocabulary/js/theme.min.js' %}"></script>
     <script src="{% static 'manage_vocabulary/js/add-new-definition.js' %}"></script>
     <script src="{% static 'manage_vocabulary/js/scroll.js' %}"></script>
+    {% if include_register_script %}
+    <script src="{% static 'manage_vocabulary/js/register.js' %}"></script>
+    {% endif %}
   </body>
 </html>
