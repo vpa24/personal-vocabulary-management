@@ -45,7 +45,7 @@ class SignupForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['password2'].error_messages = {
             'password_too_short': "This password is too short. It must contain at least 8 characters. ",
-            'password_common': "This password is too common. ",
+            'password_common': "This password is too common.",
             'password_numeric': "This password is entirely numeric."
         }
 

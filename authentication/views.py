@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.views import View
 import json
 from django.http import JsonResponse
-from django.contrib.auth.models import User
 from validate_email import validate_email
 from django.contrib import messages
 from django.core.mail import EmailMessage
@@ -50,57 +49,52 @@ class RegistrationView(View):
 
     def post(self, request):
         form = SignupForm(request.POST)
-        # GET USER DATA
-        # VALIDATE
-        # create a user account
-
         username = request.POST['username']
         email = request.POST['email']
-        password = request.POST['password']
+        password = request.POST['password1']
+        if form.is_valid():
+            user = User.objects.create_user(username=username, email=email)
+            user.set_password(password)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            email_body = {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            }
 
-        context = {
-            'form': form,
-            'fieldValues': request.POST,
-            'include_register_script':  True
-        }
+            link = reverse('activate', kwargs={
+                        'uidb64': email_body['uid'], 'token': email_body['token']})
 
-        if not User.objects.filter(username=username).exists():
-            if not User.objects.filter(email=email).exists():
-                if len(password) < 6:
-                    messages.error(request, 'Password too short')
-                    return render(request, 'authentication/register.html', context)
+            email_subject = 'Activate your account'
 
-                user = User.objects.create_user(username=username, email=email)
-                user.set_password(password)
-                user.is_active = False
-                user.save()
-                current_site = get_current_site(request)
-                email_body = {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': account_activation_token.make_token(user),
-                }
+            activate_url = 'http://'+current_site.domain+link
 
-                link = reverse('activate', kwargs={
-                               'uidb64': email_body['uid'], 'token': email_body['token']})
+            email = EmailMessage(
+                email_subject,
+                'Hi '+user.username + ', Please the link below to activate your account \n'+activate_url,
+                'noreply@semycolon.com',
+                [email],
+            )
+            email.send(fail_silently=False)
+            messages.success(request, 'Account successfully created')
+            return render(request, 'authentication/register.html', {'form': form, 'include_register_script':  True})
+        else:        
+            context = {
+                'form': form,
+                'fieldValues': request.POST,
+                'include_register_script':  True
+            }
 
-                email_subject = 'Activate your account'
-
-                activate_url = 'https://'+current_site.domain+link
-
-                email = EmailMessage(
-                    email_subject,
-                    'Hi '+user.username + ', Please the link below to activate your account \n'+activate_url,
-                    'noreply@semycolon.com',
-                    [email],
-                )
-                email.send(fail_silently=False)
-                messages.success(request, 'Account successfully created')
-                return render(request, 'authentication/register.html', {'form': form, 'include_register_script':  True})
-
-        return render(request, 'authentication/register.html', {'form': form, 'include_register_script':  True})
-
+            for field, errors in form.errors.items():
+                first_error = errors[0] if errors else ''
+                messages.error(
+                    request, first_error)
+                break
+        return render(request, 'authentication/register.html', context)
+                    
 
 class VerificationView(View):
     def get(self, request, uidb64, token):

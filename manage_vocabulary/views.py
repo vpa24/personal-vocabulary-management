@@ -25,23 +25,23 @@ def index(request):
         return render(request, 'manage_vocabulary/index.html')
 
 
-def register(request):
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('index')
-        else:
-            for field, errors in form.errors.items():
-                first_error = errors[0] if errors else ''
-                message = first_error
-                break
-            return render(request, 'manage_vocabulary/register.html', {'form': form, 'message': message})
-    else:
-        form = SignupForm()
+# def register(request):
+#     if request.method == 'POST':
+#         form = SignupForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+#             return redirect('index')
+#         else:
+#             for field, errors in form.errors.items():
+#                 first_error = errors[0] if errors else ''
+#                 message = first_error
+#                 break
+#             return render(request, 'manage_vocabulary/register.html', {'form': form, 'message': message})
+#     else:
+#         form = SignupForm()
 
-    return render(request, 'manage_vocabulary/register.html', {'form': form})
+#     return render(request, 'manage_vocabulary/register.html', {'form': form})
 
 
 @login_required()
