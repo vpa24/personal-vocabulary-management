@@ -68,7 +68,7 @@ class RegistrationView(View):
             link = reverse('activate', kwargs={
                         'uidb64': email_body['uid'], 'token': email_body['token']})
 
-            email_subject = 'Activate your account'
+            email_subject = 'Please activate your account!'
 
             activate_url = current_site.domain+link
 
