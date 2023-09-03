@@ -70,7 +70,7 @@ class RegistrationView(View):
 
             email_subject = 'Activate your account'
 
-            activate_url = 'http://'+current_site.domain+link
+            activate_url = current_site.domain+link
 
             email = EmailMessage(
                 email_subject,
