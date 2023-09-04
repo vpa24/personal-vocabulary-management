@@ -25,7 +25,7 @@ class EmailValidationView(View):
         if not validate_email(email):
             return JsonResponse({'email_error': 'Email is invalid'})
         if User.objects.filter(email=email).exists():
-            return JsonResponse({'email_error': 'sorry email in use, choose another one '})
+            return JsonResponse({'email_error': 'Sorry email in use, choose another one '})
         return JsonResponse({'email_valid': True})
 
 
@@ -38,7 +38,7 @@ class UsernameValidationView(View):
         if not str(username).isalnum():
             return JsonResponse({'username_error': 'username should only contain alphanumeric characters'})
         if User.objects.filter(username=username).exists():
-            return JsonResponse({'username_error': 'sorry username in use, choose another one'})
+            return JsonResponse({'username_error': 'Sorry username in use, choose another one'})
         return JsonResponse({'username_valid': True})
 
 

@@ -8,8 +8,8 @@ const passwordField = document.querySelector("#passwordField");
 const usernameSuccessOutput = document.querySelector(".usernameSuccessOutput");
 const submitBtn = document.querySelector(".submit-btn");
 
-emailField.addEventListener("keyup", (e) => {
-  const emailVal = e.target.value;
+emailField.addEventListener("focusout", (e) => {
+  const emailVal = document.getElementById("emailField").value;
 
   emailField.classList.remove("is-invalid");
   emailFeedBackArea.style.display = "none";
@@ -34,7 +34,7 @@ emailField.addEventListener("keyup", (e) => {
   }
 });
 
-usernameField.addEventListener("keyup", (e) => {
+usernameField.addEventListener("focusout", (e) => {
   const usernameVal = e.target.value;
 
   usernameField.classList.remove("is-invalid");
