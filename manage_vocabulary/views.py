@@ -1,4 +1,3 @@
-from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -11,7 +10,6 @@ from django.db.models import Count
 from .models import User, Word, WordEntry
 from django.contrib.auth.decorators import login_required
 
-from .authentication.forms import SignupForm, LoginForm
 from .VocabularyForm import VocabularyForm
 from .VocabularyFormEntry import VocabularyFormEntry
 from .forms.SearchForm import SearchForm
@@ -23,25 +21,6 @@ def index(request):
         return render(request, 'manage_vocabulary/index_user_is_authenticated.html', context)
     else:
         return render(request, 'manage_vocabulary/index.html')
-
-
-# def register(request):
-#     if request.method == 'POST':
-#         form = SignupForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-#             return redirect('index')
-#         else:
-#             for field, errors in form.errors.items():
-#                 first_error = errors[0] if errors else ''
-#                 message = first_error
-#                 break
-#             return render(request, 'manage_vocabulary/register.html', {'form': form, 'message': message})
-#     else:
-#         form = SignupForm()
-
-#     return render(request, 'manage_vocabulary/register.html', {'form': form})
 
 
 @login_required()
