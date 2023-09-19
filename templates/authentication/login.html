@@ -1,12 +1,8 @@
-{% extends "manage_vocabulary/layout.html" %} {% block body %}
+{% extends "../layout.html" %} {% load static %} {% block body %}
 <section class="position-relative overflow-hidden py-5 mb-5">
   <div class="container py-5">
+    {% include '../components/_messages.html' %}
     <h2 class="h3 mb-2 text-primary text-center">Login</h2>
-    {% if message %}
-    <div class="w-md-50 w-sm-100 alert alert-danger" role="alert">
-      {{ message }}
-    </div>
-    {% endif %}
     <form
       action="{% url 'login' %}"
       method="post"
@@ -18,17 +14,17 @@
       </div>
       {% load socialaccount %} {% csrf_token %}
       <div class="text-center">
-        <a href="{% provider_login_url 'google' %}?next=/"
-            class="btn btn-lg btn-block btn-primary text-uppercase"
-            style="background-color: #dd4b39"
-          >
-            <i class="fi-google me-2 mt-0"></i> Sign in with google
-         </a
+        <a
+          href="{% provider_login_url 'google' %}?next=/"
+          class="btn btn-lg btn-block btn-primary text-uppercase"
+          style="background-color: #dd4b39"
         >
+          <i class="fi-google me-2 mt-0"></i> Sign in with google
+        </a>
       </div>
-        <div class="divider d-flex align-items-center my-4">
-          <p class="text-center fw-bold mx-3 mb-0">Or</p>
-        </div>
+      <div class="divider d-flex align-items-center my-4">
+        <p class="text-center fw-bold mx-3 mb-0">Or</p>
+      </div>
       <div class="mb-4 has-validate">
         <label class="form-label" for="{{form.username.label}}"
           >{{form.username.label}} <span class="text-danger">*</span></label
@@ -37,10 +33,17 @@
         <div class="invalid-feedback">This field is required.</div>
       </div>
       <div class="mb-4 has-validate">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <label class="form-label mb-0" for="signin-password">Password</label
+          ><a class="fs-sm fw-bold" href="{% url 'reset_password' %}"
+            >Forgot password?</a
+          >
+        </div>
+        {% comment %}
         <label class="form-label" for="{{form.password.label}}"
           >{{form.password.label}} <span class="text-danger">*</span></label
         >
-        {{ form.password }}
+        {% endcomment %} {{ form.password }}
         <div class="invalid-feedback">This field is required.</div>
       </div>
       <div class="text-center">
@@ -52,5 +55,4 @@
     </form>
   </div>
 </section>
-
 {% endblock %}

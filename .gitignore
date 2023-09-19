@@ -1,13 +1,12 @@
 .vscode/
-db.sqlite3
-manage_vocabulary/static/node_modules
+vocabulary/static/node_modules
 # Ignore the entire manage_vocabulary/static/manage_vocabulary/vendor directory
-manage_vocabulary/static/manage_vocabulary/vendor/*
+vocabulary/static/manage_vocabulary/vendor/*
 
 # Unignore the directory itself
-!manage_vocabulary/static/manage_vocabulary/vendor/simplebar/
-!/manage_vocabulary/static/manage_vocabulary/vendor/smooth-scroll/
-!manage_vocabulary/static/manage_vocabulary/vendor/bootstrap/
+!vocabulary/static/manage_vocabulary/vendor/simplebar/
+!/vocabulary/static/manage_vocabulary/vendor/smooth-scroll/
+!vocabulary/static/manage_vocabulary/vendor/bootstrap/
 
 vocabulary/settings.py
 __pycache__

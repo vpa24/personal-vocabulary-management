@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 import django_heroku
 from dotenv import load_dotenv
+from django.contrib import messages
 
 load_dotenv()
 
@@ -25,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
+    'widget_tweaks'
 ]
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
@@ -97,7 +99,7 @@ ROOT_URLCONF = 'vocabulary.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,7 +121,7 @@ WSGI_APPLICATION = 'vocabulary.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'vocabulary',
         'USER': 'admin',
         'PASSWORD': os.environ.get('STACKHERO_POSTGRESQL_ADMIN_PASSWORD'),
@@ -171,7 +173,9 @@ SECURE_SSL_REDIRECT = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'vocabulary/static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -179,9 +183,22 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
 
 LOGIN_URL = 'login'
 # The LOGIN_REDIRECT_URL is used to redirect the user after authenticating from Django Login and Social Auth.
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = '/'
+
+# email stuff
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+EMAIL_PORT = 587
+EMAIL_USE_SSL = False
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
