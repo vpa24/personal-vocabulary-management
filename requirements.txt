@@ -32,7 +32,7 @@ social-auth-core==4.4.2
 sqlparse==0.4.4
 submit50==3.1.1
 termcolor==1.1.0
-typing_extensions==4.6.3
+typing_extensions==4.8.0
 tzdata==2023.3
 urllib3==2.0.4
 validate-email==1.3
