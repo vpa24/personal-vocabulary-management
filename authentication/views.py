@@ -51,7 +51,7 @@ class RegistrationView(View):
         form = SignupForm(request.POST)
         username = request.POST['username']
         email = request.POST['email']
-        password = request.POST['password1']
+        password = request.POST['password']
         if form.is_valid():
             user = User.objects.create_user(username=username, email=email)
             user.set_password(password)
@@ -66,7 +66,7 @@ class RegistrationView(View):
             }
 
             link = reverse('activate', kwargs={
-                        'uidb64': email_body['uid'], 'token': email_body['token']})
+                'uidb64': email_body['uid'], 'token': email_body['token']})
 
             email_subject = 'Please activate your account!'
 
@@ -74,14 +74,16 @@ class RegistrationView(View):
 
             email = EmailMessage(
                 email_subject,
-                'Hi '+ user.username + '\n, Welcome to Happy Dictionary. \n Please the link below to activate your account \n'+activate_url,
-                'noreply@happydictionary.com',
+                'Hi ' + user.username +
+                '\n, Welcome to Happy Dictionary. \n Please the link below to activate your account \n'+activate_url,
+                'noreply@happydictionary.net',
                 [email],
             )
             email.send(fail_silently=False)
-            messages.success(request, 'Account successfully created. Please check your email to active your account.')
+            messages.success(
+                request, 'Account successfully created. Please check your email to active your account.')
             return render(request, 'authentication/register.html', {'form': form, 'include_register_script':  True})
-        else:        
+        else:
             context = {
                 'form': form,
                 'fieldValues': request.POST,
@@ -94,7 +96,7 @@ class RegistrationView(View):
                     request, first_error)
                 break
         return render(request, 'authentication/register.html', context)
-                    
+
 
 class VerificationView(View):
     def get(self, request, uidb64, token):
@@ -119,20 +121,18 @@ class VerificationView(View):
         return redirect('login')
 
 
-class LoginView(View):
+class LoginView(View, LoginForm):
     def get(self, request):
-        form = LoginForm()
-        return render(request, 'authentication/login.html', context={'form': form, 'include_register_script':  True})
+        # form = LoginForm()
+        return render(request, 'authentication/login.html', context={'form': LoginForm, 'include_register_script':  True})
 
     def post(self, request):
-        form = LoginForm()
         username = request.POST['username']
         password = request.POST['password']
-
         if username and password:
             user = auth.authenticate(username=username, password=password)
 
-            if user:
+            if user is not None:
                 if user.is_active:
                     auth.login(request, user)
                     return redirect('index')
@@ -141,11 +141,11 @@ class LoginView(View):
                 return render(request, 'authentication/login.html')
             messages.error(
                 request, 'Invalid credentials, try again')
-            return render(request, 'authentication/login.html', context={'form': form, 'include_register_script':  True})
+            return render(request, 'authentication/login.html', context={'form': LoginForm, 'include_register_script': True})
 
         messages.error(
-            request, 'Please fill all fields')
-        return render(request, 'authentication/login.html', context={'form': form, 'include_register_script':  True})
+            request, 'Please fill out all fields')
+        return render(request, 'authentication/login.html', context={'form': LoginForm, 'include_register_script': True})
 
 
 class LogoutView(View):

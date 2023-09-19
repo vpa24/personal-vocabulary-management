@@ -1,6 +1,4 @@
-{% extends "../layout.html" %}
-{% load static %}
-{% block body %}
+{% extends "../layout.html" %} {% load static %} {% block body %}
 <section class="position-relative overflow-hidden py-5 mb-5">
   <div class="container py-5">
     {% include '../components/_messages.html' %}
@@ -35,10 +33,17 @@
         <div class="invalid-feedback">This field is required.</div>
       </div>
       <div class="mb-4 has-validate">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <label class="form-label mb-0" for="signin-password">Password</label
+          ><a class="fs-sm fw-bold" href="{% url 'reset_password' %}"
+            >Forgot password?</a
+          >
+        </div>
+        {% comment %}
         <label class="form-label" for="{{form.password.label}}"
           >{{form.password.label}} <span class="text-danger">*</span></label
         >
-        {{ form.password }}
+        {% endcomment %} {{ form.password }}
         <div class="invalid-feedback">This field is required.</div>
       </div>
       <div class="text-center">

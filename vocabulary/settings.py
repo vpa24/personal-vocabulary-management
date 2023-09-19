@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
+    'widget_tweaks'
 ]
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
