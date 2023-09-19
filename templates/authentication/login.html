@@ -12,7 +12,8 @@
       <div class="text-center mb-5">
         Welcome back. Login to your account bellow.
       </div>
-      {% load socialaccount %} {% csrf_token %}
+      {% csrf_token %}
+      {% comment %} {% load socialaccount %} 
       <div class="text-center">
         <a
           href="{% provider_login_url 'google' %}?next=/"
@@ -21,7 +22,7 @@
         >
           <i class="fi-google me-2 mt-0"></i> Sign in with google
         </a>
-      </div>
+      </div> {% endcomment %}
       <div class="divider d-flex align-items-center my-4">
         <p class="text-center fw-bold mx-3 mb-0">Or</p>
       </div>
