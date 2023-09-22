@@ -142,9 +142,9 @@ def edit_vocabulary(request, title, vid):
         form_entries.append(VocabularyFormEntry(initial=initial_data))
 
     return render(request, 'manage_vocabulary/edit_vocabulary.html', {
-        'voca_title': word.name.replace('-', ' '),
+        'voca_title': word.name,
         'vid': word.id,
-        'form': VocabularyForm(initial={'name': word.name.title()}),
+        'form': VocabularyForm(initial={'name': word.name}),
         'form_entries': form_entries
     })
 
