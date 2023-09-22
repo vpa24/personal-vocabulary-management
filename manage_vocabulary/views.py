@@ -65,8 +65,7 @@ def search(request):
 
 
 def search_vocabulary_list(request, voca_name, form):
-    user_id = request.user.id
-    user = User.objects.get(pk=user_id)
+    user = request.user
     vocabulary_words = Word.objects.filter(
         owners=user, name__contains=voca_name)
     if len(vocabulary_words) == 1:
@@ -83,8 +82,7 @@ def search_vocabulary_list(request, voca_name, form):
 
 
 def vocabulary_list_index(request):
-    user_id = request.user.id
-    user = User.objects.get(pk=user_id)
+    user = request.user
     vocabulary_words = Word.objects.filter(owners=user)
     word_dict = defaultdict(list)
 
@@ -156,8 +154,7 @@ def vocab_by_dates(request):
 
 
 def vocabulary_list_monthly(request):
-    user_id = request.user.id
-    user = User.objects.get(pk=user_id)
+    user = request.user
     vocabulary_words = Word.objects.filter(owners=user).order_by('added_date')
     years = vocabulary_words.annotate(year=ExtractYear(
         'added_date')).values('year').distinct().order_by('year')
@@ -204,7 +201,7 @@ def add_to_word_entry(request, word, user):
         word_entry.save()
 
 def update_vocabulary_entries(request):
-    name = request.POST['name'].lower().strip().replace(' ', '-')
+    name = request.POST['name'].strip()
     word = get_object_or_404(Word, name=name)
     delete_word_entries(word, request.user)  # Delete old WordEntry instances
     add_to_word_entry(request, word, request.user)
