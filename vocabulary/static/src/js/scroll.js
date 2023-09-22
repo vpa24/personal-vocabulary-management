@@ -10,11 +10,10 @@ function scrollToPosition(targetOffset) {
 var letterLinks = document.querySelectorAll(".letter-link");
 letterLinks.forEach(function (link) {
   link.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevent the default link behavior
-
-    var targetId = link.getAttribute("href"); // Get the target section ID
-    var targetOffset = document.querySelector(targetId).offsetTop; // Get the target position from the top
-
+    console.log("bi");
+    e.preventDefault();
+    var targetId = link.getAttribute("href"); 
+    var targetOffset = document.querySelector(targetId).offsetTop; 
     scrollToPosition(targetOffset);
   });
 });
