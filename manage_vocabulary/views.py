@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.functions import ExtractYear, ExtractMonth
 from django.db.models import Count
+from django.contrib import messages
 
 from .models import User, Word, WordEntry
 from django.contrib.auth.decorators import login_required
@@ -28,16 +29,19 @@ def add_vocabulary(request):
     if request.method == 'POST':
         form = VocabularyForm(request.POST)
         if form.is_valid():
-            name = request.POST['name'].lower().strip().replace(' ', '-')
-            user_id = request.user.id
-            user = User.objects.get(pk=user_id)
-            vid = existing_vocabulary(user, name)
-            if vid != None:
-                return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form, 'message': 'This vocabulary already exists. If you want to view or edit it', 'id': vid})
+            name = request.POST['name'].lower().strip()
+            user = request.user
+            word = Word.objects.filter(owners=user, name=name)
+            if word.exists():
+                word_id = word.first().id
+                vocabulary_detail_url = reverse('vocabulary_detail', args=[word_id])
+                messages.error(
+                    request, f'This vocabulary already exists. Click <a href="{vocabulary_detail_url}">here</a> to view your vocabulary.')
+                return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form })
             elif shared_vocabulary(user, name, request):
                 return HttpResponseRedirect(reverse("index"))
             else:
-                add_new_vocabulary(user_id, name, request)
+                add_new_vocabulary(user, name, request)
                 return HttpResponseRedirect(reverse("index"))
     else:
         form = VocabularyForm()
@@ -196,17 +200,6 @@ def add_to_word_entry(request, word, user):
             user=user
         )
         word_entry.save()
-
-
-def existing_vocabulary(user, name):
-    # Check if the vocabulary exists for the current user
-    existing_vocabulary = user.words.filter(name=name)
-    if existing_vocabulary.exists():
-        vid = existing_vocabulary.first().id
-        return vid
-    else:
-        return None
-
 
 def shared_vocabulary(user, name, request):
     # Check if the vocabulary exists with different owners
