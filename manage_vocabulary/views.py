@@ -26,6 +26,7 @@ def index(request):
 
 @login_required()
 def add_vocabulary(request):
+    form_entries = VocabularyFormEntry()
     if request.method == 'POST':
         form = VocabularyForm(request.POST)
         if form.is_valid():
@@ -37,7 +38,7 @@ def add_vocabulary(request):
                 vocabulary_detail_url = reverse('vocabulary_detail', args=[word_id])
                 messages.error(
                     request, f'This vocabulary already exists. Click <a href="{vocabulary_detail_url}">here</a> to view your vocabulary.')
-                return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form })
+                return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': VocabularyForm(), 'form_entries': form_entries })
             elif shared_vocabulary(user, name, request):
                 return HttpResponseRedirect(reverse("index"))
             else:
@@ -45,7 +46,6 @@ def add_vocabulary(request):
                 return HttpResponseRedirect(reverse("index"))
     else:
         form = VocabularyForm()
-        form_entries = VocabularyFormEntry()
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form, 'form_entries': form_entries})
 
 
