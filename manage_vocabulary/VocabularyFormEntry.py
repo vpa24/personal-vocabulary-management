@@ -18,7 +18,7 @@ class VocabularyFormEntry(forms.Form):
     )
 
     definition = forms.CharField(
-        label="Your Own Definition:",
+        label="Definition:",
         widget=forms.TextInput(
             attrs={'class': "form-control", 'autocompelte': 'off'}),
         required=True
