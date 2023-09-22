@@ -31,19 +31,23 @@ def add_vocabulary(request):
         form = VocabularyForm(request.POST)
         if form.is_valid():
             name = request.POST['name'].lower().strip()
-            user = request.user
-            word = Word.objects.filter(owners=user, name=name)
-            if word.exists():
-                word_id = word.first().id
-                vocabulary_detail_url = reverse('vocabulary_detail', args=[word_id])
-                messages.error(
-                    request, f'This vocabulary already exists. Click <a href="{vocabulary_detail_url}">here</a> to view your vocabulary.')
-                return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': VocabularyForm(), 'form_entries': form_entries })
-            elif shared_vocabulary(user, name, request):
-                return HttpResponseRedirect(reverse("index"))
-            else:
-                add_new_vocabulary(user, name, request)
-                return HttpResponseRedirect(reverse("index"))
+            word = Word.objects.filter(name=name).first()
+            if word:
+                word_id = word.id
+                user = request.user
+                if user in word.owners.all():
+                    vocabulary_detail_url = reverse('vocabulary_detail', args=[word_id])
+                    messages.error(
+                        request, f'This vocabulary already exists. Click <a href="{vocabulary_detail_url}">here</a> to view your vocabulary.')
+                    return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': VocabularyForm(), 'form_entries': form_entries })
+                else:
+                    word.owners.add(user)
+                    word.save()
+                    return HttpResponseRedirect(reverse("index"))
+        else:
+            new_word = word(owners=user, name=name)
+            new_word.save() 
+            return HttpResponseRedirect(reverse("index"))
     else:
         form = VocabularyForm()
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form, 'form_entries': form_entries})
@@ -200,29 +204,6 @@ def add_to_word_entry(request, word, user):
             user=user
         )
         word_entry.save()
-
-def shared_vocabulary(user, name, request):
-    # Check if the vocabulary exists with different owners
-    shared_vocabulary = Word.objects.filter(name=name).exclude(owners=user)
-    if shared_vocabulary.exists():
-        shared_word = shared_vocabulary.first()
-        shared_word.owners.add(user)
-        vid = shared_word.id
-        if vid is not None:
-            word = Word.objects.get(pk=vid)
-            add_to_word_entry(request, word, user)
-            return True
-    else:
-        return False
-
-
-def add_new_vocabulary(user_id, name, request):
-    user = User.objects.get(pk=user_id)
-    new_word = Word(name=name)
-    new_word.save()
-    new_word.owners.set([user])
-    add_to_word_entry(request, new_word, user)
-
 
 def update_vocabulary_entries(request):
     name = request.POST['name'].lower().strip().replace(' ', '-')
