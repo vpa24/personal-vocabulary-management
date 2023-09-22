@@ -8,7 +8,7 @@ class User(AbstractUser):
     time_zone = models.CharField(max_length=50, null=True)
 
 class Word(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     added_date = models.DateTimeField(default=timezone.now)
     owners = models.ManyToManyField(User, blank=True, related_name="words")
 
@@ -16,6 +16,7 @@ class Word(models.Model):
         if not self.id:
             self.added_date = timezone.now()
         super(Word, self).save(*args, **kwargs)
+
 
 class WordEntry(models.Model):
     WORD_TYPES = [
@@ -42,6 +43,7 @@ class WordEntry(models.Model):
             'adverb': 'badge rounded-pill bg-purple',
         }
         return word_type_classes.get(self.word_type, '')
+
 
 class Contact(models.Model):
     your_name = models.CharField(max_length=100)
