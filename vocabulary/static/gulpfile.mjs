@@ -1,9 +1,6 @@
 import gulp from "gulp";
-import {
-  sassCustomStyleMinified,
-  sassThemeMinified,
-} from "./sassTasks.mjs";
-import { jsExpanded, jsThemeMinified, jsMinified } from "./jsTasks.mjs";
+import { sassCustomStyleMinified, sassThemeMinified } from "./sassTasks.mjs";
+import { jsThemeMinified, jsMinified } from "./jsTasks.mjs";
 import { vendor } from "./vendorTasks.mjs";
 import { deleteSync } from "del";
 import browserSync from "browser-sync";
@@ -28,7 +25,7 @@ async function clean() {
 // Watch task
 function watch() {
   global.watch = true;
-  gulp.watch(`${path.src_js}/**/*.js`).on("change", function (path, stats) {
+  gulp.watch(`${path.src_js}/*.js`).on("change", function (path, stats) {
     console.log("File " + path + " was changed");
     jsMinified;
     // Additional actions to be performed on change
@@ -45,7 +42,7 @@ function watch() {
 export default gulp.series(
   clean,
   vendor,
-  gulp.parallel(jsThemeMinified, jsExpanded, sassThemeMinified)
+  gulp.parallel(jsThemeMinified, sassThemeMinified, sassCustomStyleMinified, jsMinified)
   // watch
 );
 gulp.task("watch", watch);

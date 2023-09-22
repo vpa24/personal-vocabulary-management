@@ -12,7 +12,6 @@ const path = {
   dist: "manage_vocabulary",
   src_scss: "src/scss",
   dist_vendor: "manage_vocabulary/vendor",
-  dist_js: "manage_vocabulary/js",
   dist_css: "manage_vocabulary/css",
 };
 
