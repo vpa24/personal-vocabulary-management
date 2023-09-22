@@ -30,7 +30,7 @@ def add_vocabulary(request):
     if request.method == 'POST':
         form = VocabularyForm(request.POST)
         if form.is_valid():
-            name = request.POST['name'].lower().strip()
+            name = request.POST['name'].strip()
             word = Word.objects.filter(name=name).first()
             if word:
                 word_id = word.id
@@ -123,7 +123,7 @@ def edit_vocabulary(request, title, vid):
     if request.method == 'POST':
         form = VocabularyForm(request.POST)
         if form.is_valid():
-            name = request.POST['name'].lower().strip().replace(' ', '-')
+            name = request.POST['name'].strip()
             update_vocabulary_name(name, title)
 
             update_vocabulary_entries(request)
