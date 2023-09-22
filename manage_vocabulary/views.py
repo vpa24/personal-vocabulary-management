@@ -32,9 +32,9 @@ def add_vocabulary(request):
         if form.is_valid():
             name = request.POST['name'].strip()
             word = Word.objects.filter(name=name).first()
+            user = request.user
             if word:
                 word_id = word.id
-                user = request.user
                 if user in word.owners.all():
                     vocabulary_detail_url = reverse('vocabulary_detail', args=[word_id])
                     messages.error(
@@ -44,10 +44,9 @@ def add_vocabulary(request):
                     word.owners.add(user)
                     word.save()
                     return HttpResponseRedirect(reverse("index"))
-        else:
-            new_word = word(owners=user, name=name)
-            new_word.save() 
-            return HttpResponseRedirect(reverse("index"))
+            else:
+                add_new_vocabulary(request, user, name)
+                return HttpResponseRedirect(reverse("index"))
     else:
         form = VocabularyForm()
         return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': form, 'form_entries': form_entries})
@@ -180,12 +179,11 @@ def get_owners_by_vocabulary(name):
         return word.owners.all()
     return None
 
-
-def add_new_owner(user_id, name):
-    new_owner = User.objects.get(pk=user_id)
-    word = Word.objects.get(name=name)
-    word.owners.add(new_owner)
-
+def add_new_vocabulary(request, user, name):
+    new_word = Word(name=name)
+    new_word.save()
+    new_word.owners.set([user])
+    add_to_word_entry(request, new_word, user)
 
 def add_to_word_entry(request, word, user):
     definitions = request.POST.getlist('definition')
