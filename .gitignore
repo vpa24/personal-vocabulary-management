@@ -1,6 +1,7 @@
 .vscode/
 vocabulary/static/node_modules
 vocabulary/static/src/scss/*
+vocabulary/static/src/js/*
 # Ignore the entire manage_vocabulary/static/manage_vocabulary/vendor directory
 vocabulary/static/manage_vocabulary/vendor/*
 
