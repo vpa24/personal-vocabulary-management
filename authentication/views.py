@@ -51,7 +51,7 @@ class RegistrationView(View):
         form = SignupForm(request.POST)
         username = request.POST['username']
         email = request.POST['email']
-        password = request.POST['password']
+        password = request.POST['password1']
         if form.is_valid():
             user = User.objects.create_user(username=username, email=email)
             user.set_password(password)
