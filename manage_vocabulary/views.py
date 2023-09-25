@@ -182,8 +182,8 @@ def get_owners_by_vocabulary(name):
 def add_new_vocabulary(request, user, name):
     new_word = Word(name=name)
     new_word.save()
-    word_owner_ship = WordOwnership(user=user, word=new_word)
-    word_owner_ship.save()
+    word_ownership = WordOwnership(user=user, word=new_word)
+    word_ownership.save()
     add_to_word_entry(request, new_word, user)
 
 def add_to_word_entry(request, word, user):
