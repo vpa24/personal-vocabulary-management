@@ -1,7 +1,7 @@
-{% extends "../layout.html" %} {% load static %} {% block body %}
+{% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
 <section class="position-relative overflow-hidden py-5 mb-5">
   <div class="container py-5">
-    {% include '../components/_messages.html' %}
+    {% include 'components/_messages.html' %}
     <h2 class="h3 mb-2 text-primary text-center">Login</h2>
     <form
       action="{% url 'login' %}"
