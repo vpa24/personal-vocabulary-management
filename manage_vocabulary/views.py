@@ -41,8 +41,9 @@ def add_vocabulary(request):
                         request, f'This vocabulary already exists. Click <a href="{vocabulary_detail_url}">here</a> to view your vocabulary.')
                     return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': VocabularyForm(), 'form_entries': form_entries })
                 else:
-                    word.owners.add(user)
-                    word.save()
+                    word_ownership = WordOwnership(user_id=request.user.id, word_id=word_id)
+                    word_ownership.save()
+                    
                     return HttpResponseRedirect(reverse("index"))
             else:
                 add_new_vocabulary(request, user, name)

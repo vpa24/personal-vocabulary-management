@@ -18,7 +18,7 @@ class WordOwnership(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.added_date = timezone.now()
-        super(Word, self).save(*args, **kwargs)
+        super(WordOwnership, self).save(*args, **kwargs)
     class Meta:
         unique_together = ('user', 'word')
 
