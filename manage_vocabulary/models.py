@@ -9,14 +9,18 @@ class User(AbstractUser):
 
 class Word(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    added_date = models.DateTimeField(default=timezone.now)
-    owners = models.ManyToManyField(User, blank=True, related_name="words")
 
+class WordOwnership(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    added_date = models.DateTimeField(default=timezone.now)
+    
     def save(self, *args, **kwargs):
         if not self.id:
             self.added_date = timezone.now()
         super(Word, self).save(*args, **kwargs)
-
+    class Meta:
+        unique_together = ('user', 'word')
 
 class WordEntry(models.Model):
     WORD_TYPES = [
