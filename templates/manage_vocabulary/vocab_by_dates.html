@@ -24,7 +24,7 @@
         {% if word.added_date|date:"Y" == year.year|stringformat:"s" and word.added_date|date:"F" == month.month|month_name|stringformat:"s" %}
           <li>
             <a class="" href="{% url 'vocabulary_detail' word.id %}">
-              {{word.name|replacetoSpace }}
+              {{word.name }}
             </a>
           </li>
         {% endif %}

@@ -5,7 +5,7 @@ from collections import defaultdict
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.functions import ExtractYear, ExtractMonth
-from django.db.models import Count
+from django.db.models import Count, Subquery, OuterRef
 from django.contrib import messages
 
 from .models import User, Word, WordEntry, WordOwnership
@@ -158,10 +158,17 @@ def vocab_by_dates(request):
 
 def vocabulary_list_monthly(request):
     user = request.user
-    vocabulary_words = Word.objects.filter(owners=user).order_by('added_date')
-    years = vocabulary_words.annotate(year=ExtractYear(
+    word_ownerships = WordOwnership.objects.filter(user=user).order_by('added_date')
+    word_ids = word_ownerships.values_list('word_id', flat=True)
+    # Filter the Word objects based on the list of word IDs and annotate with 'added_date'
+    vocabulary_words = Word.objects.filter(pk__in=word_ids).annotate(
+        added_date=Subquery(
+            word_ownerships.filter(word_id=OuterRef('pk')).values('added_date')[:1]
+        )
+    )
+    years = word_ownerships.annotate(year=ExtractYear(
         'added_date')).values('year').distinct().order_by('year')
-    months = vocabulary_words.annotate(month=ExtractMonth('added_date')).values(
+    months = word_ownerships.annotate(month=ExtractMonth('added_date')).values(
         'month', 'added_date__month').distinct().order_by('-month').annotate(total_words=Count('id'))
 
     context = {
