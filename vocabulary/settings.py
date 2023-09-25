@@ -36,6 +36,7 @@ SITE_ID = 2
 
 INSTALLED_APPS = [
     'manage_vocabulary',
+    'authentication',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+	'django_crontab',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -202,3 +204,8 @@ DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 EMAIL_PORT = 587
 EMAIL_USE_SSL = False
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+# Set up cron job
+CRONJOBS = [
+	('* * * * *', 'django.core.management.call_command', ['user-check'])
+]
