@@ -32,10 +32,10 @@ def add_vocabulary(request):
         if form.is_valid():
             name = request.POST['name'].strip()
             word = Word.objects.filter(name=name).first()
-            user = request.user
             if word:
                 word_id = word.id
-                if user in word.owners.all():
+                users_exist = User.objects.filter(wordownership__word_id=word_id, wordownership__user_id=request.user.id).exists()
+                if users_exist:
                     vocabulary_detail_url = reverse('vocabulary_detail', args=[word_id])
                     messages.error(
                         request, f'This vocabulary already exists. Click <a href="{vocabulary_detail_url}">here</a> to view your vocabulary.')
