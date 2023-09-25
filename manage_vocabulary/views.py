@@ -32,9 +32,10 @@ def add_vocabulary(request):
         if form.is_valid():
             name = request.POST['name'].strip()
             word = Word.objects.filter(name=name).first()
+            user = request.user
             if word:
                 word_id = word.id
-                users_exist = User.objects.filter(wordownership__word_id=word_id, wordownership__user_id=request.user.id).exists()
+                users_exist = User.objects.filter(wordownership__word_id=word_id, wordownership__user_id=user.id).exists()
                 if users_exist:
                     vocabulary_detail_url = reverse('vocabulary_detail', args=[word_id])
                     messages.error(
@@ -43,7 +44,7 @@ def add_vocabulary(request):
                 else:
                     word_ownership = WordOwnership(user_id=request.user.id, word_id=word_id)
                     word_ownership.save()
-                    
+                    add_to_word_entry(request,word, user)
                     return HttpResponseRedirect(reverse("index"))
             else:
                 add_new_vocabulary(request, user, name)
@@ -181,7 +182,8 @@ def get_owners_by_vocabulary(name):
 def add_new_vocabulary(request, user, name):
     new_word = Word(name=name)
     new_word.save()
-    new_word.owners.set([user])
+    word_owner_ship = WordOwnership(user=user, word=new_word)
+    word_owner_ship.save()
     add_to_word_entry(request, new_word, user)
 
 def add_to_word_entry(request, word, user):
