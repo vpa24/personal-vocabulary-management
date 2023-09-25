@@ -34,7 +34,7 @@
     {% for word in words %}
     <div class="mt-1">
       <a class="text-body link-body" href="{% url 'vocabulary_detail' word.id %}">
-      {{word.name|replacetoSpace }}</a>
+      {{word.name }}</a>
     </div>
     {% endfor%}
   {% endfor%}

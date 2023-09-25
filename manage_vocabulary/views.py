@@ -8,7 +8,7 @@ from django.db.models.functions import ExtractYear, ExtractMonth
 from django.db.models import Count
 from django.contrib import messages
 
-from .models import User, Word, WordEntry
+from .models import User, Word, WordEntry, WordOwnership
 from django.contrib.auth.decorators import login_required
 
 from .VocabularyForm import VocabularyForm
@@ -83,11 +83,12 @@ def search_vocabulary_list(request, voca_name, form):
 
 def vocabulary_list_index(request):
     user = request.user
-    vocabulary_words = Word.objects.filter(owners=user)
+    words = Word.objects.filter(wordownership__user=user).values_list('id','name')
+    word_list = [{'id': item[0], 'name': item[1]} for item in words]
     word_dict = defaultdict(list)
-
-    for word in vocabulary_words:
-        first_letter = word.name[0].upper()
+    
+    for word in word_list:
+        first_letter = word['name'][0].upper()
         if first_letter in word_dict:
             word_dict[first_letter].append(word)
         else:
@@ -95,7 +96,7 @@ def vocabulary_list_index(request):
     sorted_word_dict = dict(sorted(word_dict.items()))
     letters = sorted_word_dict.keys()
     context = {
-        'total': len(vocabulary_words),
+        'total': len(words),
         'sored_word_dict': sorted_word_dict.items(),
         'letters': letters,
         'searchForm': SearchForm()
