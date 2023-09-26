@@ -5,7 +5,7 @@ from collections import defaultdict
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.functions import ExtractYear, ExtractMonth
-from django.db.models import Count, Subquery, OuterRef
+from django.db.models import Count, Subquery, OuterRef, Q
 from django.contrib import messages
 
 from .models import User, Word, WordEntry, WordOwnership
@@ -35,16 +35,19 @@ def add_vocabulary(request):
             user = request.user
             if word:
                 word_id = word.id
-                users_exist = User.objects.filter(wordownership__word_id=word_id, wordownership__user_id=user.id).exists()
+                users_exist = User.objects.filter(
+                    wordownership__word_id=word_id, wordownership__user_id=user.id).exists()
                 if users_exist:
-                    vocabulary_detail_url = reverse('vocabulary_detail', args=[word_id])
+                    vocabulary_detail_url = reverse(
+                        'vocabulary_detail', args=[word_id])
                     messages.error(
                         request, f'This vocabulary already exists. Click <a href="{vocabulary_detail_url}">here</a> to view your vocabulary.')
-                    return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': VocabularyForm(), 'form_entries': form_entries })
+                    return render(request, 'manage_vocabulary/add_vocabulary.html', {'form': VocabularyForm(), 'form_entries': form_entries})
                 else:
-                    word_ownership = WordOwnership(user_id=request.user.id, word_id=word_id)
+                    word_ownership = WordOwnership(
+                        user_id=request.user.id, word_id=word_id)
                     word_ownership.save()
-                    add_to_word_entry(request,word, user)
+                    add_to_word_entry(request, word, user)
                     return HttpResponseRedirect(reverse("index"))
             else:
                 add_new_vocabulary(request, user, name)
@@ -69,7 +72,9 @@ def search(request):
 def search_vocabulary_list(request, voca_name, form):
     user = request.user
     vocabulary_words = Word.objects.filter(
-        owners=user, name__contains=voca_name)
+        Q(name__contains=voca_name) &
+        Q(wordownership__user_id=user.id)
+    ).distinct()
     if len(vocabulary_words) == 1:
         id = vocabulary_words[0].id
         if vocabulary_words[0].name == voca_name:
@@ -85,10 +90,11 @@ def search_vocabulary_list(request, voca_name, form):
 
 def vocabulary_list_index(request):
     user = request.user
-    words = Word.objects.filter(wordownership__user=user).values_list('id','name')
+    words = Word.objects.filter(
+        wordownership__user=user).values_list('id', 'name')
     word_list = [{'id': item[0], 'name': item[1]} for item in words]
     word_dict = defaultdict(list)
-    
+
     for word in word_list:
         first_letter = word['name'][0].upper()
         if first_letter in word_dict:
@@ -158,12 +164,14 @@ def vocab_by_dates(request):
 
 def vocabulary_list_monthly(request):
     user = request.user
-    word_ownerships = WordOwnership.objects.filter(user=user).order_by('added_date')
+    word_ownerships = WordOwnership.objects.filter(
+        user=user).order_by('added_date')
     word_ids = word_ownerships.values_list('word_id', flat=True)
     # Filter the Word objects based on the list of word IDs and annotate with 'added_date'
     vocabulary_words = Word.objects.filter(pk__in=word_ids).annotate(
         added_date=Subquery(
-            word_ownerships.filter(word_id=OuterRef('pk')).values('added_date')[:1]
+            word_ownerships.filter(word_id=OuterRef(
+                'pk')).values('added_date')[:1]
         )
     )
     years = word_ownerships.annotate(year=ExtractYear(
@@ -186,12 +194,14 @@ def get_owners_by_vocabulary(name):
         return word.owners.all()
     return None
 
+
 def add_new_vocabulary(request, user, name):
     new_word = Word(name=name)
     new_word.save()
     word_ownership = WordOwnership(user=user, word=new_word)
     word_ownership.save()
     add_to_word_entry(request, new_word, user)
+
 
 def add_to_word_entry(request, word, user):
     definitions = request.POST.getlist('definition')
@@ -210,6 +220,7 @@ def add_to_word_entry(request, word, user):
             user=user
         )
         word_entry.save()
+
 
 def update_vocabulary_entries(request):
     name = request.POST['name'].strip()
