@@ -33,11 +33,7 @@ class WordEntry(models.Model):
     word_type = models.CharField(max_length=20, choices=WORD_TYPES)
     definition = models.CharField(max_length=300)
     example = models.TextField()
-    word = models.ForeignKey(
-        Word, on_delete=models.CASCADE, related_name="word_entries")
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="word_entries")
-
+    owner = models.ForeignKey(WordOwnership, on_delete=models.CASCADE, related_name="words_ownership", null=True)
     def get_word_type_class(self):
         word_type_classes = {
             'verb': 'badge rounded-pill bg-info',
