@@ -50,12 +50,13 @@ class RegistrationView(View):
     def post(self, request):
         form = SignupForm(request.POST)
         username = request.POST['username']
-        email = request.POST['email']
+        user_email = request.POST['email']
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         password = request.POST['password1']
         if form.is_valid():
-            user = User.objects.create_user(username=username, email=email, first_name=first_name, last_name=last_name)
+            user = User.objects.create_user(
+                username=username, email=user_email, first_name=first_name, last_name=last_name)
             user.set_password(password)
             user.is_active = False
             user.save()
@@ -76,10 +77,10 @@ class RegistrationView(View):
 
             email = EmailMessage(
                 email_subject,
-                'Hi ' + user.username +
-                '\n, Welcome to Happy Dictionary. \n Please the link below to activate your account \n'+activate_url,
+                'Hi ' + user.username + ','
+                '\n Welcome to Happy Dictionary. \n Please the link below to activate your account \n'+activate_url,
                 'noreply@happydictionary.net',
-                [email],
+                [user_email],
             )
             email.send(fail_silently=False)
             messages.success(
