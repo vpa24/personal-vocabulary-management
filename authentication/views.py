@@ -85,7 +85,8 @@ class RegistrationView(View):
             email.send(fail_silently=False)
             messages.success(
                 request, 'Account successfully created. Please check your email to active your account.')
-            return render(request, 'authentication/register.html', {'form': form, 'include_register_script':  True})
+            return redirect('index')
+            # return render(request, 'authentication/register.html', {'form': form, 'include_register_script':  True})
         else:
             context = {
                 'form': form,
