@@ -78,7 +78,7 @@ class RegistrationView(View):
             email = EmailMessage(
                 email_subject,
                 'Hi ' + user.username + ','
-                '\n Welcome to Happy Dictionary. \n Please the link below to activate your account \n'+activate_url,
+                '\n Welcome to Happy Dictionary. \n This website helps you manage your vocabulary effortlessly. By adding your vocabulary words with explanations and examples to boost your English skills. With just five words in your list, my website will send you a daily email featuring five random words. Start building your vocabulary library today 😉!\n Please click on the link below to activate your account \n'+activate_url,
                 'noreply@happydictionary.net',
                 [user_email],
             )
