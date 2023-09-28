@@ -23,20 +23,22 @@
         <a
         class="fw-bold fs-5 my-4 text-decoration-none letter-link"
         href="#{{letter}}"
-        ><span class="badge rounded-circle bg-info ms-1">{{letter}}</span></a
+        ><span class="badge rounded-circle bg-info ms-1 mb-1">{{letter}}</span></a
           >
       {% endfor %}
     </div>
   {% endif%}
 
   {% for letter, words in sored_word_dict %}
-    <h4 id="{{letter}}" class="my-1 text-primary">Letter: {{letter}}</h4>
-    {% for word in words %}
-    <div class="mt-1">
-      <a class="text-body link-body" href="{% url 'vocabulary_detail' word.id %}">
-      {{word.name }}</a>
-    </div>
-    {% endfor%}
+    <h4 id="{{letter}}" class="text-primary mb-0 mt-3">Letter: {{letter}}</h4>
+    <div class="row">
+      {% for word in words %}
+      <div class="col-md-2 col-sm-6 mb-1">
+        <a class="text-body link-body" href="{% url 'vocabulary_detail' word.id %}">
+        {{word.name }}</a>
+      </div>
+      {% endfor%}
+      </div>
   {% endfor%}
   
 </div>
