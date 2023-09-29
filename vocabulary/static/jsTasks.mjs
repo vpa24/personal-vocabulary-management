@@ -19,13 +19,25 @@ export function jsThemeMinified() {
         input: `./${path.src_js}/theme.js`,
         output: {
           format: "iife",
+          banner: `
+        /**
+         * Finder | Directory & Listings Bootstrap Template
+         * Copyright 2022 Createx Studio
+         * Theme core scripts
+         * 
+         * @author Createx Studio
+         * @version 1.4.1
+         */
+        `,
         },
       })
     )
-    .pipe(rename("theme.min.js"))
-    .pipe(babel({ presets: [["@babel/env", { modules: false }]] }))
-    .pipe(uglify({ output: { comments: /^!|@author|@version/i } }))
-    .pipe(gulp.dest(path.dist_js));
+    .pipe(
+      babel({
+        presets: [["@babel/env", { modules: false }]],
+      })
+    )
+    .pipe(gulp.dest(path.src_js));
 }
 
 export function jsMinified() {
