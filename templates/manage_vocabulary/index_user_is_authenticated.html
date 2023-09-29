@@ -17,8 +17,8 @@
     
   {% if letters|length > 3 %}
     {% include 'manage_vocabulary/components/search_form.html' with form=searchForm %}
-    <div class="mb-3">You have {{total}} word(s). </div>
-    <div class="mb-3">
+      <div class="mb-3">You have {{ total|add_if_plural }}.</div>
+      <div class="mb-3">
       {% for letter in letters %}
         <a
         class="fw-bold fs-5 my-4 text-decoration-none letter-link"
