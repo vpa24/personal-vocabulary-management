@@ -14,7 +14,7 @@
   href="{% url 'add_vocabulary' %}"
   >Click here to add</a
 >
-{% else %}<p> We found {{total}} word(s). </p>{% endif %}
+{% else %}<p> We found {{total|add_if_plural}}. </p>{% endif %}
   <ul class="mt-1">
     {% for word in words %}
     <li>
