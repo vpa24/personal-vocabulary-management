@@ -1,7 +1,7 @@
 {% extends "manage_vocabulary/layout.html" %} {% load static %} {% block body %}
 {% load custom_filters %}
 <div class="container mt-5 mb-md-4 py-5">
-  <h2 class="mt-4">{{ user.username|title}}'s Dictionary</h2>
+  <h2 class="text-primary">{{ user.first_name|title}}'s Dictionary</h2>
    {% include 'manage_vocabulary/components/search_form.html' with form=searchForm %}
 {% if total == 0 %}
 <h6 class="text-center my-3">
@@ -14,7 +14,7 @@
   href="{% url 'add_vocabulary' %}"
   >Click here to add</a
 >
-{% else %}<p> We found {{total|add_if_plural}}. </p>{% endif %}
+{% else %}<p> We found <span class="fw-bold">{{total}} word{{total|pluralize}}</span> which contain{{total|pluralize}} <span class="fw-bold text-primary">{{voca_name}}</span>. </p>{% endif %}
   <ul class="mt-1">
     {% for word in words %}
     <li>
