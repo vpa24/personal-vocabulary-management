@@ -20,7 +20,6 @@
       </div>
       <div class="d-flex flex-wrap w-100 justify-content-between">
         <h5 class="text-primary">{{ word.name }}</h5>
-        <small class="opacity-50 mb-2">{{entry.word.updated_date|date}}</small>
       </div>
       {% for entry in word_entries %} {% with index=forloop.counter0 %}
       <p
