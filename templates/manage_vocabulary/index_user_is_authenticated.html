@@ -3,43 +3,77 @@
 <div class="container mt-5 mb-md-4 py-5 mt-4">
   <div class="d-flex flex-row mb-3">
     <h2 class="text-primary">{{ user.first_name|title}}'s Dictionary</h2>
-      <div class="d-md-none ms-2 d-sm-flex align-items-center">
+    <div class="d-md-none ms-2 d-sm-flex align-items-center">
       <span class="badge bg-accent p-2 mb-2">
-        <i class="fi-plus opacity-80">
-        </i>
-          <a class="text-white text-decoration-none" href="{% url 'add_vocabulary' %}">Add new vocabulary</a>
+        <i class="fi-plus opacity-80"> </i>
+        <a
+          class="text-white text-decoration-none"
+          href="{% url 'add_vocabulary' %}"
+          >Add new vocabulary</a
+        >
       </span>
     </div>
   </div>
-  {% if total == 0 %} 
-      You don't have any vocabulary words yet. Let's start to add your first vocabulary word by clicking on the <span class="fw-bold">"Add new vocabulary"</span>.
-  {% endif %}
-    
-  {% if letters|length > 3 %}
+  {% if total == 0 %} You don't have any vocabulary words yet. Let's start to
+  add your first vocabulary word by clicking on the
+  <span class="fw-bold">"Add new vocabulary"</span>. {% endif %}
+  {% if letters|length > 3 %} 
     {% include 'manage_vocabulary/components/search_form.html' with form=searchForm %}
-      <div class="mb-3">You have {{total}} word{{total|pluralize}}.</div>
-      <div class="mb-3">
+    <div class="mb-3">You have {{total}} word{{total|pluralize}}.</div>
+    <div class="mb-3">
       {% for letter in letters %}
-        <a
+      <a
         class="fw-bold fs-5 my-4 text-decoration-none letter-link"
         href="#{{letter}}"
         ><span class="badge rounded-circle bg-info ms-1 mb-1">{{letter}}</span></a
-          >
+      >
       {% endfor %}
     </div>
-  {% endif%}
-
-  {% for letter, words in sored_word_dict %}
-    <h4 id="{{letter}}" class="text-primary mb-0 mt-3">Letter: {{letter}}</h4>
-    <div class="row">
-      {% for word in words %}
-      <div class="col-md-2 col-sm-6 mb-1">
-        <a class="text-body link-body" href="{% url 'vocabulary_detail' word.id %}">
-        {{word.name }}</a>
-      </div>
-      {% endfor%}
+    {% endif %}
+    {% for letter, words in sored_word_dict %}
+      <h4 id="{{letter}}" class="text-primary mb-0 mt-3">Letter: {{letter}}</h4>
+      <div class="row">
+        {% for word in words %}
+          <div class="col-md-2 col-sm-6 mb-1">
+            <span
+              class="vocabulary_name"
+              role="button"
+              data-bs-toggle="modal"
+              data-bs-target="#vocabulary_popup"
+              data-bs-vocab-name="{{word.name}}"
+              >{{word.name }}
+            </span>
+          </div>
+        {% endfor%}
       </div>
   {% endfor%}
-  
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="vocabulary_popup"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-primary" id="staticBackdropLabel">
+          Modal title
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body"></div>
+    </div>
+  </div>
 </div>
 {% endblock %}

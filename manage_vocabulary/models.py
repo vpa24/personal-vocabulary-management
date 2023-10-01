@@ -7,20 +7,24 @@ from django.contrib.auth.models import User
 class User(AbstractUser):
     time_zone = models.CharField(max_length=50, null=True)
 
+
 class Word(models.Model):
     name = models.CharField(max_length=100, unique=True)
+
 
 class WordOwnership(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
     added_date = models.DateTimeField(default=timezone.now)
-    
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.added_date = timezone.now()
         super(WordOwnership, self).save(*args, **kwargs)
+
     class Meta:
         unique_together = ('user', 'word')
+
 
 class WordEntry(models.Model):
     WORD_TYPES = [
@@ -37,6 +41,7 @@ class WordEntry(models.Model):
         Word, on_delete=models.CASCADE, related_name="word_entries")
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="word_entries")
+
     def get_word_type_class(self):
         word_type_classes = {
             'verb': 'badge rounded-pill bg-info',
@@ -46,6 +51,15 @@ class WordEntry(models.Model):
             'adverb': 'badge rounded-pill bg-purple',
         }
         return word_type_classes.get(self.word_type, '')
+
+    def serialize(self):
+        return {
+            "name": self.word.name,
+            "type": self.word_type,
+            "definition": self.definition,
+            "example": self.example,
+            "class": self.get_word_type_class()
+        }
 
 
 class Contact(models.Model):

@@ -7,6 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.functions import ExtractYear, ExtractMonth
 from django.db.models import Count, Subquery, OuterRef, Q
 from django.contrib import messages
+from django.http import JsonResponse
 
 from .models import User, Word, WordEntry, WordOwnership
 from django.contrib.auth.decorators import login_required
@@ -243,3 +244,12 @@ def update_vocabulary_name(get_name, title):
         word.name = get_name
         word.save()
         return
+
+
+@login_required
+def vocabulary_detail_name(request, vocab_name):
+    user = request.user
+    word = get_object_or_404(Word, name=vocab_name)
+
+    word_entries = WordEntry.objects.filter(word=word, user=user)
+    return JsonResponse([entry.serialize() for entry in word_entries], safe=False)
