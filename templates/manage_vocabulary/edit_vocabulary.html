@@ -7,7 +7,7 @@
   </div>
   {% endif %}
   <form
-    action="{% url 'edit_vocabulary' title=voca_title|slugify vid=vid %}"
+    action="{% url 'edit_vocabulary' title=voca_title %}"
     method="post"
   >
     {% csrf_token %}

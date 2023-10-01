@@ -6,7 +6,7 @@
     <div class="list-group-item py-3">
       <div class="end-0 top-0 pt-3 pe-3 position-absolute">
         <a
-          href="{% url 'edit_vocabulary' title=word.name|slugify vid=word.id %}"
+          href="{% url 'edit_vocabulary' title=word.name %}"
           ><button
             class="btn btn-icon btn-light btn-xs text-primary rounded-circle"
             type="button"
@@ -32,7 +32,11 @@
       </p>
       {% if entry.example %}
       <h6 class="opacity-75 text-decoration-underline">Example:</h6>
-      <p>{{entry.example}}</p>
+      <p>
+        {% autoescape on %}
+          {{entry.example | linebreaksbr }}
+        {% endautoescape %}
+      </p>
       {% endif %} {% endwith %} {% endfor %}
     </div>
   </div>

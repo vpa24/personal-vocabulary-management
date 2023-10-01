@@ -125,18 +125,18 @@ def vocabulary_detail(request, word_name):
 
 
 @login_required()
-def edit_vocabulary(request, title, vid):
+def edit_vocabulary(request, title):
     if request.method == 'POST':
         form = VocabularyForm(request.POST)
         if form.is_valid():
-            name = request.POST['name'].strip()
-            update_vocabulary_name(name, title)
+            # name = request.POST['name'].strip()
+            # update_vocabulary_name(name, title)
 
             update_vocabulary_entries(request)
             return HttpResponseRedirect(reverse("index"))
 
     user = request.user
-    word = get_object_or_404(Word, pk=vid)
+    word = get_object_or_404(Word, name=title)
     word_entries = WordEntry.objects.filter(word=word, user=user)
     # Prepare the initial data for the formset
     form_entries = []
@@ -150,7 +150,6 @@ def edit_vocabulary(request, title, vid):
 
     return render(request, 'manage_vocabulary/edit_vocabulary.html', {
         'voca_title': word.name,
-        'vid': word.id,
         'form': VocabularyForm(initial={'name': word.name}),
         'form_entries': form_entries
     })
@@ -225,8 +224,16 @@ def add_to_word_entry(request, word, user):
 def update_vocabulary_entries(request):
     name = request.POST['name'].strip()
     word = get_object_or_404(Word, name=name)
-    delete_word_entries(word, request.user)  # Delete old WordEntry instances
-    add_to_word_entry(request, word, request.user)
+    definitions = request.POST.getlist('definition')
+    examples = request.POST.getlist('example')
+    part_of_speeches = request.POST.getlist('part_of_speech')
+    word_entries = WordEntry.objects.filter(word=word, user=request.user)
+    for i in range(len(definitions)):
+        definition = definitions[i]
+        example = examples[i]
+        part_of_speech = part_of_speeches[i]
+        word_entries.update(word_type=part_of_speech,
+                            definition=definition, example=example)
 
 
 def delete_word_entries(word, user):
