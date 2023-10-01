@@ -113,9 +113,9 @@ def vocabulary_list_index(request):
 
 
 @login_required()
-def vocabulary_detail(request, vid):
+def vocabulary_detail(request, word_name):
     user = request.user
-    word = get_object_or_404(Word, id=vid)
+    word = get_object_or_404(Word, name=word_name)
 
     word_entries = WordEntry.objects.filter(word=word, user=user)
     return render(request, 'manage_vocabulary/vocabulary_detail.html', {
