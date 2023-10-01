@@ -224,17 +224,37 @@ def add_to_word_entry(request, word, user):
 def update_vocabulary_entries(request):
     name = request.POST['name'].strip()
     word = get_object_or_404(Word, name=name)
-    definitions = request.POST.getlist('definition')
-    examples = request.POST.getlist('example')
-    part_of_speeches = request.POST.getlist('part_of_speech')
+    definition_list = request.POST.getlist('definition')
+    example_list = request.POST.getlist('example')
+    part_of_speech_list = request.POST.getlist('part_of_speech')
     word_entries = WordEntry.objects.filter(word=word, user=request.user)
-    for i in range(len(definitions)):
-        definition = definitions[i]
-        example = examples[i]
-        part_of_speech = part_of_speeches[i]
-        word_entries.update(word_type=part_of_speech,
-                            definition=definition, example=example)
+    total_word_entries = len(word_entries)
+    total_new_word_entries = len(definition_list)
+    for i, entry in enumerate(word_entries):
+        if i < total_new_word_entries:
+            part_of_speech = part_of_speech_list[i]
+            definition = definition_list[i]
+            example = example_list[i]
 
+            # Update the record with the new values
+            entry.word_type = part_of_speech
+            entry.definition = definition
+            entry.example = example
+            entry.save()
+        else:
+            entry.delete()
+    # create new record if length of new entries > length of word entries
+    if total_new_word_entries > total_word_entries:
+        number_loop = range(total_word_entries, total_new_word_entries)
+        for i in number_loop:
+            word_entry = WordEntry(
+                word_type=part_of_speech_list[i],
+                definition=definition_list[i],
+                example=example_list[i],
+                word=word,
+                user=request.user
+            )
+            word_entry.save()
 
 def delete_word_entries(word, user):
     try:
