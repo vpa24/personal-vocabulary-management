@@ -3,11 +3,11 @@
   {% include 'manage_vocabulary/components/breadcrumb.html' with breadcrumb_name='History' %}
   
 {% for year in years %}
-  <h2 class="text-primary fw-bold mb-2">{{ year.year }}</h2>
+  <h2 class="text-accent fw-bold mb-2">{{ year.year }}</h2>
   {% for month in months %}
   {% if month.added_date__month == month.month %}
   <div class="d-flex">
-    <h4 class="text-accent fst-italic ms-4 mb-2">{{ month.month|month_name }}</h4>
+    <h4 class="text-primary fst-italic ms-4 mb-2">{{ month.month|month_name }}</h4>
     <div class="ms-2 mt-1">
      <span class="badge bg-faded-info">
       {{month.total_words}} word{{month.total_words|pluralize}}
@@ -18,7 +18,7 @@
       {% for word in vocabulary_words %}
         {% if word.added_date|date:"Y" == year.year|stringformat:"s" and word.added_date|date:"F" == month.month|month_name|stringformat:"s" %}
           <li>
-            <a class="vocabulary_name" href="{% url 'vocabulary_detail' word.name %}">
+            <a class="vocabulary_name text-body" href="{% url 'vocabulary_detail' word.name %}">
               {{word.name }}
             </a>
           </li>
