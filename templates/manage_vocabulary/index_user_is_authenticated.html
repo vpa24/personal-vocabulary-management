@@ -34,7 +34,7 @@
     <div class="row">
       {% for word in words %}
       <div class="col-md-2 col-sm-6 mb-1">
-        <a class="text-body link-body" href="{% url 'vocabulary_detail' word.name %}">
+        <a class="text-body link-body vocabulary_name" href="{% url 'vocabulary_detail' word.name %}">
         {{word.name }}</a>
       </div>
       {% endfor%}
