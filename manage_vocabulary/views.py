@@ -91,11 +91,11 @@ def search_vocabulary_list(request, voca_name, form):
 def vocabulary_list_index(request):
     user = request.user
     words = Word.objects.filter(
-        wordownership__user=user).values_list('id', 'name')
-    word_list = [{'id': item[0], 'name': item[1]} for item in words]
+        wordownership__user=user).values('name')
+    name_list = list(words)
     word_dict = defaultdict(list)
 
-    for word in word_list:
+    for word in name_list:
         first_letter = word['name'][0].upper()
         if first_letter in word_dict:
             word_dict[first_letter].append(word)
