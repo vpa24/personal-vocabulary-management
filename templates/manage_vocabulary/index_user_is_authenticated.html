@@ -32,7 +32,7 @@
   {% for letter, words in sored_word_dict %}
     <h4 id="{{letter}}" class="text-primary mb-0 mt-3">Letter: {{letter}}</h4>
     <div class="row">
-      {% for word in words %}
+      {% for word in words|dictsort:"name" %}
       <div class="col-md-2 col-sm-6 mb-1">
         <a class="text-body link-body vocabulary_name" href="{% url 'vocabulary_detail' word.name %}">
         {{word.name }}</a>
