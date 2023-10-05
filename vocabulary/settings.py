@@ -45,11 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 	'django_crontab',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
     'widget_tweaks'
 ]
 
@@ -93,7 +88,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'vocabulary.urls'
@@ -133,12 +127,6 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = 'manage_vocabulary.User'
-
-# Authentication for social media
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
