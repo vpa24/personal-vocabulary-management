@@ -1,6 +1,6 @@
 {% extends "manage_vocabulary/layout.html" %} {% block body %} {% load custom_filters %}
 <div class="container mt-6 mb-md-4">
-  {% include 'manage_vocabulary/components/breadcrumb.html' with breadcrumb_name='History' %}
+  {% include 'components/breadcrumb.html' with breadcrumb_name='History' %}
   
 {% for year in years %}
   <h2 class="text-accent fw-bold mb-2">{{ year.year }}</h2>

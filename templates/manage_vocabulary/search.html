@@ -2,7 +2,7 @@
 {% load custom_filters %}
 <div class="container mt-5 mb-md-4 py-5">
   <h2 class="text-primary">{{ user.first_name|title}}'s Dictionary</h2>
-   {% include 'manage_vocabulary/components/search_form.html' with form=searchForm %}
+   {% include 'components/search_form.html' with form=searchForm %}
 {% if total == 0 %}
 <h6 class="text-center my-3">
   We couldn't find any matches for

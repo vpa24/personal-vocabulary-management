@@ -1,6 +1,6 @@
 {% extends "manage_vocabulary/layout.html" %} {% block body %} {% load custom_filters %}
 <div class="container mt-6 mb-md-4">
-  {% with breadcrumb_name="Edit "|add:voca_title|title %} {% include 'manage_vocabulary/components/breadcrumb.html' %} {% endwith %} {% if message and id %}
+  {% with breadcrumb_name="Edit "|add:voca_title|title %} {% include 'components/breadcrumb.html' %} {% endwith %} {% if message and id %}
   <div class="alert alert-danger" role="alert">
     {{message}},
     <a class="fw-bold" href="{% url 'vocabulary_detail' id %}">click here</a>
