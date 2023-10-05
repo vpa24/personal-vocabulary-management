@@ -100,7 +100,7 @@ def vocabulary_list_index(request):
             word_dict[first_letter].append(word)
         else:
             word_dict[first_letter] = [word]
-    sorted_word_dict = dict(word_dict.items())
+    sorted_word_dict = dict(sorted(word_dict.items()))
     letters = sorted_word_dict.keys()
     context = {
         'total': len(words),
