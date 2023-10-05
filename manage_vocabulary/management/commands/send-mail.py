@@ -33,7 +33,7 @@ def send_summary_voca_mail(user, words):
     subject = 'Daily Vocabulary Review on ' + date
     message = format_html('Hi {}, <br>', user.first_name)
     body = format_html(
-        "<br>It's time for your daily vocabulary review! By using active recall method to help you remember your vocabulary words for your long term memory 🧠.<br/>")
+        "<br>It's time for your daily vocabulary review! By using recall method which can help you remember your vocabulary words in the long term memory 🧠.<br/>")
     body += format_html('Here are the 5 vocabulary words for you to review today.<br/><ol>')
     for word_id in words:
         word = Word.objects.filter(pk=word_id).first()
@@ -56,4 +56,3 @@ def send_summary_voca_mail(user, words):
     )
     email.content_subtype = 'html'
     email.send()
-    # send_mail(subject, message, email_from, recipient, html_message=body)
