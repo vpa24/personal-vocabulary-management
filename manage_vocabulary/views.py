@@ -62,7 +62,6 @@ def search(request):
     form = SearchForm()
     voca_name = ""
     if request.method == 'GET':
-        # Bind form data to the submitted GET data
         form = SearchForm(request.GET)
         if form.is_valid():
             voca_name = request.GET.get('search')
@@ -129,9 +128,6 @@ def edit_vocabulary(request, title):
     if request.method == 'POST':
         form = VocabularyForm(request.POST)
         if form.is_valid():
-            # name = request.POST['name'].strip()
-            # update_vocabulary_name(name, title)
-
             update_vocabulary_entries(request)
             return HttpResponseRedirect(reverse("index"))
 
