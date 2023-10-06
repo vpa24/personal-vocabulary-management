@@ -18,7 +18,7 @@
       {% for word in vocabulary_words %}
         {% if word.added_date|date:"Y" == year.year|stringformat:"s" and word.added_date|date:"F" == month.month|month_name|stringformat:"s" %}
           <li class="col-md-3 col-sm-6 mb-1">
-            <a class="vocabulary_name text-body" href="{% url 'vocabulary_detail' word.name %}">
+            <a class="vocabulary_name text-body text-decoration-none" href="{% url 'vocabulary_detail' word.name %}">
               {{word.name }}
             </a>
           </li>
