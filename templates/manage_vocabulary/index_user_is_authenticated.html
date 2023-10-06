@@ -30,11 +30,11 @@
   {% endif%}
 
   {% for letter, words in sored_word_dict %}
-    <h4 id="{{letter}}" class="text-primary mb-0 mt-3">Letter: {{letter}}</h4>
-    <div class="row">
+    <h4 id="{{letter}}" class="text-primary mb-2 mt-2">Letter: {{letter}}</h4>
+    <div class="row ps-3">
       {% for word in words|dictsort:"name" %}
       <div class="col-md-2 col-sm-6 mb-1">
-        <a class="text-body link-body vocabulary_name" href="{% url 'vocabulary_detail' word.name %}">
+        <a class="text-body vocabulary_name text-decoration-none fs-6" href="{% url 'vocabulary_detail' word.name %}">
         {{word.name }}</a>
       </div>
       {% endfor%}
