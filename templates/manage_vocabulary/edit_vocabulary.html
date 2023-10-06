@@ -15,41 +15,44 @@
       <label class="form-label" for="{{ form.name.id_for_label }}"
         >{{ form.name.label }}</label
       >
-      {{form.name}} {% for entry in form_entries %}
-      <div class="clone_div">
-        <div
-          class="row mt-3 p-4 bg-secondary rounded alert alert-dismissible fade show"
-        >
-          <button
-            class="btn-close"
-            type="button"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
+      {{form.name}} 
+      <div class="form_entries">
+        {% for entry in form_entries %}
+        <div class="clone_div">
+          <div
+            class="row mt-3 p-4 bg-secondary rounded alert alert-dismissible fade show"
+          >
+            <button
+              class="btn-close"
+              type="button"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
 
-          <div class="col-md-2 mb-3">
-            <label
-              class="form-label"
-              for="{{entry.part_of_speech.id_for_lable}}"
-              >{{entry.part_of_speech.label}}</label
-            >
-            {{entry.part_of_speech}}
-          </div>
-          <div class="col-md-10">
-            <label class="form-label" for="{{entry.definition.id_for_label}}">
-              {{entry.definition.label}}</label
-            >
-            {{entry.definition}}
-          </div>
-          <div class="col-12">
-            <label class="form-label" for="{{entry.exmple.id_for_label}}"
-              >{{entry.example.label}}</label
-            >
-            {{entry.example}}
+            <div class="col-md-2 mb-3">
+              <label
+                class="form-label"
+                for="{{entry.part_of_speech.id_for_lable}}"
+                >{{entry.part_of_speech.label}}</label
+              >
+              {{entry.part_of_speech}}
+            </div>
+            <div class="col-md-10">
+              <label class="form-label" for="{{entry.definition.id_for_label}}">
+                {{entry.definition.label}}</label
+              >
+              {{entry.definition}}
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="{{entry.exmple.id_for_label}}"
+                >{{entry.example.label}}</label
+              >
+              {{entry.example}}
+            </div>
           </div>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
       <div class="">
         <button
           type="button"

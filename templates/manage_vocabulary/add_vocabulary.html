@@ -10,39 +10,41 @@
         >{{ form.name.label }}</label
       >
       {{form.name}}
-      <div class="clone_div">
-        <div
-          class="row mt-3 p-4 bg-secondary rounded alert alert-dismissible fade show"
-        >
-          <button
-            class="btn-close"
-            type="button"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
+      <div class="form_entries">
+        <div class="clone_div">
+          <div
+            class="row mt-3 p-4 bg-secondary rounded alert alert-dismissible fade show"
+          >
+            <button
+              class="btn-close"
+              type="button"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
 
-          <div class="col-md-2 mb-3">
-            <label
-              class="form-label"
-              for="{{form_entries.part_of_speech.id_for_lable}}"
-              >{{form_entries.part_of_speech.label}}</label
-            >
-            {{form_entries.part_of_speech}}
-          </div>
-          <div class="col-md-7">
-            <label
-              class="form-label"
-              for="{{form_entries.definition.id_for_label}}"
-            >
-              {{form_entries.definition.label}}</label
-            >
-            {{form_entries.definition}}
-          </div>
-          <div class="col-11">
-            <label class="form-label" for="{{form_entries.exmple.id_for_label}}"
-              >{{form_entries.example.label}}</label
-            >
-            {{form_entries.example}}
+            <div class="col-md-2 mb-3">
+              <label
+                class="form-label"
+                for="{{form_entries.part_of_speech.id_for_lable}}"
+                >{{form_entries.part_of_speech.label}}</label
+              >
+              {{form_entries.part_of_speech}}
+            </div>
+            <div class="col-md-7">
+              <label
+                class="form-label"
+                for="{{form_entries.definition.id_for_label}}"
+              >
+                {{form_entries.definition.label}}</label
+              >
+              {{form_entries.definition}}
+            </div>
+            <div class="col-11">
+              <label class="form-label" for="{{form_entries.exmple.id_for_label}}"
+                >{{form_entries.example.label}}</label
+              >
+              {{form_entries.example}}
+            </div>
           </div>
         </div>
       </div>
