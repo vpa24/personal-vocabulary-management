@@ -1,0 +1,36 @@
+/*
+ * Finder | Directory & Listings Bootstrap Template
+ * Copyright 2022 Createx Studio
+ * Theme styles
+ */
+
+// User variables
+@import "user-variables";
+
+// Configuration & utilities
+@import "variables";
+@import "utilities";
+
+// Bootstrap
+@import "../../manage_vocabulary/vendor/bootstrap/scss/bootstrap";
+
+// Layout & components
+@import "reboot";
+@import "components";
+
+// User custom styles
+@import "user";
+
+@include media-breakpoint-down(sm) { 
+  .change_order_position_xs{
+    display: flex;
+    flex-direction: column;
+    #add_other_definition{
+      order: 1;
+      margin-bottom: .5em;
+    }
+    .btn.btn-primary.w-150px{
+      order: 2;
+    }
+  }
+ }

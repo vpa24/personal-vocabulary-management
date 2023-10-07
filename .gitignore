@@ -1,11 +1,13 @@
 .vscode/
 vocabulary/static/node_modules
-vocabulary/static/src/scss/*
+# vocabulary/static/src/scss/*
 # Ignore the entire manage_vocabulary/static/manage_vocabulary/vendor directory
 vocabulary/static/manage_vocabulary/vendor/*
 
 # Ingore vocabulary/static/src/js/components
 vocabulary/static/src/js/components/
+# Ingore vocabulary/static/src/scss/components
+vocabulary/static/src/scss/components/
 
 # Unignore the directory itself
 !vocabulary/static/manage_vocabulary/vendor/simplebar/
