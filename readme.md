@@ -17,7 +17,7 @@
   - [Reset Password with Token `/authentication/reset`](#authentication-reset-password-with-token-authentication-reset-password-with-token)
   - [Password Reset Complete `/authentication/password-reset-conplete`](#authentication-password-reset-complete-authentication-password-reset-complete)
     - [Add vocabulary `/add-vocabulary`](#add-vocabulary-dictionaryadd-vocabulary)
-    - [Vocabulary Detail `/dictionary/<word_name>`](#vocabulary-detail-vocabulary-detail)
+    - [Vocabulary Detail `/dictionary/<word_name>`](##vocabulary-detail-dictionaryword_name)
     - [Vocabulary Edit `/dictionary/<word_name>/edit`](#vocabulary-edit-dictionaryword_namevocabulary-edit)
     - [Search `/search`](#search-search)
     - [History `/history`](#history-history)
@@ -115,7 +115,7 @@ When the user clicks on the link from an email, it will check the token link and
 
 From this page, users can create a new vocabulary word by providing a word name, part of speech, definition, example, and they can add multiple types of parts of speech or definitions for that word by clicking on the 'Add other definition' button. By using the 'click' event when a user clicks on the DOM element with the id `add_other_definition`, it will clone the div named `clone_div` and append it as a new child within the `form_entries` class. These functions manipulate from `add-new-definition.min.js` file. After clicked on the _Save_ button, it will redirect to the [Index](#index) page.
 
-### vocabulary Detail `/dictionary/<word_name>`
+### Vocabulary Detail `/dictionary/<word_name>`
 
 From this page, a user will see the detail for a vobulary word with its word entry. User can also click on the `Edit` icon to redirect to [Edit](#vocabulary-edit-dictionaryword_namevocabulary-edit) page
 ### Vocabulary edit `/dictionary/<word_name>vocabulary-edit`
