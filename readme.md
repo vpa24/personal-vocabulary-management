@@ -41,7 +41,10 @@ I believe that my project meets this requirement for the following reasons:
 2. On the [Register](#register) function, I have implemented dynamic validation based on JavaScript code, which can accurately validate user data input before inserting it into the database.
 3. I build the 'Forgot password' function on the [Login](#login) page, which will send an email to the user containing a dynamic token code link.
 4. I set up the configurations for sending mail via `.env` on my localhost project, and I configured those settings through **SECRET VARIABLES** on GitHub.
-5. I built a simple cron job that sends a daily email with five random vocabulary words, along with their definitions and examples, based on the user's dictionary.
+5. I built a simple cron job that sends a daily email with five random vocabulary words, along with their definitions and examples, based on the user's dictionary with a custom command file named `send-mail.py` from the directory `manage_vocabulary/commands` folder. You can run the send mail function with the command bellow:
+```
+python manage.py send-mail
+```
 
 > Your web application must utilize Django (including at least one model) on the back-end and JavaScript on the front-end.
 
