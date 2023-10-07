@@ -27,7 +27,7 @@
 
 As an English learner, I have invested a lot of time and effort into learning and remembering vocabulary. However, much later, I feel frustrated when I forget some vocabulary words that I had previously learned. For this reason, I have decided to create a vocabulary management website that can help every English learner create their own dictionary by adding new words over time and grow up vocabulary words over time.
 
-My web application was built using Django, JavaScript, Gulp, Cronjob and Bootstrap.
+My web application was built using Django, JavaScript, Gulp, Cronjob, and Bootstrap.
 
 ## Distinctiveness and complexity
 
