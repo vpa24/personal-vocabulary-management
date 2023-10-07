@@ -15,7 +15,7 @@
       <label class="form-label" for="{{ form.name.id_for_label }}"
         >{{ form.name.label }}</label
       >
-      {{form.name}} 
+      {{form.name}}
       <div class="form_entries">
         {% for entry in form_entries %}
         <div class="clone_div">
@@ -53,17 +53,17 @@
         </div>
         {% endfor %}
       </div>
-      <button
-        type="button"
-        id="add_other_definition"
-        class="btn btn-info w-250px me-3"
-      >
-        <i class="fi-plus me-2"></i>
-        Add other definition
-      </button>
-      <div class="mt-3 text-center">
-        <button class="btn btn-primary w-150px" type="submit">
+      <div class="mt-3 change_order_position_xs">
+        <button class="btn btn-primary w-150px me-md-5 me-sm-4" type="submit">
           <i class="fi-check me-2"></i>Save
+        </button>
+        <button
+          type="button"
+          id="add_other_definition"
+          class="btn btn-info w-250px"
+        >
+          <i class="fi-plus me-2"></i>
+          Add other definition
         </button>
       </div>
     </div>
