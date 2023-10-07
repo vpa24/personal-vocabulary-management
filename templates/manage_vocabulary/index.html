@@ -8,9 +8,8 @@
     class="d-xl-none position-absolute top-0 start-0 w-100 h-100 bg-secondary"
   ></div>
   <div class="container content-overlay mt-4 mb-2 mt-lg-5 mb-lg-4 pt-5 pb-md-2">
-    {% include 'components/_messages.html' %}
     <h2 class="lh-lg">
-      <span class="text-primary">Welcome to Happy Dictionary.</span><br />
+      <span class="text-primary">Welcome to Happy Dictionary</span><br />
       <span class="fs-3">You can create and manage your own dictionary</span>
     </h2>
     <div class="row">
@@ -33,7 +32,7 @@
                 class="nav-link stretched-link d-flex align-items-center justify-content-center justify-content-md-start"
                 href="real-estate-home-v1.html"
                 ><i class="fi-flame text-primary me-2 pe-1"></i
-                ><span>Easy to add new vocabulary</span></span
+                ><span>Easy to add & edit</span></span
               >
             </h2>
             <div class="position-relative zindex-0">
@@ -64,7 +63,7 @@
             <span
               class="nav-link stretched-link d-flex align-items-center justify-content-center justify-content-md-start"
               ><i class="fi-like text-primary me-2 pe-1"></i
-              ><span>Easy to organize & search</span></span
+              ><span>Easy to manage</span></span
             >
           </h2>
           <img
@@ -88,18 +87,11 @@
       />
     </div>
     <div class="col-xxl-6 col-md-7 text-md-start text-center">
-      {% comment %}
-      <h2 class="text-primary">{{ 'I forgot what I have studied'|title }}</h2>
-      {% endcomment %}
-      <p class="pb-3 fs-lg">
-        As an English learner, I have taken a lot of time and effort into
-        learning and remembering vocabulary. But a long time later, I feel
-        frustrated when I forget some vocabulary words that I have previously
-        learned. More than that, I also feel overwhelmed by my vocabulary notes
-        and struggle to keep them organized. That's why I made this website
-        offers a convenient solution for everyone to save time by eliminating
-        the need for paper notes. With this website, you can easily to create
-        and manage the vocabulary that you have learned.
+      <h1 class="bg-danger text-center fw-bold p-3">{{ 'Hard Truth'|upper }}</h1>
+      <p class="pb-3 fs-4">
+        We have taken a lot of time and effort into
+        learning and remembering vocabulary. But a long time later, we usually <span class="text-danger fw-bold">{{'forget'|upper}}</span>
+        some vocabulary words that we have previously learned. 😢
       </p>
     </div>
   </div>
