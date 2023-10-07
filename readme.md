@@ -17,7 +17,7 @@
   - [Reset Password with Token `/authentication/reset`](#authentication-reset-password-with-token-authentication-reset-password-with-token)
   - [Password Reset Complete `/authentication/password-reset-conplete`](#authentication-password-reset-complete-authentication-password-reset-complete)
     - [Add vocabulary `/add-vocabulary`](#add-vocabulary-dictionaryadd-vocabulary)
-    - [Vocabulary Detail `/dictionary/<word_name>`](##vocabulary-detail-dictionaryword_name)
+    - [Vocabulary Detail `/dictionary/<word_name>`](#vocabulary-detail-dictionaryword_name)
     - [Vocabulary Edit `/dictionary/<word_name>/edit`](#vocabulary-edit-dictionaryword_namevocabulary-edit)
     - [Search `/search`](#search-search)
     - [History `/history`](#history-history)
@@ -25,7 +25,7 @@
 
 ## Overview
 
-As an English learner, I have invested a lot of time and effort into learning and remembering vocabulary. However, much later, I feel frustrated when I forget some vocabulary words that I had previously learned. For this reason, I have decided to create a vocabulary management website that can help every English learner create their own dictionary by adding new words over time as they learn them.
+As an English learner, I have invested a lot of time and effort into learning and remembering vocabulary. However, much later, I feel frustrated when I forget some vocabulary words that I had previously learned. For this reason, I have decided to create a vocabulary management website that can help every English learner create their own dictionary by adding new words over time and grow up vocabulary words over time.
 
 My web application was built using Django, JavaScript, Gulp, Cronjob and Bootstrap.
 
