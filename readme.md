@@ -133,12 +133,10 @@ This page displays list of word names base on each year and each month along wit
    pip install -r requirements.txt
    ```
 4. Go to the directory `vocabulary/static` and run the command bellow:
-   ```bash
+   ```
    gulp
    ```
-
-````
 5. Go to the root directory of the Django project and run the following command to start up the web server:
-   ```python
+   ```
    python manage.py runserver
-````
+   ````
