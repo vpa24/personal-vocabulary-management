@@ -133,16 +133,31 @@ This page displays list of word names base on each year and each month along wit
 ## How to run the application
 
 1. Copy the repo to your system.
-2. Verify you have Python, Django, Gulp, and Node.js installed on your system. If not you will need to install them.
+2. Verify you have Python, Django, PostgreSQL installed on your system. If not you will need to install them.
 3. To install all of the packages from `requirements.txt`, you need to run the command:
    ```
    pip install -r requirements.txt
    ```
-4. Go to the directory `vocabulary/static` and run the command bellow:
-   ```
-   gulp
-   ```
-5. Go to the root directory of the Django project and run the following command to start up the web server:
+4. Create a new database named **django_vocabulary** in **pgAdmin4** for PostgresSQL. Import a database by clicking on *Restore...* and choose a file named **happy-dictionary-example** from *example-db* directory.
+5. In the root dicrectory, create an file called .env with the following content:
+  ```
+  SECRET_KEY=${YOUR_DAJNGO_SERECT_KEY}
+  DB_USER=postgres
+  DB_NAME=django_vocabulary
+  STACKHERO_POSTGRESQL_ADMIN_PASSWORD=postgres
+  STACKHERO_POSTGRESQL_HOST=localhost
+  EMAIL_HOST=smtp.gmail.com
+  EMAIL_HOST_USER=h${YOUR_GMAIL_ACCOUNT}
+  EMAIL_HOST_PASSWORD=${YOUR_GMAIL_PASSWORD}
+  DEBUG=True
+  DJANGO_SETTINGS_MODULE=vocabulary.settings
+  ```
+6. Go to the root directory of the Django project and run the following command to start up the web server:
    ```
    python manage.py runserver
    ````
+7. Visit the website in your browser and login with the example account username and password:
+  ```
+  username: anh.vu
+  password: HappyDictionary
+  ```
