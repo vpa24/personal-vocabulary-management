@@ -84,8 +84,8 @@ WSGI_APPLICATION = 'vocabulary.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'vocabulary',
-        'USER': 'admin',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('STACKHERO_POSTGRESQL_ADMIN_PASSWORD'),
         'HOST': os.environ.get('STACKHERO_POSTGRESQL_HOST'),
         'PORT': '5432',
