@@ -48,7 +48,7 @@ python manage.py send-mail
 
 > Your web application must utilize Django (including at least one model) on the back-end and JavaScript on the front-end.
 
-My application was built using Django, including 5 models on the back-end. All generated information is saved in a database (SQLite by default).
+My application was built using Django, including 5 models on the back-end. All generated information is saved in a database (PostgreSQL by default).
 
 > Your web application must be mobile-responsive
 
