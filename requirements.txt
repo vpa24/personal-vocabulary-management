@@ -16,7 +16,7 @@ gunicorn==21.2.0
 idna==3.4
 oauthlib==3.2.2
 pexpect==4.8.0
-psycopg2==2.9.8
+psycopg2==2.9.9
 ptyprocess==0.7.0
 pycparser==2.21
 PyJWT==2.8.0
