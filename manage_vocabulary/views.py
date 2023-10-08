@@ -75,9 +75,9 @@ def search_vocabulary_list(request, voca_name, form):
         Q(wordownership__user_id=user.id)
     ).distinct()
     if len(vocabulary_words) == 1:
-        id = vocabulary_words[0].id
+        name = vocabulary_words[0].name
         if vocabulary_words[0].name == voca_name:
-            return HttpResponseRedirect(reverse('vocabulary_detail', args=(id,)))
+            return HttpResponseRedirect(reverse('vocabulary_detail', args=(name,)))
     context = {
         'total': len(vocabulary_words),
         'voca_name': voca_name,
