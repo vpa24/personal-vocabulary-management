@@ -12,6 +12,7 @@ from pathlib import Path
 import django_heroku
 from dotenv import load_dotenv
 from django.contrib import messages
+import sys
 
 load_dotenv()
 
@@ -44,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-	'django_crontab',
     'widget_tweaks'
 ]
 
@@ -93,6 +93,10 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = 'manage_vocabulary.User'
+
+if 'test' in sys.argv or 'test_coverage' in sys.argv:  # Covers regular testing and django-coverage
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
+    DATABASES['default']['NAME'] = ':memory:'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
