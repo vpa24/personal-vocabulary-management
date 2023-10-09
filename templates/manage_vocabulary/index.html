@@ -39,6 +39,7 @@
             <div class="position-relative zindex-0">
               <img
                 class="position-relative zindex-5 rounded"
+                loading="lazy"
                 src="{% static 'manage_vocabulary/img/add_new_vocabulary.webp' %}"
                 alt="Easily"
               />
@@ -69,6 +70,7 @@
           </h2>
           <img
             class="rounded"
+            loading="lazy"
             src="{% static 'manage_vocabulary/img/easy_to_organize_search.webp' %}"
             alt="Easy-to-manage"
           />
@@ -82,16 +84,20 @@
     <div class="col-md-5">
       <img
         class="d-block mx-md-0 mx-auto mb-md-0 mb-4 rounded"
+        loading="lazy"
         src="{% static 'manage_vocabulary/img/intro/IMG_2115.jpg' %}"
         alt="Illustration"
         width="416"
       />
     </div>
     <div class="col-xxl-6 col-md-7 text-md-start text-center">
-      <h1 class="bg-danger text-center fw-bold p-3 w-md-75 mx-auto">{{ 'Hard Truth'|upper }}</h1>
+      <h1 class="bg-danger text-center fw-bold p-3 w-md-75 mx-auto">
+        {{ 'Hard Truth'|upper }}
+      </h1>
       <p class="pb-3 fs-4">
-        We have taken a lot of time and effort into
-        learning and remembering vocabulary. But a long time later, we usually <span class="text-danger fw-bold">{{'forget'|upper}}</span>
+        We have taken a lot of time and effort into learning and remembering
+        vocabulary. But a long time later, we usually
+        <span class="text-danger fw-bold">{{'forget'|upper}}</span>
         some vocabulary words that we have previously learned. 😢
       </p>
     </div>
