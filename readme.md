@@ -1,4 +1,4 @@
-# CS50W: Web Programming with Python and JavaScript - Manage Vocabulary App
+Manage English Vocabulary App
 
 - [CS50W Final Project - Manage Vocabulary App](#cs50w-web-programming-with-python-and-javascript---manage-vocabulary-app)
   - [Overview](#overview)
